@@ -1,0 +1,1 @@
+web: gunicorn globalspend_proj.wsgi
