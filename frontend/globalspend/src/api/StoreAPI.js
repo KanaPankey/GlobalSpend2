@@ -1,5 +1,5 @@
-const BASE_URL = `https://globalspend.herokuapp.com/`
-// const BASE_URL = `http://localhost:8000/`
+// const BASE_URL = `https://globalspend.herokuapp.com/`
+const BASE_URL = `http://localhost:8000/`
 
 
 const tryCatchFetch = async (url, init = null) => {
@@ -48,7 +48,7 @@ const updateStore = async (storeObj, id) => {
     headers: {
       'Content_Type': 'application/json'
     },
-    body: JSON.stringigy(taskObj)
+    body: JSON.stringigy(storeObj)
   }
   return await tryCatchFetch(url, init)
 }

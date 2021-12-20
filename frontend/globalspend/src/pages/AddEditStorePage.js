@@ -1,14 +1,36 @@
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { Form, Button } from "react-bootstrap"
 import StoreAPI from "../api/StoreAPI"
+import { useEffect, useState } from 'react'
 
 function AddEditStorePage() {
+  // router props
   const navigate = useNavigate()
+  const params = useParams()
+  const location = useLocation()
 
+  const [store, setStore] = useState(null)
+
+  useEffect (() => {
+    const getStore = async () => {
+      const data = await StoreAPI.fetchStoreByID(params.storeID) 
+      setStore(data)
+    }
+
+    getStore()
+  }, [] )
+
+
+  // changes depending on whether adding or editing
+  const editingStore = store
+  console.log('editingstore:', editingStore)
+  const action = editingStore ? "Edit" : "Add"
+
+  // handlers
   const handleFormSubmit = async (event) => {
     event.preventDefault()
 
-    const storeData = {
+    const storeObj = {
       store_name: event.target.elements[0].value,
       store_longitude: event.target.elements[3].value,
       store_latitude: event.target.elements[2].value,
@@ -19,7 +41,9 @@ function AddEditStorePage() {
       envelope: [event.target.elements[1].value]
     }
 
-    const data = await StoreAPI.addStore(storeData)
+    const data = editingStore 
+      ? await StoreAPI.updateStore(storeObj)
+      : await StoreAPI.addStore(storeObj)
     if (data) {
       navigate(`/store/${data.id}`)
     }
@@ -28,47 +52,47 @@ function AddEditStorePage() {
   // render
   return (
     <div>
-      <h2>Add Store Page</h2>
+      <h2>{action} Store Page</h2>
       <hr />
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>
           <Form.Label>Name</Form.Label>
-          <Form.Control placeholder="name" />
+          <Form.Control placeholder="name" defaultValue={editingStore && editingStore.store_name} />
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <Form.Control placeholder="envelope" />
+          <Form.Control placeholder="envelope" defaultValue={editingStore && editingStore.envelope} />
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Location: Latitude</Form.Label>
-          <Form.Control placeholder="latitude" />
+          <Form.Control placeholder="latitude" defaultValue={editingStore && editingStore.store_latitude} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Location: Longitude</Form.Label>
-          <Form.Control placeholder="longitude" />
+          <Form.Control placeholder="longitude" defaultValue={editingStore && editingStore.store_longitude} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Typical Amount 1</Form.Label>
-          <Form.Control placeholder="amt_1" />
+          <Form.Control placeholder="amt_1" defaultValue={editingStore && editingStore.amt_1} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Typical Amount 2</Form.Label>
-          <Form.Control placeholder="amt_2" />
+          <Form.Control placeholder="amt_2" defaultValue={editingStore && editingStore.amt_2} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Typical Amount 3</Form.Label>
-          <Form.Control placeholder="amt_3" />
+          <Form.Control placeholder="amt_3" defaultValue={editingStore && editingStore.amt_3} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Typical Amount 4</Form.Label>
-          <Form.Control placeholder="amt_4" />
+          <Form.Control placeholder="amt_4" defaultValue={editingStore && editingStore.amt_4} />
         </Form.Group>
 
         <br />
         <Button variant="primary" type="submit">
-          Add Store
+          {action} Store
         </Button>  
       </Form>  
     </div>

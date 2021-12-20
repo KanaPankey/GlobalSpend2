@@ -16,7 +16,8 @@ import ConverterPage from './pages/ConverterPage';
 import HomePage from './pages/HomePage';
 import StoreListPage from './pages/StoreListPage';
 import StorePage from './pages/StorePage';
-import AddEditStorePage from './pages/AddEditStorePage'
+import AddEditStorePage from './pages/AddEditStorePage';
+import DeleteStorePage from './pages/DeleteStorePage'
 
 // api
 import ConverterAPI from './api/ConverterAPI'
@@ -95,6 +96,8 @@ function App() {
           <Route exact path="/store/" element={<StoreListPage  />} />
           <Route exact path="/store/:storeID" element={<StorePage  />} />
           <Route exact path="/store/add" element={<AddEditStorePage  />} />
+          <Route exact path="/store/:storeID/edit" element={<AddEditStorePage  />} />
+          <Route exact path="/store/:storeID/delete" element={<DeleteStorePage  />} />
 
         </Routes>
       </BrowserRouter>
