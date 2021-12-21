@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom"
-import StoreAPI from "../api/StoreAPI"
+import BackendAPI from "../api/BackendAPI"
 import { useEffect, useState } from 'react'
 
 function DeleteStorePage(props) {
@@ -14,26 +14,20 @@ function DeleteStorePage(props) {
   // effects
   useEffect (() => {
     const getStore = async () => {
-      const data = await StoreAPI.fetchStoreByID(params.storeID) 
-      console.log("data", data)
+      const data = await BackendAPI.fetchStoreByID(params.storeID) 
       setStore(data)
     }
 
     getStore()
   }, [] )
 
-  useEffect (() => {
-    console.log("store:", store)
-  }, [store])
-
+  
   // handlers
   const deleteStore = async () => {
-    const data = await StoreAPI.deleteStore(params.storeID)
-    if (data) {
-      navigate(`/store/`)
-    }
+    const data = await BackendAPI.deleteStore(params.storeID)
+    navigate(`/store/`)
   }
-
+  
   const doNotDelete = () => {
     navigate(`/store/${params.storeID}`)
   }
@@ -41,11 +35,11 @@ function DeleteStorePage(props) {
   // render
   return (
     <div>
-      <h1>Are you sure you want to delete this store?</h1>
+      {store && <h1>Are you sure you want to delete {store.store_name}?</h1>}
       <button onClick={ deleteStore }>Yes</button>
       <button onClick={ doNotDelete }>No</button>
-    </div>
-  )
+    </div>)
+
 }
 
 export default DeleteStorePage;

@@ -1,6 +1,6 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Form, Button } from "react-bootstrap"
-import StoreAPI from "../api/StoreAPI"
+import BackendAPI from "../api/BackendAPI"
 import { useEffect, useState } from 'react'
 
 function AddEditStorePage() {
@@ -14,7 +14,7 @@ function AddEditStorePage() {
   // effects
   useEffect (() => {
     const getStore = async () => {
-      const data = await StoreAPI.fetchStoreByID(params.storeID) 
+      const data = await BackendAPI.fetchStoreByID(params.storeID) 
       setStore(data)
     }
 
@@ -24,7 +24,6 @@ function AddEditStorePage() {
 
   // changes depending on whether adding or editing
   const editingStore = store
-  console.log('editingstore:', editingStore)
   const action = editingStore ? "Edit" : "Add"
 
   // handlers
@@ -43,8 +42,8 @@ function AddEditStorePage() {
     }
 
     const data = editingStore 
-      ? await StoreAPI.updateStore(storeObj, params.storeID)
-      : await StoreAPI.addStore(storeObj)
+      ? await BackendAPI.updateStore(storeObj, params.storeID)
+      : await BackendAPI.addStore(storeObj)
     if (data) {
       navigate(`/store/${data.id}`)
     }

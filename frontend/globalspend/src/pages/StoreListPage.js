@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 // APIs
-import StoreAPI from '../api/StoreAPI'
+import BackendAPI from '../api/BackendAPI'
 
 function StoreListPage(props) {
   // states
@@ -11,8 +11,7 @@ function StoreListPage(props) {
   // effects
   useEffect(() => {
     const getStoreLists = async() => {
-      const data = await StoreAPI.fetchStores()
-      console.log('this is the data:', data)
+      const data = await BackendAPI.fetchStores()
       if (data) {
         setStoreLists(data)
       }
@@ -23,9 +22,7 @@ function StoreListPage(props) {
 
   // render helpers
   const renderStoreList = (storeLists) => {
-    console.log('thisis the storelist:', storeLists)
     return storeLists.map((storeList, index) => {
-      console.log(index)
       return (
         // <li key={index+1}>
         //   <h1>{storeList[index].store_name}</h1>
@@ -45,6 +42,7 @@ function StoreListPage(props) {
     <div>
       <h1>StoreList Page</h1>
       { renderStoreList(storeLists) }
+      <Link to={`/store/add`}><button>Add Store</button></Link>
     </div>
   )
 }

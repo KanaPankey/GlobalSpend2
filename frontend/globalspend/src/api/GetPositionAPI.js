@@ -1,15 +1,19 @@
-if (window.navigator.geolocation) {
-  const success = (position) => {
-    const data = position
-    console.log(data.coords.latitude)
-  }
+// locationIQToken = pk.6d8f36ffb7c400d2fe02117015c63fe7
 
-  const error = (error) => {
-    console.log(error)
-  }
 
-  window.navigator.geolocation.getCurrentPosition(success, error)
-}
+// if (window.navigator.geolocation) {
+//   const success = (position) => {
+//     const data = position
+//     console.log(data.coords.latitude)
+//     console.log(data.coords.longitude)
+//   }
+
+//   const error = (error) => {
+//     console.log(error)
+//   }
+
+//   window.navigator.geolocation.getCurrentPosition(success, error)
+// }
 
 
 

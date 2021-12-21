@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 // APIs
-import StoreAPI from '../api/StoreAPI'
+import BackendAPI from '../api/BackendAPI'
 
 function StorePage(props) {
   // states
@@ -12,15 +12,15 @@ function StorePage(props) {
 
   //effects
   useEffect(() => {
-    const getStore = async (id) => {
-      const data = await StoreAPI.fetchStoreByID(id)
+    const getStore = async () => {
+      const data = await BackendAPI.fetchStoreByID(params.storeID)
       if (data) {
         setStore(data)
       }
     }
 
-    getStore(params.storeID)
-  }, [params.storeID])
+    getStore()
+  }, [])
 
   const renderStore = () => {
     if (!store) {
@@ -41,7 +41,8 @@ function StorePage(props) {
     <div>
       <h1>Store Page</h1>
       { renderStore() }
-      <Link to={`/store/${store.id}/edit`}><button>Edit task</button></Link>
+      <Link to={`/store/${params.storeID}/edit`}><button>Edit Store</button></Link>
+      <Link to={`/store/${params.storeID}/delete`}><button>Delete Store</button></Link>
     </div>
   )
 }

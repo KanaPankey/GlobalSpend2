@@ -12,12 +12,17 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // components
 
 // pages
-import ConverterPage from './pages/ConverterPage';
 import HomePage from './pages/HomePage';
+import ConverterPage from './pages/ConverterPage';
 import StoreListPage from './pages/StoreListPage';
 import StorePage from './pages/StorePage';
 import AddEditStorePage from './pages/AddEditStorePage';
-import DeleteStorePage from './pages/DeleteStorePage'
+import DeleteStorePage from './pages/DeleteStorePage';
+import EnvelopeListPage from './pages/EnvelopeListPage';
+import EnvelopePage from './pages/EnvelopePage';
+import AddEditEnvelopePage from './pages/AddEditEnvelopePage';
+import DeleteEnvelopePage from './pages/DeleteEnvelopePage';
+import TransactionPage from './pages/TransactionPage';
 
 // api
 import ConverterAPI from './api/ConverterAPI'
@@ -96,11 +101,22 @@ function App() {
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/converter/" element={<ConverterPage rate={relativeRate} />} />
-          <Route exact path="/store/" element={<StoreListPage  />} />
-          <Route exact path="/store/:storeID" element={<StorePage  />} />
-          <Route exact path="/store/add" element={<AddEditStorePage  />} />
-          <Route exact path="/store/:storeID/edit" element={<AddEditStorePage  />} />
-          <Route exact path="/store/:storeID/delete" element={<DeleteStorePage  />} />
+          <Route exact path="/store/" element={<StoreListPage />} />
+          <Route exact path="/store/:storeID" element={<StorePage />} />
+          <Route exact path="/store/add" element={<AddEditStorePage />} />
+          <Route exact path="/store/:storeID/edit" element={<AddEditStorePage />} />
+          <Route exact path="/store/:storeID/delete" element={<DeleteStorePage />} />
+          <Route exact path="/envelope/" element={<EnvelopeListPage />} />
+          <Route exact path="/envelope/:envelopeID" element={<EnvelopePage />} />
+          <Route exact path="/envelope/add" element={<AddEditEnvelopePage />} />
+          <Route exact path="/envelope/:envelopeID/edit" element={<AddEditEnvelopePage />} />
+          <Route exact path="/envelope/:envelopeID/delete" element={<DeleteEnvelopePage />} />
+          <Route exact path="/transaction/:transactionID" element={<TransactionPage />} />
+          {/* <Route exact path="/transaction/add" element={<AddEditTransactionPage />} />
+          <Route exact path="/transaction/:transactionID/edit" element={<AddEditTransactionPage />} />
+          <Route exact path="/transaction/:transactionID/delete" element={<DeleteTransactionPage />} /> */}
+
+
 
         </Routes>
       </BrowserRouter>
