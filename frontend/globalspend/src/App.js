@@ -21,7 +21,7 @@ import DeleteStorePage from './pages/DeleteStorePage'
 
 // api
 import ConverterAPI from './api/ConverterAPI'
-
+// import getLocation from "../api/GetPositionAPI";
 
 
 function App() {
@@ -45,9 +45,9 @@ function App() {
         let getSpendRate = data.rates.NOK
         setSpendRate(getSpendRate)
       }
+
+      // getConversionRate()  
     }
-    
-    // getConversionRate()  
   }, [])
   
   // calculate relative exchange rate between home and spend currencies through EUR
