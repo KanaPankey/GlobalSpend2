@@ -7,10 +7,11 @@ function AddEditStorePage() {
   // router props
   const navigate = useNavigate()
   const params = useParams()
-  const location = useLocation()
 
+  // states
   const [store, setStore] = useState(null)
 
+  // effects
   useEffect (() => {
     const getStore = async () => {
       const data = await StoreAPI.fetchStoreByID(params.storeID) 
@@ -42,7 +43,7 @@ function AddEditStorePage() {
     }
 
     const data = editingStore 
-      ? await StoreAPI.updateStore(storeObj)
+      ? await StoreAPI.updateStore(storeObj, params.storeID)
       : await StoreAPI.addStore(storeObj)
     if (data) {
       navigate(`/store/${data.id}`)

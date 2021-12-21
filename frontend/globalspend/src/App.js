@@ -33,6 +33,7 @@ function App() {
   const [spendRate, setSpendRate] = useState(10.152)  // hard-coded to prevent API calls
   const [relativeRate, setRelativeRate] = useState(null)
 
+
   // effects
   // retrieve exchange rates from API compared to EUR
   useEffect(() => {
@@ -46,8 +47,7 @@ function App() {
       }
     }
     
-    // getConversionRate()
-    
+    // getConversionRate()  
   }, [])
   
   // calculate relative exchange rate between home and spend currencies through EUR
@@ -56,6 +56,9 @@ function App() {
     setRelativeRate(getRelativeRate)
 
   }, [spendRate])
+
+
+  // fetching props to pass down to pages
   
 
   const renderNavbar = () => {
@@ -66,11 +69,11 @@ function App() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#link">Link</Nav.Link>
+                <Nav.Link href="/envelope/">Envelopes</Nav.Link>
+                <Nav.Link href="/store/">Stores</Nav.Link>
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                  <NavDropdown.Item href="/store/add/">Add Store</NavDropdown.Item>
+                  <NavDropdown.Item href="/envelope/add">Add Envelope</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>

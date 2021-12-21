@@ -32,7 +32,7 @@ function StorePage(props) {
         <h3>Store: {store.store_name}</h3>
         <h3>Envelope: {store.envelope}</h3>
         <h3>Typical spend amount: {store.amt_1}, {store.amt_2}, {store.amt_3}, {store.amt_4}</h3>
-        <Link to={`/store/${store.id}/edit`}></Link>
+
       </div>
     )
   }
@@ -41,6 +41,7 @@ function StorePage(props) {
     <div>
       <h1>Store Page</h1>
       { renderStore() }
+      <Link to={`/store/${store.id}/edit`}><button>Edit task</button></Link>
     </div>
   )
 }

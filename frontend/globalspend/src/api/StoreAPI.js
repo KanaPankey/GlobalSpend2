@@ -43,12 +43,13 @@ const addStore = async (storeObj) => {
 
 const updateStore = async (storeObj, id) => {
   const url = BASE_URL + `store/${id}/`
+  console.log(url)
   const init = {
-    method: "PUT",
+    method: "PATCH",
     headers: {
-      'Content_Type': 'application/json'
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringigy(storeObj)
+    body: JSON.stringify(storeObj)
   }
   return await tryCatchFetch(url, init)
 }
@@ -58,7 +59,7 @@ const deleteStore = async (id) => {
   const init = {
     method: "DELETE",
     headers: {
-      'Content_Type': 'application/json'
+      'Content-Type': 'application/json'
     }
   }
   return await tryCatchFetch(url, init)

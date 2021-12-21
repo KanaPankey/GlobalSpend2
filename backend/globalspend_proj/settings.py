@@ -42,21 +42,21 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    'https://globalspend.herokuapp.com',
-    'http://localhost:3000'
-    ]
-
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_WHITELIST = [
+    'https://globalspend.herokuapp.com',
+    'http://localhost:3000'
+    ]
 
 ROOT_URLCONF = 'globalspend_proj.urls'
 
