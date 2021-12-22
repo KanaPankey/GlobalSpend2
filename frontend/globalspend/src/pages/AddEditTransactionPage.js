@@ -32,8 +32,12 @@ function AddEditTransactionPage() {
 
     const transactionObj = {
       transaction_name: event.target.elements[0].value,
-      current_amt: event.target.elements[1].value,
-      fill_amt: event.target.elements[2].value,
+      original_transaction_amt: event.target.elements[1].value,
+      home_transaction_amt: event.target.elements[2].value,
+      is_debit_transaction: event.target.elements[3].value,
+      envelope: event.target.elements[4].value,
+      store: event.target.elements[5].value,
+      notes: event.target.elements[6].value
     }
 
     const data = editingTransaction 
@@ -51,18 +55,34 @@ function AddEditTransactionPage() {
       <hr />
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>
-          <Form.Label>Name</Form.Label>
-          <Form.Control placeholder="name" defaultValue={editingTransaction && editingTransaction.envelope_name} />
+          <Form.Label>Transaction Date</Form.Label>
+          <Form.Control placeholder="date" defaultValue={editingTransaction && editingTransaction.transaction_date} />
         </Form.Group>
         <br />
         <Form.Group>
-          <Form.Label>Current Amount</Form.Label>
-          <Form.Control placeholder="current amt" defaultValue={editingTransaction && editingTransaction.current_amt} />
+          <Form.Label>Spent in local currency</Form.Label>
+          <Form.Control placeholder="amt in local" defaultValue={editingTransaction && editingTransaction.original_transaction_amt} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Spent in home currency</Form.Label>
+          <Form.Control placeholder="amt in home" defaultValue={editingTransaction && editingTransaction.home_transaction_amt} />
         </Form.Group>
         <br />
         <Form.Group>
-          <Form.Label>Fill Amount</Form.Label>
-          <Form.Control placeholder="fill amt" defaultValue={editingTransaction && editingTransaction.fill_amt} />
+          <Form.Label>Debit or deposit</Form.Label>
+          <Form.Control placeholder="debit or deposit" defaultValue={editingTransaction && editingTransaction.is_debit_transaction} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Envelope</Form.Label>
+          <Form.Control placeholder="envelope" defaultValue={editingTransaction && editingTransaction.envelope} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Store</Form.Label>
+          <Form.Control placeholder="store" defaultValue={editingTransaction && editingTransaction.store} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Notes</Form.Label>
+          <Form.Control placeholder="notes" defaultValue={editingTransaction && editingTransaction.notes} />
         </Form.Group>
 
         <br />

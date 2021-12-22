@@ -70,6 +70,7 @@ function EnvelopePage(props) {
       <div>{ renderTransactionList() }</div>
       <Link to={`/envelope/${params.envelopeID}/edit`}><button>Edit Envelope</button></Link>
       <Link to={`/envelope/${params.envelopeID}/delete`}><button>Delete Envelope</button></Link>
+      <Link to={`/`}><button>Add Transaction</button></Link>
     </div>
   )
 }

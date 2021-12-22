@@ -23,6 +23,8 @@ import EnvelopePage from './pages/EnvelopePage';
 import AddEditEnvelopePage from './pages/AddEditEnvelopePage';
 import DeleteEnvelopePage from './pages/DeleteEnvelopePage';
 import TransactionPage from './pages/TransactionPage';
+import AddEditTransactionPage from './pages/AddEditTransactionPage';
+import DeleteTransactionPage from './pages/DeleteTransactionPage';
 
 // api
 import ConverterAPI from './api/ConverterAPI'
@@ -112,9 +114,9 @@ function App() {
           <Route exact path="/envelope/:envelopeID/edit" element={<AddEditEnvelopePage />} />
           <Route exact path="/envelope/:envelopeID/delete" element={<DeleteEnvelopePage />} />
           <Route exact path="/transaction/:transactionID" element={<TransactionPage />} />
-          {/* <Route exact path="/transaction/add" element={<AddEditTransactionPage />} />
+          <Route exact path="/transaction/add" element={<AddEditTransactionPage />} />
           <Route exact path="/transaction/:transactionID/edit" element={<AddEditTransactionPage />} />
-          <Route exact path="/transaction/:transactionID/delete" element={<DeleteTransactionPage />} /> */}
+          <Route exact path="/transaction/:transactionID/delete" element={<DeleteTransactionPage />} />
 
 
 
