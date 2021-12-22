@@ -1,9 +1,13 @@
-import getLocation from "../api/GetPositionAPI";
-
+// react
 import { useNavigate, useParams } from "react-router-dom"
 import { Form, Button } from "react-bootstrap"
-import BackendAPI from "../api/BackendAPI"
 import { useEffect, useState } from 'react'
+
+// API
+import BackendAPI from "../api/BackendAPI"
+
+// components
+import GetUserLocationAPI from "../api/GetUserLocationAPI"
 
 function HomePage() {
   // router props
@@ -12,16 +16,22 @@ function HomePage() {
 
   // states
   const [transaction, setTransaction] = useState(null)
+  const [userStore, setUserStore] = useState(null)
 
   // effects
   useEffect (() => {
-    const getTransaction = async () => {
-      const data = await BackendAPI.fetchTransactionByID(params.transactionID) 
-      setTransaction(data)
+    // **** can refactor to get rid of async...just need to setUserStore
+    const getUserStore = async() => {
+      const userStore = GetUserLocationAPI.fetchUserStore()
+      if (userStore) {
+        setUserStore(userStore)
+      }
     }
-
-    getTransaction()
+    
+    getUserStore()
   }, [] )
+
+
 
 
   // changes depending on whether adding or editing
