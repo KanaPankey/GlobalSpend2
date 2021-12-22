@@ -32,15 +32,24 @@ function HomePage() {
   const handleFormSubmit = async (event) => {
     event.preventDefault()
 
+    // get date to populate transaction
+    let today = new Date();
+    // let dd = String(today.getDate()).padStart(2,'0');
+    // let mm = String(today.getMonth() + 1).padStart(2, '0')
+    // let yyyy = today.getFullYear();
+    // let currentDate = mm +'/' + dd + '/' + yyyy
+    // console.log(today)
+
     const transactionObj = {
-      transaction_name: event.target.elements[0].value,
-      original_transaction_amt: event.target.elements[1].value,
-      home_transaction_amt: event.target.elements[2].value,
-      is_debit_transaction: event.target.elements[3].value,
-      envelope: event.target.elements[4].value,
-      store: event.target.elements[5].value,
-      notes: event.target.elements[6].value
+      transaction_date: today,
+      original_transaction_amt: event.target.elements[0].value,
+      home_transaction_amt: event.target.elements[1].value,
+      is_debit_transaction: event.target.elements[2].value,
+      envelope: event.target.elements[3].value,
+      store: event.target.elements[4].value,
+      notes: event.target.elements[5].value
     }
+
 
     const data = editingTransaction 
       ? await BackendAPI.updateTransaction(transactionObj, params.transactionID)
@@ -56,10 +65,6 @@ function HomePage() {
       <h2>Home Page</h2>
       <hr />
       <Form onSubmit={handleFormSubmit}>
-        <Form.Group>
-          <Form.Label>Transaction Date</Form.Label>
-          <Form.Control placeholder="date" defaultValue={now} />
-        </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Spent in local currency</Form.Label>

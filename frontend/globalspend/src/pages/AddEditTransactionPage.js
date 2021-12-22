@@ -70,7 +70,7 @@ function AddEditTransactionPage() {
         <br />
         <Form.Group>
           <Form.Label>Debit or deposit</Form.Label>
-          <Form.Control placeholder="debit or deposit" defaultValue={editingTransaction && editingTransaction.is_debit_transaction} />
+          <Form.Control placeholder="true or false" defaultValue={editingTransaction && editingTransaction.is_debit_transaction} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
