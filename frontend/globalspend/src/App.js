@@ -45,7 +45,7 @@ function App() {
   // states...for userlocation and default store
   const [storeList, setStoreList] = useState([])
   const [userPosition, setUserPosition] = useState([])
-  const [userStore, setUserStore] = useState(null)
+  const [userStore, setUserStore] = useState(-1)
 
   // get user's current position
   if (window.navigator.geolocation) {
@@ -99,31 +99,55 @@ function App() {
   }, [])  
 
   // get lat and long from each store and compare to userlocation...sets user store
-  useEffect(() => {
+  // useEffect(() => {
+  //   console.log("in storelist update", storeList)
 
-    const distanceList = []
-    for (let i = 0; i < storeList.length; i++) {
-      // pull in user latlong and store instance latlong
-      let userLat = userPosition[0]
-      let userLong = userPosition[1]
-      let storeLat = storeList[i].store_latitude
-      let storeLong = storeList[i].store_longitude
+  //   const distanceList = []
+  //   for (let i = 0; i < storeList.length; i++) {
+  //     // pull in user latlong and store instance latlong
+  //     let userLat = userPosition[0]
+  //     let userLong = userPosition[1]
+  //     let storeLat = storeList[i].store_latitude
+  //     let storeLong = storeList[i].store_longitude
 
-      // Haversine distance equation to find distance as crow flies between two latlongs
-      const R = 3958.8;  // Radius of the Earth in miles
-      let rUserLat = userLat * (Math.PI/180)  // Convert degrees to radians
-      let rStoreLat = storeLat * (Math.PI/180)  // Convert degrees to radians
-      let diffLat = rStoreLat - rUserLat  // Radian difference (latitudes)
-      let diffLong = storeLong - userLong  // Radian difference (longitudes)
+  //     // Haversine distance equation to find distance as crow flies between two latlongs
+  //     const R = 3958.8;  // Radius of the Earth in miles
+  //     let rUserLat = userLat * (Math.PI/180)  // Convert degrees to radians
+  //     let rStoreLat = storeLat * (Math.PI/180)  // Convert degrees to radians
+  //     let diffLat = rStoreLat - rUserLat  // Radian difference (latitudes)
+  //     let diffLong = storeLong - userLong  // Radian difference (longitudes)
 
-      let distance = 2 * R * Math.asin(Math.sqrt(Math.sin(diffLat/2) * Math.sin(diffLat/2) + Math.cos(rUserLat) * Math.cos(rStoreLat) * Math.sin(diffLong/2) * Math.sin(diffLong/2)))
+  //     let distance = 2 * R * Math.asin(Math.sqrt(Math.sin(diffLat/2) * Math.sin(diffLat/2) + Math.cos(rUserLat) * Math.cos(rStoreLat) * Math.sin(diffLong/2) * Math.sin(diffLong/2)))
 
-      // creates an array with store id and the distance from the user
-      distanceList.push([storeList[i].id, distance])
-    }
-    console.log(distanceList)
+  //     // creates an array with store id and the distance from the user
+  //     distanceList.push([storeList[i].id, distance])
+  //   }
+  //   console.log(distanceList)
 
-  }, [storeList])
+  //   // determine if there are any stores in a given radius and, if so, which is closest
+  //   let radius = 100
+  //   let distClosestStore = radius // any store must be less than 0.2 miles away from user location to count
+  //   let ClosestStoreID = null
+
+  //   // check if store is closer than previous ones
+  //   for (let i = 0; i < distanceList.length; i++) {
+  //     if (distanceList[i][1] < distClosestStore) {
+  //       distClosestStore = distanceList[i][1]
+  //       ClosestStoreID = distanceList[i][0]
+  //     }
+  //   }
+
+  //   console.log(ClosestStoreID)
+  //   if (distClosestStore < radius) {
+  //     setUserStore(ClosestStoreID)
+  //   } 
+
+
+  // }, [storeList])
+
+  // useEffect(() => {
+  //   console.log("userStore", userStore)
+  // }, [userStore])
 
 
 
@@ -162,7 +186,7 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<HomePage userStore={userStore} />} />
+          <Route exact path="/" element={<HomePage userStore={ userStore } />} />
           <Route exact path="/converter/" element={<ConverterPage rate={relativeRate} />} />
           <Route exact path="/store/" element={<StoreListPage />} />
           <Route exact path="/store/:storeID" element={<StorePage />} />

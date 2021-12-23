@@ -7,9 +7,9 @@ import { useEffect, useState } from 'react'
 import BackendAPI from "../api/BackendAPI"
 
 // components
-// import GetUserLocationAPI from "../api/GetUserLocationAPI"
 
 function HomePage(props) {
+  const { userStore } = props
   // router props
   // const navigate = useNavigate()
   // const params = useParams()
@@ -97,7 +97,7 @@ function HomePage(props) {
         </Form.Group>
         <Form.Group>
           <Form.Label>Store</Form.Label>
-          <Form.Control placeholder="store" defaultValue={props.userStore} />
+          <Form.Control placeholder="store" defaultValue={userStore} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Notes</Form.Label>
