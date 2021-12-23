@@ -7,36 +7,38 @@ import { useEffect, useState } from 'react'
 import BackendAPI from "../api/BackendAPI"
 
 // components
-import GetUserLocationAPI from "../api/GetUserLocationAPI"
+// import GetUserLocationAPI from "../api/GetUserLocationAPI"
 
-function HomePage() {
+function HomePage(props) {
   // router props
-  const navigate = useNavigate()
-  const params = useParams()
+  // const navigate = useNavigate()
+  // const params = useParams()
 
   // states
-  const [transaction, setTransaction] = useState(null)
-  const [userStore, setUserStore] = useState(null)
+  // const [transaction, setTransaction] = useState(null)
+  // const [userStore, setUserStore] = useState(null)
+
+  
 
   // effects
-  useEffect (() => {
-    // **** can refactor to get rid of async...just need to setUserStore
-    const getUserStore = async() => {
-      const userStore = GetUserLocationAPI.fetchUserStore()
-      if (userStore) {
-        setUserStore(userStore)
-      }
-    }
+  // useEffect (() => {
+  //   // **** can refactor to get rid of async...just need to setUserStore
+  //   const getUserStore = async() => {
+  //     const userStore = GetUserLocationAPI.fetchUserStore()
+  //     if (userStore) {
+  //       setUserStore(userStore)
+  //     }
+  //   }
     
-    getUserStore()
-  }, [] )
+  //   getUserStore()
+  // }, [] )
 
-
+  // console.log(GetUserLocationAPI.fetchUserStore())
 
 
   // changes depending on whether adding or editing
-  const editingTransaction = transaction
-  const action = editingTransaction ? "Edit" : "Add"
+  // const editingTransaction = transaction
+  // const action = editingTransaction ? "Edit" : "Add"
 
   // handlers
   const handleFormSubmit = async (event) => {
@@ -48,7 +50,7 @@ function HomePage() {
     // let mm = String(today.getMonth() + 1).padStart(2, '0')
     // let yyyy = today.getFullYear();
     // let currentDate = mm +'/' + dd + '/' + yyyy
-    // console.log(today)
+
 
     const transactionObj = {
       transaction_date: today,
@@ -61,12 +63,12 @@ function HomePage() {
     }
 
 
-    const data = editingTransaction 
-      ? await BackendAPI.updateTransaction(transactionObj, params.transactionID)
-      : await BackendAPI.addTransaction(transactionObj)
-    if (data) {
-      navigate(`/transaction/${data.id}`)
-    }
+    // const data = editingTransaction 
+    //   ? await BackendAPI.updateTransaction(transactionObj, params.transactionID)
+    //   : await BackendAPI.addTransaction(transactionObj)
+    // if (data) {
+    //   navigate(`/transaction/${data.id}`)
+    // }
   }
 
   // render
@@ -78,33 +80,33 @@ function HomePage() {
         <br />
         <Form.Group>
           <Form.Label>Spent in local currency</Form.Label>
-          <Form.Control placeholder="amt in local" defaultValue={editingTransaction && editingTransaction.original_transaction_amt} />
+          <Form.Control placeholder="amt in local"  />
         </Form.Group>
         <Form.Group>
           <Form.Label>Spent in home currency</Form.Label>
-          <Form.Control placeholder="amt in home" defaultValue={editingTransaction && editingTransaction.home_transaction_amt} />
+          <Form.Control placeholder="amt in home" />
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Debit or deposit</Form.Label>
-          <Form.Control placeholder="debit or deposit" defaultValue={editingTransaction && editingTransaction.is_debit_transaction} />
+          <Form.Control placeholder="debit or deposit" />
         </Form.Group>
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <Form.Control placeholder="envelope" defaultValue={editingTransaction && editingTransaction.envelope} />
+          <Form.Control placeholder="envelope"  />
         </Form.Group>
         <Form.Group>
           <Form.Label>Store</Form.Label>
-          <Form.Control placeholder="store" defaultValue={editingTransaction && editingTransaction.store} />
+          <Form.Control placeholder="store" defaultValue={props.userStore} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Notes</Form.Label>
-          <Form.Control placeholder="notes" defaultValue={editingTransaction && editingTransaction.notes} />
+          <Form.Control placeholder="notes" />
         </Form.Group>
 
         <br />
         <Button variant="primary" type="submit">
-          {action} Transaction
+          Add Transaction
         </Button>  
       </Form>  
     </div>
