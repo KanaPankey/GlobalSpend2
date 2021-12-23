@@ -101,8 +101,6 @@ function App() {
 
   // get lat and long from each store and compare to userlocation...sets user store
   useEffect(() => {
-    console.log("storelist changed", storeList)
-  
     const getStorePosition = () => {
       const storePositionList = storeList.map((store) => {
         return [store.store_latitude, store.store_longitude]
@@ -111,29 +109,46 @@ function App() {
       setStorePositionList(storePositionList)
     }
 
-      getStorePosition()
+    getStorePosition()
   }, [storeList])
 
-  // find the distance between each store and the user's current location
   useEffect(() => {
-    console.log("after storepositionlist update")
-    // function haversine_distance(mk1, mk2) {
-    //   console.log("mk1", mk1)
-    //   var R = 3958.8; // Radius of the Earth in miles
-    //   var rlat1 = mk1[0] * (Math.PI/180); // Convert degrees to radians
-    //   var rlat2 = mk2[0] * (Math.PI/180); // Convert degrees to radians
-    //   var difflat = rlat2-rlat1; // Radian difference (latitudes)
-    //   var difflon = (mk2[1]-mk1[1]) * (Math.PI/180); // Radian difference (longitudes)
+    const distanceList = []
+    for (let i = 0; i < storePositionList.length; i++) {
 
-    //   var d = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));
-    //   return d;
-    // }
-    // let storePosition = storePositionList[0]
-    // console.log("storeposition:", storePosition)
-    // let distance = haversine_distance(storePosition, [58.95146134411782, 5.712638652308436])
-    // console.log(distance)
-
+      distanceList.push([store.id])
+      // console.log("in store position", i, storePositionList[i])
+      // console.log("userPosition", userPosition)
+    }
   }, [storePositionList])
+
+  // find the distance between each store and the user's current location
+  // useEffect(() => {
+  //   console.log("firstin", userPosition, storePositionList)
+  //   if (storePositionList) {
+  //     let distanceList = haversine_distance(userPosition, storePositionList[0])
+  //     console.log(distanceList)
+  //     debugger
+  //     function haversine_distance(mk1, mk2) {
+  //       let R = 3958.8; // Radius of the Earth in miles
+  //       let rlat1 = mk1[0] * (Math.PI/180); // Convert degrees to radians
+  //       let rlat2 = mk2[0] * (Math.PI/180); // Convert degrees to radians
+  //       let difflat = rlat2-rlat1; // Radian difference (latitudes)
+  //       let difflon = (mk2[1]-mk1[1]) * (Math.PI/180); // Radian difference (longitudes)
+
+  //       let d = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));
+  //       return d;
+  //     }
+
+    // // let distanceList = storePositionList.map((latlong) => {
+    // //   haversine_distance(userPosition, latlong)
+    // // })
+    //   // let distanceList = haversine_distance(userPosition, [58.951477242714674, 5.712211541867487])
+    //   let distanceList = haversine_distance(userPosition, storePositionList[0])
+    //   console.log(distanceList)
+  //   }
+
+  // }, [storePositionList, userPosition])
 
   
 
