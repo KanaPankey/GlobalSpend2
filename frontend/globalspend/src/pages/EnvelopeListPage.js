@@ -31,9 +31,36 @@ function EnvelopeListPage(props) {
         </tr>
       )
     })
-    
   }
 
+
+  // const renderStoreList = (storeLists) => {
+  //   return (
+  //     <Table striped bordered hover>
+  //       <thead>
+  //         <tr>
+  //           <th>#</th>
+  //           <th colSpan="2">Envelope Name</th>
+  //           <th>Envelope</th>
+  //         </tr>
+  //       </thead>
+  //       <tbody>
+  //       {storeLists.map((storeList, index) => {
+  //         return (
+  //           <tr key={index}>
+  //             <td>{storeList.id}</td>
+  //             <td colSpan="2"><Link to={`/store/${storeList.id}/`}>{storeList.store_name}</Link></td>
+  //             <td>{storeList.envelope}</td>
+  //           </tr>
+  //         )
+  //       })}
+  //       </tbody>
+  //     </Table>
+  //   )
+  // }
+
+
+  // render
   return (
     <div>
       <h1>EnvelopeList Page</h1>

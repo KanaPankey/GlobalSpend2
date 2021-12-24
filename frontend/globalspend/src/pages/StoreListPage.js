@@ -24,39 +24,38 @@ function StoreListPage(props) {
   }, [])
 
   // render helpers
-
-const renderStoreList = (storeLists) => {
-    return (
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th colSpan="2">Store Name</th>
-            <th>Envelope</th>
-          </tr>
-        </thead>
-        <tbody>
-        {storeLists.map((storeList, index) => {
-          return (
-            <tr key={index}>
-              <td>{storeList.id}</td>
-              <td colSpan="2"><Link to={`/store/${storeList.id}/`}>{storeList.store_name}</Link></td>
-              <td>{storeList.envelope}</td>
+  const renderStoreList = (storeLists) => {
+      return (
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th colSpan="2">Store Name</th>
+              <th>Envelope</th>
             </tr>
-          )
-        })}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+          {storeLists.map((storeList, index) => {
+            return (
+              <tr key={index}>
+                <td>{storeList.id}</td>
+                <td colSpan="2"><Link to={`/store/${storeList.id}/`}>{storeList.store_name}</Link></td>
+                <td>{storeList.envelope}</td>
+              </tr>
+            )
+          })}
+          </tbody>
+        </Table>
+      )
+    }
+
+    return (
+      <div>
+        <h1>StoreList Page</h1>
+        { renderStoreList(storeLists) }
+        <Link to={`/store/add`}><button>Add Store</button></Link>
+      </div>
     )
   }
-
-  return (
-    <div>
-      <h1>StoreList Page</h1>
-      { renderStoreList(storeLists) }
-      <Link to={`/store/add`}><button>Add Store</button></Link>
-    </div>
-  )
-}
 
 export default StoreListPage;

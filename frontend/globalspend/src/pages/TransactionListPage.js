@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
+import { Table } from 'react-bootstrap'
+
 // APIs
 import BackendAPI from '../api/BackendAPI'
 
@@ -40,6 +42,38 @@ function TransactionListPage(props) {
     })
   }
 
+
+
+  // const renderStoreList = (storeLists) => {
+  //   return (
+  //     <Table striped bordered hover>
+  //       <thead>
+  //         <tr>
+  //           <th>#</th>
+  //           <th>Date</th>
+  //           <th>Store</th>
+  //           <th>Local Amt</th>
+  //         </tr>
+  //       </thead>
+  //       <tbody>
+  //       {storeLists.map((storeList, index) => {
+  //         return (
+  //           <Link to={`/transaction/${transactionList.id}`}>
+  //             <tr key={index}>
+  //               <td>{transactionList.transaction_date}</td>
+  //               <td>{transactionList.store}</td>
+  //               <td>{transactionList.original_transaction_amt}</td>
+  //             </tr>
+  //           </Link>
+  //         )
+  //       })}
+  //       </tbody>
+  //     </Table>
+  //   )
+  // }
+
+
+  // render
   return (
     <div>
       <h1>Transaction List Page</h1>
