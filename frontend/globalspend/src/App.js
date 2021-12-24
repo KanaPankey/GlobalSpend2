@@ -107,7 +107,7 @@ function App() {
         setStoreList(data)
       }
     }
-    setUserStore(2) // hard coding store value to keep developing
+    // setUserStore(2) // hard coding store value to keep developing
     getStores()
   }, [])  
 
@@ -151,11 +151,11 @@ function App() {
       }
     }
 
-    console.log(ClosestStoreID)
-    // if (distClosestStore < radius) {
-    //   setUserStore(ClosestStoreID)
-    // } 
-    setUserStore(1) // hard coding store value to keep developing
+    console.log("closest store id", ClosestStoreID)
+    if (distClosestStore < radius) {
+      setUserStore(ClosestStoreID)
+    } 
+    // setUserStore(1) // hard coding store value to keep developing
 
   }, [storeList])
   

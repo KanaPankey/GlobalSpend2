@@ -27,15 +27,15 @@ function AddEditStorePage() {
   // get store lat long
   useEffect(() => {
     const getStoreLocation = async() => {
-      console.log("ingetstore")
       const data = await GetStoreLocationAPI.fetchLatLongFromStore()
       if (data) {
-        let storeLatLong = data
-        console.log("data", data)
+        let storePosition = [parseFloat(data[0].lat), parseFloat(data[0].lon)]
+        // console.log("lat", storePosition)
+        // console.log("data", data)
       }
     }
     // getStoreLocation()  
-  }, [event.target.elements[0].value])
+  }, [])
 
 
   // changes depending on whether adding or editing

@@ -98,7 +98,7 @@ function HomePage(props) {
         </Form.Group>
         <Form.Group>
           <Form.Label>Store</Form.Label>
-          <Form.Control placeholder="store" defaultValue={props.userStore} />
+          <Form.Control placeholder="store" value={props.userStore} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Notes</Form.Label>
