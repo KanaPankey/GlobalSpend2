@@ -1,8 +1,41 @@
-// // react
-// import { useState, useEffect } from 'react'
+const api = 'pk.6d8f36ffb7c400d2fe02117015c63fe7';
+const SEARCH_STRING = 'Coop Madla';
+const countryCode = 'no'
 
-// // APIs
-// import BackendAPI from './BackendAPI'
+const BASE_URL = `https://eu1.locationiq.com/v1/search.php?key=${api}&countrycodes=${countryCode}&q=${SEARCH_STRING}&format=json`
+
+
+const tryCatchFetch = async (url, init = null) => {
+  try {
+    const response = await fetch(url, init)
+    if (response.ok) {
+      return await response.json()
+    }
+    else {
+      throw new Error(`Bad response: ${response.status} ${response.statusText}`)
+    }
+  }
+  catch (e) {
+    console.error(e)
+    return null
+  }
+}
+
+
+const fetchLatLongFromStore = async () => {
+  const url = BASE_URL
+  return await tryCatchFetch(url)
+}
+
+
+const exportItems = {
+  fetchLatLongFromStore
+}
+
+export default exportItems
+
+
+
 
 
 // function GetUserLocationAPI() {

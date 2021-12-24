@@ -30,10 +30,23 @@ import DeleteTransactionPage from './pages/DeleteTransactionPage';
 // api
 import ConverterAPI from './api/ConverterAPI'
 import BackendAPI from './api/BackendAPI'
-// import getLocation from "../api/GetPositionAPI";
+import GetStoreLocationAPI from './api/GetStoreLocationAPI'
 
 
 function App() {
+
+  // get store lat long
+  useEffect(() => {
+    const getStoreLocation = async() => {
+      const data = await GetStoreLocationAPI.fetchLatLongFromStore()
+      if (data) {
+        let storeLatLong = data
+        console.log("data", data)
+      }
+
+    }
+    // getStoreLocation()  
+  }, [])
 
   // states...home and spend rates are in relation to EUR
   const [homeCurrency, setHomeCurrency] = useState('USD') // future multi-currency functionality
@@ -45,15 +58,15 @@ function App() {
   // states...for userlocation and default store
   const [storeList, setStoreList] = useState([])
   const [userPosition, setUserPosition] = useState([])
-  const [userStore, setUserStore] = useState(-1)
+  const [userStore, setUserStore] = useState(null)
 
   // get user's current position
   if (window.navigator.geolocation) {
     const success = (position) => {
       const data = position
       setUserPosition([data.coords.latitude, data.coords.longitude])
-      // console.log(data.coords.latitude, "here", userLatitude)
-      // console.log(data.coords.longitude, userLongitude)
+      // console.log(data.coords.latitude)
+      // console.log(data.coords.longitude)
     }
   
     const error = (error) => {
@@ -75,7 +88,6 @@ function App() {
         let getSpendRate = data.rates.NOK
         setSpendRate(getSpendRate)
       }
-
       // getConversionRate()  
     }
   }, [])
@@ -95,62 +107,57 @@ function App() {
         setStoreList(data)
       }
     }
+    setUserStore(2) // hard coding store value to keep developing
     getStores()
   }, [])  
 
+
   // get lat and long from each store and compare to userlocation...sets user store
-  // useEffect(() => {
-  //   console.log("in storelist update", storeList)
+  useEffect(() => {
+    console.log("in storelist update", storeList)
 
-  //   const distanceList = []
-  //   for (let i = 0; i < storeList.length; i++) {
-  //     // pull in user latlong and store instance latlong
-  //     let userLat = userPosition[0]
-  //     let userLong = userPosition[1]
-  //     let storeLat = storeList[i].store_latitude
-  //     let storeLong = storeList[i].store_longitude
+    const distanceList = []
+    for (let i = 0; i < storeList.length; i++) {
+      // pull in user latlong and store instance latlong
+      let userLat = userPosition[0]
+      let userLong = userPosition[1]
+      let storeLat = storeList[i].store_latitude
+      let storeLong = storeList[i].store_longitude
 
-  //     // Haversine distance equation to find distance as crow flies between two latlongs
-  //     const R = 3958.8;  // Radius of the Earth in miles
-  //     let rUserLat = userLat * (Math.PI/180)  // Convert degrees to radians
-  //     let rStoreLat = storeLat * (Math.PI/180)  // Convert degrees to radians
-  //     let diffLat = rStoreLat - rUserLat  // Radian difference (latitudes)
-  //     let diffLong = storeLong - userLong  // Radian difference (longitudes)
+      // Haversine distance equation to find distance as crow flies between two latlongs
+      const R = 3958.8;  // Radius of the Earth in miles
+      let rUserLat = userLat * (Math.PI/180)  // Convert degrees to radians
+      let rStoreLat = storeLat * (Math.PI/180)  // Convert degrees to radians
+      let diffLat = rStoreLat - rUserLat  // Radian difference (latitudes)
+      let diffLong = storeLong - userLong  // Radian difference (longitudes)
 
-  //     let distance = 2 * R * Math.asin(Math.sqrt(Math.sin(diffLat/2) * Math.sin(diffLat/2) + Math.cos(rUserLat) * Math.cos(rStoreLat) * Math.sin(diffLong/2) * Math.sin(diffLong/2)))
+      let distance = 2 * R * Math.asin(Math.sqrt(Math.sin(diffLat/2) * Math.sin(diffLat/2) + Math.cos(rUserLat) * Math.cos(rStoreLat) * Math.sin(diffLong/2) * Math.sin(diffLong/2)))
 
-  //     // creates an array with store id and the distance from the user
-  //     distanceList.push([storeList[i].id, distance])
-  //   }
-  //   console.log(distanceList)
+      // creates an array with store id and the distance from the user
+      distanceList.push([storeList[i].id, distance])
+    }
+    console.log(distanceList)
 
-  //   // determine if there are any stores in a given radius and, if so, which is closest
-  //   let radius = 100
-  //   let distClosestStore = radius // any store must be less than 0.2 miles away from user location to count
-  //   let ClosestStoreID = null
+    // determine if there are any stores in a given radius and, if so, which is closest
+    let radius = 100
+    let distClosestStore = radius // any store must be less than 0.2 miles away from user location to count
+    let ClosestStoreID = null
 
-  //   // check if store is closer than previous ones
-  //   for (let i = 0; i < distanceList.length; i++) {
-  //     if (distanceList[i][1] < distClosestStore) {
-  //       distClosestStore = distanceList[i][1]
-  //       ClosestStoreID = distanceList[i][0]
-  //     }
-  //   }
+    // check if store is closer than previous ones
+    for (let i = 0; i < distanceList.length; i++) {
+      if (distanceList[i][1] < distClosestStore) {
+        distClosestStore = distanceList[i][1]
+        ClosestStoreID = distanceList[i][0]
+      }
+    }
 
-  //   console.log(ClosestStoreID)
-  //   if (distClosestStore < radius) {
-  //     setUserStore(ClosestStoreID)
-  //   } 
+    console.log(ClosestStoreID)
+    // if (distClosestStore < radius) {
+    //   setUserStore(ClosestStoreID)
+    // } 
+    setUserStore(1) // hard coding store value to keep developing
 
-
-  // }, [storeList])
-
-  // useEffect(() => {
-  //   console.log("userStore", userStore)
-  // }, [userStore])
-
-
-
+  }, [storeList])
   
 
   const renderNavbar = () => {
@@ -163,10 +170,10 @@ function App() {
               <Nav className="me-auto">
                 <Nav.Link href="/envelope/">Envelopes</Nav.Link>
                 <Nav.Link href="/store/">Stores</Nav.Link>
-                <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                <NavDropdown title="Add menu" id="basic-nav-dropdown">
                   <NavDropdown.Item href="/store/add/">Add Store</NavDropdown.Item>
                   <NavDropdown.Item href="/envelope/add">Add Envelope</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                  <NavDropdown.Item href="/transaction/add">Add Transaction</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                 </NavDropdown>
@@ -207,6 +214,7 @@ function App() {
 
 
         </Routes>
+
       </BrowserRouter>
     </div>
   );

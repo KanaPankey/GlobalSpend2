@@ -9,7 +9,6 @@ import BackendAPI from "../api/BackendAPI"
 // components
 
 function HomePage(props) {
-  const { userStore } = props
   // router props
   // const navigate = useNavigate()
   // const params = useParams()
@@ -71,6 +70,8 @@ function HomePage(props) {
     // }
   }
 
+
+
   // render
   return (
     <div>
@@ -97,7 +98,7 @@ function HomePage(props) {
         </Form.Group>
         <Form.Group>
           <Form.Label>Store</Form.Label>
-          <Form.Control placeholder="store" defaultValue={userStore} />
+          <Form.Control placeholder="store" defaultValue={props.userStore} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Notes</Form.Label>

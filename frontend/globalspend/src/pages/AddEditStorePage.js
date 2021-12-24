@@ -3,6 +3,9 @@ import { Form, Button } from "react-bootstrap"
 import BackendAPI from "../api/BackendAPI"
 import { useEffect, useState } from 'react'
 
+// api
+import GetStoreLocationAPI from '../api/GetStoreLocationAPI'
+
 function AddEditStorePage() {
   // router props
   const navigate = useNavigate()
@@ -20,6 +23,19 @@ function AddEditStorePage() {
 
     getStore()
   }, [] )
+
+  // get store lat long
+  useEffect(() => {
+    const getStoreLocation = async() => {
+      console.log("ingetstore")
+      const data = await GetStoreLocationAPI.fetchLatLongFromStore()
+      if (data) {
+        let storeLatLong = data
+        console.log("data", data)
+      }
+    }
+    // getStoreLocation()  
+  }, [event.target.elements[0].value])
 
 
   // changes depending on whether adding or editing
