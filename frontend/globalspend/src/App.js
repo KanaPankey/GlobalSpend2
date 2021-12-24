@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react'
 
 // css
+// import 'cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css'  //table formatter
+// import 'cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js'   // table formatter
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav, Navbar, NavDropdown, Container } from 'react-bootstrap';
@@ -31,6 +33,7 @@ import DeleteTransactionPage from './pages/DeleteTransactionPage';
 import ConverterAPI from './api/ConverterAPI'
 import BackendAPI from './api/BackendAPI'
 import GetStoreLocationAPI from './api/GetStoreLocationAPI'
+
 
 
 function App() {
@@ -210,9 +213,6 @@ function App() {
           <Route exact path="/transaction/add" element={<AddEditTransactionPage />} />
           <Route exact path="/transaction/:transactionID/edit" element={<AddEditTransactionPage />} />
           <Route exact path="/transaction/:transactionID/delete" element={<DeleteTransactionPage />} />
-
-
-
         </Routes>
 
       </BrowserRouter>

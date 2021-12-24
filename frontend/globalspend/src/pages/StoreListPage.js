@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+// table component
+import {Table} from 'react-bootstrap'
+
 // APIs
 import BackendAPI from '../api/BackendAPI'
 
@@ -21,21 +24,30 @@ function StoreListPage(props) {
   }, [])
 
   // render helpers
-  const renderStoreList = (storeLists) => {
-    return storeLists.map((storeList, index) => {
-      return (
-        // <li key={index+1}>
-        //   <h1>{storeList[index].store_name}</h1>
-        //   <Link to={`/store/${storeList.index}/`}>{ storeList.store_name }</Link>
-        // </li>
-        <tr key={index}>
-          <td>{storeList.id}</td>
-          <td><Link to={`/store/${storeList.id}/`}>{storeList.store_name}</Link></td>
-          <td>{storeList.envelope}</td>
-        </tr>
-      )
-    })
-    
+
+const renderStoreList = (storeLists) => {
+    return (
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th colSpan="2">Store Name</th>
+            <th>Envelope</th>
+          </tr>
+        </thead>
+        <tbody>
+        {storeLists.map((storeList, index) => {
+          return (
+            <tr key={index}>
+              <td>{storeList.id}</td>
+              <td colSpan="2"><Link to={`/store/${storeList.id}/`}>{storeList.store_name}</Link></td>
+              <td>{storeList.envelope}</td>
+            </tr>
+          )
+        })}
+        </tbody>
+      </Table>
+    )
   }
 
   return (
