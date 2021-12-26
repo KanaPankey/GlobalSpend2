@@ -3,7 +3,7 @@ import { Form, Button } from "react-bootstrap"
 import BackendAPI from "../api/BackendAPI"
 import { useEffect, useState } from 'react'
 
-function AddEditTransactionPage() {
+function EditTransactionPage() {
   // router props
   const navigate = useNavigate()
   const params = useParams()
@@ -13,18 +13,15 @@ function AddEditTransactionPage() {
 
   // effects
   useEffect (() => {
+    console.log("in edit transaction", params.transactionID)
     const getTransaction = async () => {
       const data = await BackendAPI.fetchTransactionByID(params.transactionID) 
+      console.log(data)
       setTransaction(data)
     }
 
     getTransaction()
   }, [] )
-
-
-  // changes depending on whether adding or editing
-  const editingTransaction = transaction
-  const action = editingTransaction ? "Edit" : "Add"
 
   // handlers
   const handleFormSubmit = async (event) => {
@@ -40,9 +37,7 @@ function AddEditTransactionPage() {
       notes: event.target.elements[6].value
     }
 
-    const data = editingTransaction 
-      ? await BackendAPI.updateTransaction(transactionObj, params.transactionID)
-      : await BackendAPI.addTransaction(transactionObj)
+    const data = await BackendAPI.updateTransaction(transactionObj, params.transactionID)
     if (data) {
       navigate(`/transaction/${data.id}`)
     }
@@ -51,47 +46,47 @@ function AddEditTransactionPage() {
   // render
   return (
     <div>
-      <h2>{action} Transaction Page</h2>
+      <h2>Edit Transaction Page</h2>
       <hr />
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>
           <Form.Label>Transaction Date</Form.Label>
-          <Form.Control placeholder="date" defaultValue={editingTransaction && editingTransaction.transaction_date} />
+          <Form.Control placeholder="date" value={transaction && transaction.transaction_date}/>
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Spent in local currency</Form.Label>
-          <Form.Control placeholder="amt in local" defaultValue={editingTransaction && editingTransaction.original_transaction_amt} />
+          <Form.Control placeholder="amt in local" value={transaction && transaction.original_transaction_amt}/>
         </Form.Group>
         <Form.Group>
           <Form.Label>Spent in home currency</Form.Label>
-          <Form.Control placeholder="amt in home" defaultValue={editingTransaction && editingTransaction.home_transaction_amt} />
+          <Form.Control placeholder="amt in home" value={transaction && transaction.home_transaction_amt}/>
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Debit or deposit</Form.Label>
-          <Form.Control placeholder="true or false" defaultValue={editingTransaction && editingTransaction.is_debit_transaction} />
+          <Form.Control placeholder="true or false" value={transaction && transaction.is_debit_transaction}/>
         </Form.Group>
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <Form.Control placeholder="envelope" defaultValue={editingTransaction && editingTransaction.envelope} />
+          <Form.Control placeholder="envelope" value={transaction && transaction.envelope} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Store</Form.Label>
-          <Form.Control placeholder="store" defaultValue={editingTransaction && editingTransaction.store} />
+          <Form.Control placeholder="store" value={transaction && transaction.store} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Notes</Form.Label>
-          <Form.Control placeholder="notes" defaultValue={editingTransaction && editingTransaction.notes} />
+          <Form.Control placeholder="notes" value={transaction && transaction.notes} />
         </Form.Group>
 
         <br />
         <Button variant="primary" type="submit">
-          {action} Transaction
+          Edit Transaction
         </Button>  
       </Form>  
     </div>
   )
 }
 
-export default AddEditTransactionPage;
+export default EditTransactionPage;
