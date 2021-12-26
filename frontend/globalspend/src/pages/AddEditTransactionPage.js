@@ -31,7 +31,7 @@ function AddEditTransactionPage() {
     event.preventDefault()
 
     const transactionObj = {
-      transaction_name: event.target.elements[0].value,
+      transaction_date: event.target.elements[0].value,
       original_transaction_amt: event.target.elements[1].value,
       home_transaction_amt: event.target.elements[2].value,
       is_debit_transaction: event.target.elements[3].value,
