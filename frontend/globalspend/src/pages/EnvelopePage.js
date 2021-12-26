@@ -58,21 +58,6 @@ function EnvelopePage(props) {
     )
   }
 
-  // const renderTransactionList = () => {
-  //   return transactionLists.map((transactionList, index) => {
-  //     return (
-  //       <Link to={`/transaction/${transactionList.id}`}>
-  //         <tr key={index}>
-  //           <td>{transactionList.transaction_date}</td>
-  //           <td>{transactionList.store}</td>
-  //           <td>{transactionList.original_transaction_amt}</td>
-  //         </tr>
-  //       </Link>
-
-  //     )
-  //   })
-  // }
-
   const renderTransactionList = () => {
     return (
       <Table striped bordered hover>
@@ -104,7 +89,6 @@ function EnvelopePage(props) {
 
   return (
     <div>
-      <h1>Envelope Page</h1>
       { renderEnvelope() }
       { renderTransactionList() }
       <Link to={`/envelope/${params.envelopeID}/edit`}><button>Edit Envelope</button></Link>

@@ -57,15 +57,13 @@ function TransactionListPage(props) {
         </thead>
         <tbody>
         {transactionLists.map((transactionList, index) => {
-          return (
-            
-              <tr key={index}>
-                <td>{transactionList.id}</td>
-                <td>{transactionList.transaction_date}</td>
-                <td>{transactionList.store}</td>
-                <td><Link to={`/transaction/${transactionList.id}`}>{transactionList.original_transaction_amt}</Link></td>
-              </tr>
-            
+          return (     
+            <tr key={index}>
+              <td>{transactionList.id}</td>
+              <td>{transactionList.transaction_date}</td>
+              <td>{transactionList.store}</td>
+              <td><Link to={`/transaction/${transactionList.id}`}>{transactionList.original_transaction_amt}</Link></td>
+            </tr>         
           )
         })}
         </tbody>

@@ -8,6 +8,9 @@ import {Table} from 'react-bootstrap'
 // APIs
 import BackendAPI from '../api/BackendAPI'
 
+// components
+import EnvelopeBar from '../components/EnvelopeBar'
+
 function EnvelopeListPage(props) {
   // states
   const [envelopeLists, setEnvelopeLists] = useState([])
@@ -27,41 +30,39 @@ function EnvelopeListPage(props) {
   // helper functions
 
 
-  // render helpers
-  const renderEnvelopeList = (envelopeLists) => {
+  // // render helpers
+  // const renderEnvelopeList = (envelopeLists) => {
     
-    return (
-      <Table bordered hover>
-        <thead>
-          <tr>
-            <th>Envelope Name</th>
-            <th>Envelope</th>
-            {/* <th>Amt Left</th> */}
-          </tr>
-        </thead>
-        <tbody>
-        {envelopeLists.map((envelopeList, index) => {
-          const progressBarFill = envelopeList.current_amt/envelopeList.fill_amt*100
-          console.log(envelopeList.current_amt, envelopeList.fill_amt, progressBarFill)
-          return (
-            <tr key={index} >
-              <td><Link to={`/envelope/${envelopeList.id}/`}>{envelopeList.envelope_name}</Link></td>
-              <td><ProgressBar now={ progressBarFill } /></td>
-              <td>{envelopeList.current_amt}/{envelopeList.fill_amt}</td>
-              {/* <td>{amt_}</td> */}
-            </tr>
-          )
-        })}
-        </tbody>
-      </Table>
-    )
-  }
+  //   return (
+  //     <Table bordered hover>
+  //       <thead>
+  //         <tr>
+  //           <th>Envelope Name</th>
+  //           <th>Envelope</th>
+  //         </tr>
+  //       </thead>
+  //       <tbody>
+  //       {envelopeLists.map((envelopeList, index) => {
+  //         const progressBarFill = envelopeList.current_amt/envelopeList.fill_amt*100
+  //         console.log(envelopeList.current_amt, envelopeList.fill_amt, progressBarFill)
+  //         return (
+  //           <tr key={index} >
+  //             <td><Link to={`/envelope/${envelopeList.id}/`}>{envelopeList.envelope_name}</Link></td>
+  //             <td><ProgressBar now={ progressBarFill } /></td>
+  //             <td>{envelopeList.current_amt}/{envelopeList.fill_amt}</td>
+  //           </tr>
+  //         )
+  //       })}
+  //       </tbody>
+  //     </Table>
+  //   )
+  // }
 
   // render
   return (
     <div>
-      <h1>EnvelopeList Page</h1>
-      { renderEnvelopeList(envelopeLists) }
+      <h1>Envelopes</h1>
+      <EnvelopeBar />
       <Link to={`/envelope/add`}><button>Add Envelope</button></Link>
     </div>
   )
