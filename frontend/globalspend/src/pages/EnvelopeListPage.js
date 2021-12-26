@@ -41,12 +41,13 @@ function EnvelopeListPage(props) {
         </thead>
         <tbody>
         {envelopeLists.map((envelopeList, index) => {
-          const progressBarFill = envelopeList.current_amt/envelopeList.fill_amt
+          const progressBarFill = envelopeList.current_amt/envelopeList.fill_amt*100
           console.log(envelopeList.current_amt, envelopeList.fill_amt, progressBarFill)
           return (
-            <tr key={index}>
+            <tr key={index} >
               <td><Link to={`/envelope/${envelopeList.id}/`}>{envelopeList.envelope_name}</Link></td>
               <td><ProgressBar now={ progressBarFill } /></td>
+              <td>{envelopeList.current_amt}/{envelopeList.fill_amt}</td>
               {/* <td>{amt_}</td> */}
             </tr>
           )
