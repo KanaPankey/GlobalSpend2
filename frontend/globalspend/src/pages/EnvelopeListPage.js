@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import ProgressBar from 'react-bootstrap/ProgressBar'
+
+// table component
+import {Table} from 'react-bootstrap'
 
 // APIs
 import BackendAPI from '../api/BackendAPI'
@@ -20,45 +24,37 @@ function EnvelopeListPage(props) {
     getEnvelopeLists()
   }, [])
 
+  // helper functions
+
+
   // render helpers
   const renderEnvelopeList = (envelopeLists) => {
-    return envelopeLists.map((envelopeList, index) => {
-      return (
-        <tr key={index}>
-          <td>{envelopeList.id}</td>
-          <td><Link to={`/envelope/${envelopeList.id}/`}>{envelopeList.envelope_name}</Link></td>
-          <td>{envelopeList.envelope}</td>
-        </tr>
-      )
-    })
+    
+    return (
+      <Table bordered hover>
+        <thead>
+          <tr>
+            <th>Envelope Name</th>
+            <th>Envelope</th>
+            {/* <th>Amt Left</th> */}
+          </tr>
+        </thead>
+        <tbody>
+        {envelopeLists.map((envelopeList, index) => {
+          const progressBarFill = envelopeList.current_amt/envelopeList.fill_amt
+          console.log(envelopeList.current_amt, envelopeList.fill_amt, progressBarFill)
+          return (
+            <tr key={index}>
+              <td><Link to={`/envelope/${envelopeList.id}/`}>{envelopeList.envelope_name}</Link></td>
+              <td><ProgressBar now={ progressBarFill } /></td>
+              {/* <td>{amt_}</td> */}
+            </tr>
+          )
+        })}
+        </tbody>
+      </Table>
+    )
   }
-
-
-  // const renderStoreList = (storeLists) => {
-  //   return (
-  //     <Table striped bordered hover>
-  //       <thead>
-  //         <tr>
-  //           <th>#</th>
-  //           <th colSpan="2">Envelope Name</th>
-  //           <th>Envelope</th>
-  //         </tr>
-  //       </thead>
-  //       <tbody>
-  //       {storeLists.map((storeList, index) => {
-  //         return (
-  //           <tr key={index}>
-  //             <td>{storeList.id}</td>
-  //             <td colSpan="2"><Link to={`/store/${storeList.id}/`}>{storeList.store_name}</Link></td>
-  //             <td>{storeList.envelope}</td>
-  //           </tr>
-  //         )
-  //       })}
-  //       </tbody>
-  //     </Table>
-  //   )
-  // }
-
 
   // render
   return (

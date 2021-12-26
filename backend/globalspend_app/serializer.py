@@ -12,6 +12,7 @@ class StoreSerializer(serializers.ModelSerializer):
         fields = ['id', 'store_name', 'store_longitude', 'store_latitude', 'amt_1', 'amt_2', 'amt_3', 'amt_4', 'envelope']
 
 class TransactionSerializer(serializers.ModelSerializer):
+    # store = serializers.SlugRelatedField(many=False, read_only=True, slug_field='store')
     class Meta:
         model = Transaction
         fields = ['id', 'transaction_date', 'original_transaction_amt', 'home_transaction_amt', 'is_debit_transaction', 'notes', 'envelope', 'store']

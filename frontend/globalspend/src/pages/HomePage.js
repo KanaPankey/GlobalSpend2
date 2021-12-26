@@ -10,8 +10,10 @@ import BackendAPI from "../api/BackendAPI"
 
 function HomePage(props) {
   // router props
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   // const params = useParams()
+
+  console.log ("in home page", props.userStore)
 
   // states
   // const [transaction, setTransaction] = useState(null)
@@ -34,10 +36,6 @@ function HomePage(props) {
 
   // console.log(GetUserLocationAPI.fetchUserStore())
 
-
-  // changes depending on whether adding or editing
-  // const editingTransaction = transaction
-  // const action = editingTransaction ? "Edit" : "Add"
 
   // handlers
   const handleFormSubmit = async (event) => {
@@ -62,15 +60,12 @@ function HomePage(props) {
     }
 
 
-    // const data = editingTransaction 
-    //   ? await BackendAPI.updateTransaction(transactionObj, params.transactionID)
-    //   : await BackendAPI.addTransaction(transactionObj)
-    // if (data) {
-    //   navigate(`/transaction/${data.id}`)
-    // }
+    const data = await BackendAPI.addTransaction(transactionObj)
+    if (data) {
+      navigate(`/transaction/${data.id}`)
+    }
+
   }
-
-
 
   // render
   return (
@@ -90,15 +85,15 @@ function HomePage(props) {
         <br />
         <Form.Group>
           <Form.Label>Debit or deposit</Form.Label>
-          <Form.Control placeholder="debit or deposit" />
+          <Form.Control placeholder="true or false" defaultValue={true}/>
         </Form.Group>
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <Form.Control placeholder="envelope"  />
+          <Form.Control placeholder="envelope" value={props.userStore.envelope} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Store</Form.Label>
-          <Form.Control placeholder="store" value={props.userStore} />
+          <Form.Control placeholder="store" value={props.userStore.store_name} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Notes</Form.Label>

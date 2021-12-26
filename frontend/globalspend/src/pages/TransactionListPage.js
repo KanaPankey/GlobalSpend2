@@ -26,51 +26,52 @@ function TransactionListPage(props) {
 
 
   // render helpers
-  const renderTransactionList = () => {
-    return transactionLists.map((transactionList, index) => {
-      return (
-        <div>
-          <Link to={`/transaction/${transactionList.id}`}>
-            <tr key={index}>
-              <td>{transactionList.transaction_date}</td>
-              <td>{transactionList.store}</td>
-              <td>{transactionList.original_transaction_amt}</td>
-            </tr>
-          </Link>
-        </div>
-      )
-    })
-  }
-
-
-
-  // const renderStoreList = (storeLists) => {
-  //   return (
-  //     <Table striped bordered hover>
-  //       <thead>
-  //         <tr>
-  //           <th>#</th>
-  //           <th>Date</th>
-  //           <th>Store</th>
-  //           <th>Local Amt</th>
-  //         </tr>
-  //       </thead>
-  //       <tbody>
-  //       {storeLists.map((storeList, index) => {
-  //         return (
-  //           <Link to={`/transaction/${transactionList.id}`}>
-  //             <tr key={index}>
-  //               <td>{transactionList.transaction_date}</td>
-  //               <td>{transactionList.store}</td>
-  //               <td>{transactionList.original_transaction_amt}</td>
-  //             </tr>
-  //           </Link>
-  //         )
-  //       })}
-  //       </tbody>
-  //     </Table>
-  //   )
+  // const renderTransactionList = () => {
+  //   return transactionLists.map((transactionList, index) => {
+  //     return (
+  //       <div>
+  //         <Link to={`/transaction/${transactionList.id}`}>
+  //           <tr key={index}>
+  //             <td>{transactionList.transaction_date}</td>
+  //             <td>{transactionList.store}</td>
+  //             <td>{transactionList.original_transaction_amt}</td>
+  //           </tr>
+  //         </Link>
+  //       </div>
+  //     )
+  //   })
   // }
+
+
+
+  const renderTransactionList = () => {
+    return (
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Store</th>
+            <th>Local Amt</th>
+          </tr>
+        </thead>
+        <tbody>
+        {transactionLists.map((transactionList, index) => {
+          return (
+            
+              <tr key={index}>
+                <td>{transactionList.id}</td>
+                <td>{transactionList.transaction_date}</td>
+                <td>{transactionList.store}</td>
+                <td><Link to={`/transaction/${transactionList.id}`}>{transactionList.original_transaction_amt}</Link></td>
+              </tr>
+            
+          )
+        })}
+        </tbody>
+      </Table>
+    )
+  }
 
 
   // render
