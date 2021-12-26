@@ -9,7 +9,7 @@ import {Table} from 'react-bootstrap'
 import BackendAPI from '../api/BackendAPI'
 
 // components
-import EnvelopeBar from '../components/EnvelopeBar'
+import EnvelopeBarList from '../components/EnvelopeBarList'
 
 function EnvelopeListPage(props) {
   // states
@@ -62,7 +62,7 @@ function EnvelopeListPage(props) {
   return (
     <div>
       <h1>Envelopes</h1>
-      <EnvelopeBar />
+      <EnvelopeBarList />
       <Link to={`/envelope/add`}><button>Add Envelope</button></Link>
     </div>
   )

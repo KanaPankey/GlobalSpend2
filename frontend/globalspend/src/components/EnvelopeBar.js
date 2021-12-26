@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 
 // table component
@@ -9,47 +9,44 @@ import {Table} from 'react-bootstrap'
 import BackendAPI from '../api/BackendAPI'
 
 function EnvelopeBar(props) {
+  const params = useParams()
+
   // states
-  const [envelopeLists, setEnvelopeLists] = useState([])
+  const [envelope, setEnvelope] = useState([])
 
   // effects
   useEffect(() => {
-    const getEnvelopeLists = async() => {
-      const data = await BackendAPI.fetchEnvelopes()
+    const getEnvelope = async() => {
+      const data = await BackendAPI.fetchEnvelopeByID(params.envelopeID)
       if (data) {
-        setEnvelopeLists(data)
+        setEnvelope(data)
       }
     }
 
-    getEnvelopeLists()
+    getEnvelope()
   }, [])
 
   // render helpers
-  const renderEnvelopeList = (envelopeLists) => {
+  const renderEnvelope = (envelope) => {
+    const progressBarFill = envelope.current_amt/envelope.fill_amt*100
     return (
       <Table>
         <thead>
           <tr>
-            <th>Envelope</th>
             <th></th>
             <th></th>
-            <th>Amt spent</th>
+            <th></th>
+            <th></th>
             <th></th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-        {envelopeLists.map((envelopeList, index) => {
-          const progressBarFill = envelopeList.current_amt/envelopeList.fill_amt*100
-          console.log(envelopeList.current_amt, envelopeList.fill_amt, progressBarFill)
-          return (
-            <tr key={index} >
-              <td><Link to={`/envelope/${envelopeList.id}/`}>{envelopeList.envelope_name}</Link></td>
-              <td colSpan="4"><ProgressBar now={ progressBarFill } /></td>
-              <td>{Math.round(envelopeList.current_amt)}/{Math.round(envelopeList.fill_amt)}</td>
+            <tr>
+              <td><Link to={`/envelope/${envelope.id}/`}>{envelope.envelope_name}</Link></td>
+              <td colSpan={4}><ProgressBar now={ progressBarFill } /></td>
+              <td>{Math.round(envelope.current_amt)}/{Math.round(envelope.fill_amt)}</td>
             </tr>
-          )
-        })}
         </tbody>
       </Table>
     )
@@ -59,7 +56,8 @@ function EnvelopeBar(props) {
   // render
   return (
     <div>
-      { renderEnvelopeList(envelopeLists) }
+      <h1>{envelope.envelope_name}</h1>
+      { renderEnvelope(envelope) }
     </div>
   )
 }
