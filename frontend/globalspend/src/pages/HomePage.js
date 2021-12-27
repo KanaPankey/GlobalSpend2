@@ -18,6 +18,7 @@ function HomePage(props) {
   // states
   // const [transaction, setTransaction] = useState(null)
   // const [userStore, setUserStore] = useState(null)
+  const [ spentInHomeCurrency, setSpentInHomeCurrency ] = useState(null)
 
   
 
@@ -37,6 +38,13 @@ function HomePage(props) {
   // console.log(GetUserLocationAPI.fetchUserStore())
 
 
+  // calculates the amount spent in the home currency
+  const calcSpentInHomeCurrency = (event) => {
+    let spentInHomeCurrency = Math.round(event.target.value * props.rate, 2)
+    setSpentInHomeCurrency(spentInHomeCurrency)
+    // console.log("spent in home currency", spentInHomeCurrency)
+  }
+
   // handlers
   const handleFormSubmit = async (event) => {
     event.preventDefault()
@@ -49,11 +57,11 @@ function HomePage(props) {
     const transactionObj = {
       transaction_date: today,
       original_transaction_amt: event.target.elements[0].value,
-      home_transaction_amt: event.target.elements[1].value,
-      is_debit_transaction: event.target.elements[2].value,
-      envelope: event.target.elements[3].value,
-      store: event.target.elements[4].value,
-      notes: event.target.elements[5].value
+      home_transaction_amt: spentInHomeCurrency,
+      is_debit_transaction: event.target.elements[1].value,
+      envelope: event.target.elements[2].value,
+      store: event.target.elements[3].value,
+      notes: event.target.elements[4].value
     }
 
 
@@ -73,16 +81,12 @@ function HomePage(props) {
         <br />
         <Form.Group>
           <Form.Label>Spent in local currency</Form.Label>
-          <Form.Control placeholder="amt in local"  />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Spent in home currency</Form.Label>
-          <Form.Control placeholder="amt in home" />
+          <Form.Control placeholder="amt in local" onChange={ calcSpentInHomeCurrency } />
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Debit or deposit</Form.Label>
-          <Form.Control placeholder="true or false" />
+          <Form.Control placeholder="true or false" defaultValue={true} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
@@ -90,7 +94,7 @@ function HomePage(props) {
         </Form.Group>
         <Form.Group>
           <Form.Label>Store</Form.Label>
-          <Form.Control placeholder="store" />
+          <Form.Control placeholder="store" defaultValue={props.userStore}/>
         </Form.Group>
         <Form.Group>
           <Form.Label>Notes</Form.Label>

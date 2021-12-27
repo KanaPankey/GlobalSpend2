@@ -26,8 +26,8 @@ function AddEditStorePage() {
         } else {
             setStoreList(data)
         }
-    console.log("store position", storePosition)
-    console.log("data", data)
+    // console.log("store position", storePosition)
+    // console.log("data", data)
     }
 }
 

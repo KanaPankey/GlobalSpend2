@@ -48,7 +48,7 @@ function App() {
   const [spendCurrency, setSpendCurrency] = useState('NOK') // future multi-currency functionality
   const [homeRate, setHomeRate] = useState(null)  // hard-coded to prevent API calls
   const [spendRate, setSpendRate] = useState(null)  // hard-coded to prevent API calls
-  const [relativeRate, setRelativeRate] = useState(null)
+  const [relativeRate, setRelativeRate] = useState(.113)
   
   // states...for userlocation and default store
   const [storeList, setStoreList] = useState([])
@@ -203,7 +203,7 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<HomePage userStore={ userStore } />} />
+          <Route exact path="/" element={<HomePage userStore={ userStore } rate={relativeRate}/>} />
           <Route exact path="/converter/" element={<ConverterPage rate={relativeRate} />} />
           <Route exact path="/store/" element={<StoreListPage />} />
           <Route exact path="/store/:storeID" element={<StorePage />} />
