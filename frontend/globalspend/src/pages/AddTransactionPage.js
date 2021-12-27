@@ -8,55 +8,29 @@ import BackendAPI from "../api/BackendAPI"
 
 // components
 
-function HomePage(props) {
+function AddTransactionPage(props) {
   // router props
   const navigate = useNavigate()
   // const params = useParams()
 
-  console.log ("in home page", props.userStore)
-
-  // states
-  // const [transaction, setTransaction] = useState(null)
-  // const [userStore, setUserStore] = useState(null)
-
-  
-
-  // effects
-  // useEffect (() => {
-  //   // **** can refactor to get rid of async...just need to setUserStore
-  //   const getUserStore = async() => {
-  //     const userStore = GetUserLocationAPI.fetchUserStore()
-  //     if (userStore) {
-  //       setUserStore(userStore)
-  //     }
-  //   }
-    
-  //   getUserStore()
-  // }, [] )
-
-  // console.log(GetUserLocationAPI.fetchUserStore())
-
+  console.log ("in add transaction page", props.relativeRate)
 
   // handlers
   const handleFormSubmit = async (event) => {
     event.preventDefault()
+    console.log("props", props.currencyRate)
 
     // get date to populate transaction
     let today = new Date();
-    // let dd = String(today.getDate()).padStart(2,'0');
-    // let mm = String(today.getMonth() + 1).padStart(2, '0')
-    // let yyyy = today.getFullYear();
-    // let currentDate = mm +'/' + dd + '/' + yyyy
-
 
     const transactionObj = {
       transaction_date: today,
       original_transaction_amt: event.target.elements[0].value,
-      home_transaction_amt: event.target.elements[1].value,
-      is_debit_transaction: event.target.elements[2].value,
-      envelope: event.target.elements[3].value,
-      store: event.target.elements[4].value,
-      notes: event.target.elements[5].value
+      home_transaction_amt: event.target.elements[0].value * props.currencyRate,
+      is_debit_transaction: event.target.elements[1].value,
+      envelope: event.target.elements[2].value,
+      store: event.target.elements[3].value,
+      notes: event.target.elements[4].value
     }
 
 
@@ -70,17 +44,12 @@ function HomePage(props) {
   // render
   return (
     <div>
-      <h2>Home Page</h2>
       <hr />
       <Form onSubmit={handleFormSubmit}>
         <br />
         <Form.Group>
           <Form.Label>Spent in local currency</Form.Label>
           <Form.Control placeholder="amt in local"  />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Spent in home currency</Form.Label>
-          <Form.Control placeholder="amt in home" />
         </Form.Group>
         <br />
         <Form.Group>
@@ -109,4 +78,4 @@ function HomePage(props) {
   )
 }
 
-export default HomePage;
+export default AddTransactionPage;

@@ -43,10 +43,7 @@ function HomePage(props) {
 
     // get date to populate transaction
     let today = new Date();
-    // let dd = String(today.getDate()).padStart(2,'0');
-    // let mm = String(today.getMonth() + 1).padStart(2, '0')
-    // let yyyy = today.getFullYear();
-    // let currentDate = mm +'/' + dd + '/' + yyyy
+
 
 
     const transactionObj = {
@@ -85,15 +82,15 @@ function HomePage(props) {
         <br />
         <Form.Group>
           <Form.Label>Debit or deposit</Form.Label>
-          <Form.Control placeholder="true or false" defaultValue={true}/>
+          <Form.Control placeholder="true or false" />
         </Form.Group>
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <Form.Control placeholder="envelope" value={props.userStore.envelope} />
+          <Form.Control placeholder="envelope" />
         </Form.Group>
         <Form.Group>
           <Form.Label>Store</Form.Label>
-          <Form.Control placeholder="store" value={props.userStore.store_name} />
+          <Form.Control placeholder="store" />
         </Form.Group>
         <Form.Group>
           <Form.Label>Notes</Form.Label>
