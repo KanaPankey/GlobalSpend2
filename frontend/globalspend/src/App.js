@@ -29,7 +29,6 @@ import AddEditEnvelopePage from './pages/AddEditEnvelopePage';
 import DeleteEnvelopePage from './pages/DeleteEnvelopePage';
 import TransactionListPage from './pages/TransactionListPage';
 import TransactionPage from './pages/TransactionPage';
-import AddTransactionPage from './pages/AddTransactionPage';
 import EditTransactionPage from './pages/EditTransactionPage';
 import DeleteTransactionPage from './pages/DeleteTransactionPage';
 
@@ -183,7 +182,7 @@ function App() {
                 <NavDropdown title="Actions" id="basic-nav-dropdown">
                   <NavDropdown.Item href="/store/add/">Add Store</NavDropdown.Item>
                   <NavDropdown.Item href="/envelope/add">Add Envelope</NavDropdown.Item>
-                  <NavDropdown.Item href="/transaction/add">Add Transaction</NavDropdown.Item>
+                  <NavDropdown.Item href="/">Add Transaction</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/converter/">Currency Converter</NavDropdown.Item>
                 </NavDropdown>
@@ -217,7 +216,6 @@ function App() {
           <Route exact path="/envelope/:envelopeID/delete" element={<DeleteEnvelopePage />} />
           <Route exact path="/transaction/" element={<TransactionListPage />} />
           <Route exact path="/transaction/:transactionID" element={<TransactionPage />} />
-          <Route exact path="/transaction/add" element={<AddTransactionPage currencyRate={ relativeRate }/>} />
           <Route exact path="/transaction/:transactionID/edit" element={<EditTransactionPage />} />
           <Route exact path="/transaction/:transactionID/delete" element={<DeleteTransactionPage />} />
         </Routes>
