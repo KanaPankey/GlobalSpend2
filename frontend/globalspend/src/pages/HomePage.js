@@ -19,23 +19,6 @@ function HomePage(props) {
   const [ spentInHomeCurrency, setSpentInHomeCurrency ] = useState(null)
   const [ spendAmt, setSpendAmt ] = useState(null)
 
-  
-
-  // effects
-  // useEffect (() => {
-  //   // **** can refactor to get rid of async...just need to setUserStore
-  //   const getUserStore = async() => {
-  //     const userStore = GetUserLocationAPI.fetchUserStore()
-  //     if (userStore) {
-  //       setUserStore(userStore)
-  //     }
-  //   }
-    
-  //   getUserStore()
-  // }, [] )
-
-  // console.log(GetUserLocationAPI.fetchUserStore())
-
 
   // calculates the amount spent in the home currency
   const calcSpentInHomeCurrency = (event) => {
@@ -78,6 +61,7 @@ function HomePage(props) {
     setSpendAmt(spendAmt)
   }
 
+  // helpers for TeypicalAmtTitles render function
   let amt1 = props.userStore && props.userStore.amt_1
   let amt2 = props.userStore && props.userStore.amt_2
   let amt3 = props.userStore && props.userStore.amt_3
