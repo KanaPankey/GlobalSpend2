@@ -16,17 +16,7 @@ function HomePage(props) {
   console.log ("in home page", props.userStore)
 
   // states
-  const [ spentInHomeCurrency, setSpentInHomeCurrency ] = useState(null)
   const [ spendAmt, setSpendAmt ] = useState(null)
-
-
-  // calculates the amount spent in the home currency
-  const calcSpentInHomeCurrency = (event) => {
-    console.log(event.target.value, props.rate)
-    let spentInHomeCurrency = event.target.value * props.rate
-    setSpentInHomeCurrency(spentInHomeCurrency)
-    console.log("spent in home currency", spentInHomeCurrency)
-  }
 
   // handlers
   const handleFormSubmit = async (event) => {
@@ -36,7 +26,10 @@ function HomePage(props) {
     let today = new Date();
     
     // set amount spent
+    let spentInHomeCurrency = event.target.elements[0].value * props.rate
     let homeAmt = parseFloat(spentInHomeCurrency).toFixed(2)
+
+    // let envelopeID = parseInt(event.target.elements[2].value)
 
     const transactionObj = {
       transaction_date: today,
@@ -48,16 +41,21 @@ function HomePage(props) {
       notes: event.target.elements[4].value
     }
 
-
+    // create transaction record
     const data = await BackendAPI.addTransaction(transactionObj)
     if (data) {
       navigate(`/transaction/${data.id}`)
     }
+
+    // change current amt for the envelope of transaction accounting for debit/deposit
+    // const data = await BackendAPI.fetchEnvelopeByID(event.target.elements[2].value)
+
   }
 
   const setSpendAmount = (event) => {
-    let spendAmt = event.target.__reactProps$g0mhz7l8lxs.children
-    console.log("clicked", spendAmt)
+    // console.log("clicked", event)
+    let spendAmt = event.target.firstChild.data
+    // console.log("spendAmt", spendAmt)
     setSpendAmt(spendAmt)
   }
 
@@ -101,7 +99,7 @@ function HomePage(props) {
         <br />
         <Form.Group>
           <Form.Label>Spent in local currency</Form.Label>
-          <Form.Control placeholder="amt in local" onChange={ calcSpentInHomeCurrency } value={spendAmt}/>
+          <Form.Control placeholder="amt in local" value={spendAmt}/>
         </Form.Group>
         <br />
         <Form.Group>
