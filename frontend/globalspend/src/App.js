@@ -20,7 +20,8 @@ import HomePage from './pages/HomePage';
 import ConverterPage from './pages/ConverterPage';
 import StoreListPage from './pages/StoreListPage';
 import StorePage from './pages/StorePage';
-import AddEditStorePage from './pages/EditStorePage';
+import AddStorePage from './pages/AddStorePage';
+import EditStorePage from './pages/EditStorePage';
 import DeleteStorePage from './pages/DeleteStorePage';
 import EnvelopeListPage from './pages/EnvelopeListPage';
 import EnvelopePage from './pages/EnvelopePage';
@@ -206,8 +207,8 @@ function App() {
           <Route exact path="/converter/" element={<ConverterPage rate={relativeRate} />} />
           <Route exact path="/store/" element={<StoreListPage />} />
           <Route exact path="/store/:storeID" element={<StorePage />} />
-          <Route exact path="/store/add" element={<AddEditStorePage />} />
-          <Route exact path="/store/:storeID/edit" element={<AddEditStorePage />} />
+          <Route exact path="/store/add" element={<AddStorePage />} />
+          <Route exact path="/store/:storeID/edit" element={<EditStorePage />} />
           <Route exact path="/store/:storeID/delete" element={<DeleteStorePage />} />
           <Route exact path="/envelope/" element={<EnvelopeListPage />} />
           <Route exact path="/envelope/:envelopeID" element={<EnvelopePage />} />
