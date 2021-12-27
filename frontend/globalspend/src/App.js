@@ -20,7 +20,7 @@ import HomePage from './pages/HomePage';
 import ConverterPage from './pages/ConverterPage';
 import StoreListPage from './pages/StoreListPage';
 import StorePage from './pages/StorePage';
-import AddEditStorePage from './pages/AddEditStorePage';
+import AddEditStorePage from './pages/EditStorePage';
 import DeleteStorePage from './pages/DeleteStorePage';
 import EnvelopeListPage from './pages/EnvelopeListPage';
 import EnvelopePage from './pages/EnvelopePage';
@@ -57,7 +57,7 @@ function App() {
   // get store lat long
   useEffect(() => {
     const getStoreLocation = async() => {
-      const data = await GetStoreLocationAPI.fetchLatLongFromStore()
+      const data = await GetStoreLocationAPI.fetchLatLongFromStore("Coop Madla")
       if (data) {
         let storeLatLong = data
         console.log("data", data)
@@ -105,7 +105,6 @@ function App() {
   useEffect(() => {
     let getRelativeRate = homeRate/spendRate
     setRelativeRate(getRelativeRate)
-    console.log("relative rate", getRelativeRate)
   }, [spendRate, homeRate])
 
 
@@ -124,7 +123,7 @@ function App() {
 
   // get lat and long from each store and compare to userlocation...sets user store
   useEffect(() => {
-    console.log("in storelist update", storeList)
+    // console.log("in storelist update", storeList)
 
     const distanceList = []
     for (let i = 0; i < storeList.length; i++) {

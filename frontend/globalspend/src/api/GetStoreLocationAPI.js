@@ -1,8 +1,8 @@
 const api = 'pk.6d8f36ffb7c400d2fe02117015c63fe7';
-const SEARCH_STRING = 'Coop Madla';
+// const SEARCH_STRING = 'Kiwi';
 const countryCode = 'no'
 
-const BASE_URL = `https://eu1.locationiq.com/v1/search.php?key=${api}&countrycodes=${countryCode}&q=${SEARCH_STRING}&format=json`
+const BASE_URL = `https://eu1.locationiq.com/v1/search.php?key=${api}&countrycodes=${countryCode}&format=json&q=$`
 
 
 const tryCatchFetch = async (url, init = null) => {
@@ -22,8 +22,8 @@ const tryCatchFetch = async (url, init = null) => {
 }
 
 
-const fetchLatLongFromStore = async () => {
-  const url = BASE_URL
+const fetchLatLongFromStore = async (storeName) => {
+  const url = BASE_URL + storeName
   return await tryCatchFetch(url)
 }
 
