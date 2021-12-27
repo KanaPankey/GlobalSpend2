@@ -31,19 +31,7 @@ function AddEditStorePage() {
     }
 }
 
-
-// const displayStores = (storeList) => {
-//     return (
-//         <select id="mySelect" onchange="myFunction()">  
-//             {storeList.map((storeList, index) => {
-//             return (     
-//                 <option value="{storeList.display_name}">{storeList.display_name}</option>
-//             )
-//             })}
-//         </select>
-//     )
-// }
-
+  // reads the value from th drop down menu and sets the store latlong
   const selectStore = () => {
       let storeIndex = document.getElementById('store').value;
       let store = storeList[storeIndex]
@@ -52,6 +40,7 @@ function AddEditStorePage() {
       setStorePosition(storePosition)
   }
 
+  // populates store option dropdown menu if more than 1 store returns from api
   const DisplayStores = () => {
     return (
         <select id="store" onChange={selectStore}>  
@@ -64,8 +53,8 @@ function AddEditStorePage() {
     )
   }
 
+  // populates store option drop down menu if multiple store ptions
   useEffect(() => {
-    console.log("storeList", storeList)
     DisplayStores()
   }, [storeList])
 
