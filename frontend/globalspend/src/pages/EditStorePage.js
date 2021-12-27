@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 // api
 import GetStoreLocationAPI from '../api/GetStoreLocationAPI'
 
-function AddEditStorePage() {
+function EditStorePage() {
   // router props
   const navigate = useNavigate()
   const params = useParams()
@@ -24,24 +24,6 @@ function AddEditStorePage() {
     getStore()
   }, [] )
 
-  // get store lat long
-  useEffect(() => {
-    const getStoreLocation = async() => {
-      const data = await GetStoreLocationAPI.fetchLatLongFromStore()
-      if (data) {
-        let storePosition = [parseFloat(data[0].lat), parseFloat(data[0].lon)]
-        // console.log("lat", storePosition)
-        // console.log("data", data)
-      }
-    }
-    // getStoreLocation()  
-  }, [])
-
-
-  // changes depending on whether adding or editing
-  const editingStore = store
-  const action = editingStore ? "Edit" : "Add"
-
   // handlers
   const handleFormSubmit = async (event) => {
     event.preventDefault()
@@ -57,9 +39,7 @@ function AddEditStorePage() {
       envelope: [event.target.elements[1].value]
     }
 
-    const data = editingStore 
-      ? await BackendAPI.updateStore(storeObj, params.storeID)
-      : await BackendAPI.addStore(storeObj)
+    const data = await BackendAPI.updateStore(storeObj, params.storeID)
     if (data) {
       navigate(`/store/${data.id}`)
     }
@@ -68,51 +48,51 @@ function AddEditStorePage() {
   // render
   return (
     <div>
-      <h2>{action} Store Page</h2>
+      <h2>Edit Store Page</h2>
       <hr />
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>
           <Form.Label>Name</Form.Label>
-          <Form.Control placeholder="name" defaultValue={editingStore && editingStore.store_name} />
+          <Form.Control placeholder="name" defaultValue={store && store.store_name} />
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <Form.Control placeholder="envelope" defaultValue={editingStore && editingStore.envelope} />
+          <Form.Control placeholder="envelope" defaultValue={store && store.envelope} />
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Location: Latitude</Form.Label>
-          <Form.Control placeholder="latitude" defaultValue={editingStore && editingStore.store_latitude} />
+          <Form.Control placeholder="latitude" defaultValue={store && store.store_latitude} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Location: Longitude</Form.Label>
-          <Form.Control placeholder="longitude" defaultValue={editingStore && editingStore.store_longitude} />
+          <Form.Control placeholder="longitude" defaultValue={store && store.store_longitude} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Typical Amount 1</Form.Label>
-          <Form.Control placeholder="amt_1" defaultValue={editingStore && editingStore.amt_1} />
+          <Form.Control placeholder="amt_1" defaultValue={store && store.amt_1} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Typical Amount 2</Form.Label>
-          <Form.Control placeholder="amt_2" defaultValue={editingStore && editingStore.amt_2} />
+          <Form.Control placeholder="amt_2" defaultValue={store && store.amt_2} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Typical Amount 3</Form.Label>
-          <Form.Control placeholder="amt_3" defaultValue={editingStore && editingStore.amt_3} />
+          <Form.Control placeholder="amt_3" defaultValue={store && store.amt_3} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Typical Amount 4</Form.Label>
-          <Form.Control placeholder="amt_4" defaultValue={editingStore && editingStore.amt_4} />
+          <Form.Control placeholder="amt_4" defaultValue={store && store.amt_4} />
         </Form.Group>
 
         <br />
         <Button variant="primary" type="submit">
-          {action} Store
+          Edit Store
         </Button>  
       </Form>  
     </div>
   )
 }
 
-export default AddEditStorePage;
+export default EditStorePage;
