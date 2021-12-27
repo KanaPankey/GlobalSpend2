@@ -13,18 +13,61 @@ function AddEditStorePage() {
 
   // states
   const [store, setStore] = useState(null)
+  const [storeList, setStoreList] = useState([])
   const [storePosition, setStorePosition] = useState([])
 
   // get store lat long
   const getStoreLocation = async(event) => {
     const data = await GetStoreLocationAPI.fetchLatLongFromStore(event.target.value)
     if (data) {
-    let storePosition = [parseFloat(data[0].lat), parseFloat(data[0].lon)]
-    setStorePosition(storePosition)
+        if (data.length == 1) {
+            let storePosition = [parseFloat(data[0].lat), parseFloat(data[0].lon)]
+            setStorePosition(storePosition)
+        } else {
+            setStoreList(data)
+        }
     console.log("store position", storePosition)
     console.log("data", data)
     }
 }
+
+
+// const displayStores = (storeList) => {
+//     return (
+//         <select id="mySelect" onchange="myFunction()">  
+//             {storeList.map((storeList, index) => {
+//             return (     
+//                 <option value="{storeList.display_name}">{storeList.display_name}</option>
+//             )
+//             })}
+//         </select>
+//     )
+// }
+
+  const selectStore = () => {
+      let storeIndex = document.getElementById('store').value;
+      let store = storeList[storeIndex]
+      console.log("store", store)
+      let storePosition = [parseFloat(store.lat), parseFloat(store.lon)]
+      setStorePosition(storePosition)
+  }
+
+  const DisplayStores = () => {
+    return (
+        <select id="store" onChange={selectStore}>  
+            {storeList.map((store, index) => {
+            return (     
+                <option value={index}>{store.display_name}</option>
+            )
+            })}
+        </select>
+    )
+  }
+
+  useEffect(() => {
+    console.log("storeList", storeList)
+    DisplayStores()
+  }, [storeList])
 
   // handlers
   const handleFormSubmit = async (event) => {
@@ -48,10 +91,11 @@ function AddEditStorePage() {
   }
 
   // render
-  return (
+  return ( 
     <div>
       <h2>Add Store Page</h2>
       <hr />
+      <DisplayStores />
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>
           <Form.Label>Name</Form.Label>
