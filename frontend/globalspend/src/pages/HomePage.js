@@ -17,6 +17,7 @@ function HomePage(props) {
 
   // states
   const [ spentInHomeCurrency, setSpentInHomeCurrency ] = useState(null)
+  const [ spendAmt, setSpendAmt ] = useState(null)
 
   
 
@@ -71,6 +72,12 @@ function HomePage(props) {
     }
   }
 
+  const setSpendAmount = (event) => {
+    let spendAmt = event.target.__reactProps$g0mhz7l8lxs.children
+    console.log("clicked", spendAmt)
+    setSpendAmt(spendAmt)
+  }
+
   let amt1 = props.userStore && props.userStore.amt_1
   let amt2 = props.userStore && props.userStore.amt_2
   let amt3 = props.userStore && props.userStore.amt_3
@@ -82,16 +89,16 @@ function HomePage(props) {
     if (amt1) {
       return(
         <ButtonToolbar className="justify-content-between" aria-label="Toolbar with Button groups">
-          <ButtonGroup className="me-2" size="lg" aria-label="First group">
+          <ButtonGroup onClick={ setSpendAmount } size="lg" aria-label="First group">
             <Button variant="secondary">{amt1}</Button>{' '}
           </ButtonGroup>
-          <ButtonGroup className="me-2" size="lg" aria-label="First group">
+          <ButtonGroup onClick={ setSpendAmount } size="lg" aria-label="First group">
             <Button variant="secondary">{amt2}</Button>{' '}
           </ButtonGroup>
-          <ButtonGroup className="me-2" size="lg" aria-label="First group">
+          <ButtonGroup onClick={ setSpendAmount } size="lg" aria-label="First group">
             <Button variant="secondary">{amt3}</Button>{' '}
           </ButtonGroup>
-          <ButtonGroup className="me-2" size="lg" aria-label="First group">
+          <ButtonGroup onClick={ setSpendAmount } size="lg" aria-label="First group">
             <Button variant="secondary">{amt4}</Button>{' '}
           </ButtonGroup>
         </ButtonToolbar>
@@ -110,7 +117,7 @@ function HomePage(props) {
         <br />
         <Form.Group>
           <Form.Label>Spent in local currency</Form.Label>
-          <Form.Control placeholder="amt in local" onChange={ calcSpentInHomeCurrency } />
+          <Form.Control placeholder="amt in local" onChange={ calcSpentInHomeCurrency } value={spendAmt}/>
         </Form.Group>
         <br />
         <Form.Group>
