@@ -1,6 +1,6 @@
 // react
 import { useNavigate, useParams } from "react-router-dom"
-import { Form, Button } from "react-bootstrap"
+import { Form, Button, ButtonToolbar, ButtonGroup, InputGroup, FormControl } from "react-bootstrap"
 import { useEffect, useState } from 'react'
 
 // API
@@ -16,8 +16,6 @@ function HomePage(props) {
   console.log ("in home page", props.userStore)
 
   // states
-  // const [transaction, setTransaction] = useState(null)
-  // const [userStore, setUserStore] = useState(null)
   const [ spentInHomeCurrency, setSpentInHomeCurrency ] = useState(null)
 
   
@@ -71,13 +69,42 @@ function HomePage(props) {
     if (data) {
       navigate(`/transaction/${data.id}`)
     }
+  }
 
+  let amt1 = props.userStore && props.userStore.amt_1
+  let amt2 = props.userStore && props.userStore.amt_2
+  let amt3 = props.userStore && props.userStore.amt_3
+  let amt4 = props.userStore && props.userStore.amt_4
+
+
+  // render helpers
+  const TypicalAmtTiles = (props) => {
+    if (amt1) {
+      return(
+        <ButtonToolbar className="justify-content-between" aria-label="Toolbar with Button groups">
+          <ButtonGroup className="me-2" size="lg" aria-label="First group">
+            <Button variant="secondary">{amt1}</Button>{' '}
+          </ButtonGroup>
+          <ButtonGroup className="me-2" size="lg" aria-label="First group">
+            <Button variant="secondary">{amt2}</Button>{' '}
+          </ButtonGroup>
+          <ButtonGroup className="me-2" size="lg" aria-label="First group">
+            <Button variant="secondary">{amt3}</Button>{' '}
+          </ButtonGroup>
+          <ButtonGroup className="me-2" size="lg" aria-label="First group">
+            <Button variant="secondary">{amt4}</Button>{' '}
+          </ButtonGroup>
+        </ButtonToolbar>
+      )
+    } else {
+      return ''
+}
   }
 
   // render
   return (
     <div>
-      <h2>Home Page</h2>
+      <TypicalAmtTiles />
       <hr />
       <Form onSubmit={handleFormSubmit}>
         <br />
