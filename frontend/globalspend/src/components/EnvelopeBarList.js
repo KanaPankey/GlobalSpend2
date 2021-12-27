@@ -33,7 +33,7 @@ function EnvelopeBarList(props) {
             <th>Envelope</th>
             <th></th>
             <th></th>
-            <th>Amt spent</th>
+            <th>Money left</th>
             <th></th>
             <th></th>
           </tr>
@@ -44,7 +44,7 @@ function EnvelopeBarList(props) {
           return (
             <tr key={index} >
               <td><Link to={`/envelope/${envelopeList.id}/`}>{envelopeList.envelope_name}</Link></td>
-              <td colSpan="4"><ProgressBar now={ progressBarFill } /></td>
+              <td colSpan="4"><ProgressBar variant="success" now={ progressBarFill } /></td>
               <td>{Math.round(envelopeList.current_amt)}/{Math.round(envelopeList.fill_amt)}</td>
             </tr>
           )

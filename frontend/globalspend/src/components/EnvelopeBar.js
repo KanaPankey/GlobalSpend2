@@ -44,7 +44,7 @@ function EnvelopeBar(props) {
         <tbody>
             <tr>
               <td><Link to={`/envelope/${envelope.id}/`}>{envelope.envelope_name}</Link></td>
-              <td colSpan={4}><ProgressBar now={ progressBarFill } /></td>
+              <td colSpan={4}><ProgressBar variant="success" now={ progressBarFill } /></td>
               <td>{Math.round(envelope.current_amt)}/{Math.round(envelope.fill_amt)}</td>
             </tr>
         </tbody>

@@ -11,6 +11,8 @@ import { Nav, Navbar, NavDropdown, Container } from 'react-bootstrap';
 // router
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+// import { AppProvider } from './context/AppContext';
+
 // components
 
 // pages
@@ -43,8 +45,8 @@ function App() {
   // states...home and spend rates are in relation to EUR
   const [homeCurrency, setHomeCurrency] = useState('USD') // future multi-currency functionality
   const [spendCurrency, setSpendCurrency] = useState('NOK') // future multi-currency functionality
-  const [homeRate, setHomeRate] = useState(1.127)  // hard-coded to prevent API calls
-  const [spendRate, setSpendRate] = useState(10.152)  // hard-coded to prevent API calls
+  const [homeRate, setHomeRate] = useState(null)  // hard-coded to prevent API calls
+  const [spendRate, setSpendRate] = useState(null)  // hard-coded to prevent API calls
   const [relativeRate, setRelativeRate] = useState(null)
   
   // states...for userlocation and default store
@@ -86,22 +88,25 @@ function App() {
   // retrieve exchange rates from API compared to EUR
   useEffect(() => {
     const getConversionRate = async() => {
+      console.log("in conversion")
       const data = await ConverterAPI.fetchRates()
       if (data) {
+        console.log("conversion rate", data)
         let getHomeRate = data.rates.USD
         setHomeRate(getHomeRate)
         let getSpendRate = data.rates.NOK
         setSpendRate(getSpendRate)
       }
-      // getConversionRate()  
     }
+    // getConversionRate()  
   }, [])
   
   // calculate relative exchange rate between home and spend currencies through EUR
   useEffect(() => {
     let getRelativeRate = homeRate/spendRate
     setRelativeRate(getRelativeRate)
-  }, [spendRate])
+    console.log("relative rate", getRelativeRate)
+  }, [spendRate, homeRate])
 
 
   // get list of stores
@@ -193,7 +198,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div>
       { renderNavbar() }
 
       <BrowserRouter>
@@ -216,9 +221,11 @@ function App() {
           <Route exact path="/transaction/:transactionID/edit" element={<EditTransactionPage />} />
           <Route exact path="/transaction/:transactionID/delete" element={<DeleteTransactionPage />} />
         </Routes>
-
       </BrowserRouter>
+
     </div>
+
+
   );
 }
 

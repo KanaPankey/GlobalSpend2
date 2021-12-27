@@ -4,7 +4,7 @@ import { InputGroup, FormControl, Form, Button } from 'react-bootstrap'
 function ConverterPage(props) {
   // states
   const[price, setPrice] = useState(null)
-  const[displayPrice, setDisplayPrice] = useState(null)
+  const[displayPrice, setDisplayPrice] = useState()
 
   // effects
   useEffect(() => {
