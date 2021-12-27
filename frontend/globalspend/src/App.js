@@ -99,7 +99,7 @@ function App() {
         setSpendRate(getSpendRate)
       }
     }
-    // getConversionRate()  
+    getConversionRate()  
   }, [])
   
   // calculate relative exchange rate between home and spend currencies through EUR

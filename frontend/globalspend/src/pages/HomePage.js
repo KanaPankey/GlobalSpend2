@@ -40,9 +40,10 @@ function HomePage(props) {
 
   // calculates the amount spent in the home currency
   const calcSpentInHomeCurrency = (event) => {
-    let spentInHomeCurrency = Math.round(event.target.value * props.rate, 2)
+    console.log(event.target.value, props.rate)
+    let spentInHomeCurrency = event.target.value * props.rate
     setSpentInHomeCurrency(spentInHomeCurrency)
-    // console.log("spent in home currency", spentInHomeCurrency)
+    console.log("spent in home currency", spentInHomeCurrency)
   }
 
   // handlers
@@ -51,13 +52,14 @@ function HomePage(props) {
 
     // get date to populate transaction
     let today = new Date();
-
-
+    
+    // set amount spent
+    let homeAmt = parseFloat(spentInHomeCurrency).toFixed(2)
 
     const transactionObj = {
       transaction_date: today,
       original_transaction_amt: event.target.elements[0].value,
-      home_transaction_amt: spentInHomeCurrency,
+      home_transaction_amt: homeAmt,
       is_debit_transaction: event.target.elements[1].value,
       envelope: event.target.elements[2].value,
       store: event.target.elements[3].value,
@@ -90,11 +92,11 @@ function HomePage(props) {
         </Form.Group>
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <Form.Control placeholder="envelope" />
+          <Form.Control placeholder="envelope" defaultValue={props.userStore && props.userStore.envelope}/>
         </Form.Group>
         <Form.Group>
           <Form.Label>Store</Form.Label>
-          <Form.Control placeholder="store" defaultValue={props.userStore}/>
+          <Form.Control placeholder="store" defaultValue={props.userStore && props.userStore.id}/>
         </Form.Group>
         <Form.Group>
           <Form.Label>Notes</Form.Label>
