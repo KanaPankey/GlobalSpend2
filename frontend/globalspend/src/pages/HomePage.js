@@ -25,30 +25,48 @@ function HomePage(props) {
     // get date to populate transaction
     let today = new Date();
     
-    // set amount spent
+    // set amount spent in home currency
     let spentInHomeCurrency = event.target.elements[0].value * props.rate
     let homeAmt = parseFloat(spentInHomeCurrency).toFixed(2)
 
-    // let envelopeID = parseInt(event.target.elements[2].value)
+    // values used by new transaction obj and envelope
+    let envelopeID = parseInt(event.target.elements[2].value)
+    let isDebit = event.target.elements[1].value
 
     const transactionObj = {
       transaction_date: today,
       original_transaction_amt: event.target.elements[0].value,
       home_transaction_amt: homeAmt,
-      is_debit_transaction: event.target.elements[1].value,
-      envelope: event.target.elements[2].value,
+      is_debit_transaction: isDebit,
+      envelope: envelopeID,
       store: event.target.elements[3].value,
       notes: event.target.elements[4].value
     }
-
+    
     // create transaction record
     const data = await BackendAPI.addTransaction(transactionObj)
     if (data) {
       navigate(`/transaction/${data.id}`)
     }
-
+    
     // change current amt for the envelope of transaction accounting for debit/deposit
-    // const data = await BackendAPI.fetchEnvelopeByID(event.target.elements[2].value)
+    const envelope = await BackendAPI.fetchEnvelopeByID(envelopeID)
+    let newCurrentAmt 
+    if (envelope) {
+      let envelopeCurrentAmt = envelope.current_amt
+      if (isDebit) {
+        newCurrentAmt = envelopeCurrentAmt - homeAmt
+      } else {
+        newCurrentAmt = envelopeCurrentAmt + homeAmt
+      }
+
+      // update envelope
+      const envelopeObj = {
+        current_amt: newCurrentAmt
+      }
+      const newEnvelope = await BackendAPI.updateEnvelope(envelopeObj, envelopeID)
+    }
+
 
   }
 
