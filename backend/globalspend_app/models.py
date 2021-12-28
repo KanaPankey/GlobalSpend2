@@ -49,4 +49,3 @@ class Transaction(models.Model):
         return '%s %s %s' % (self.transaction_date, self.store, self.original_transaction_amt)
 
 
-

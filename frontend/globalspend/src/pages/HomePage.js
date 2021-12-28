@@ -13,7 +13,7 @@ function HomePage(props) {
   const navigate = useNavigate()
   // const params = useParams()
 
-  console.log ("in home page", props.userStore)
+  // console.log ("in home page", props.userStore)
 
   // states
   const [ spendAmt, setSpendAmt ] = useState(null)

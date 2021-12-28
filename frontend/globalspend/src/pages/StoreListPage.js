@@ -30,7 +30,7 @@ function StoreListPage(props) {
           <thead>
             <tr>
               <th>#</th>
-              <th colSpan="2">Store Name</th>
+              <th>Store Name</th>
               <th>Envelope</th>
             </tr>
           </thead>
@@ -39,7 +39,8 @@ function StoreListPage(props) {
             return (
               <tr key={index}>
                 <td>{storeList.id}</td>
-                <td colSpan="2"><Link to={`/store/${storeList.id}/`}>{storeList.store_name}</Link></td>
+                <td><Link to={`/store/${storeList.id}/`}>{storeList.store_name}</Link></td>
+                {console.log(storeList.envelope)}
                 <td>{storeList.envelope}</td>
               </tr>
             )

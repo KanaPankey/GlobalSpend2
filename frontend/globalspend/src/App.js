@@ -54,37 +54,7 @@ function App() {
   const [userPosition, setUserPosition] = useState([])
   const [userStore, setUserStore] = useState(null)
   
-  // get store lat long
-  useEffect(() => {
-    const getStoreLocation = async() => {
-      const data = await GetStoreLocationAPI.fetchLatLongFromStore("Coop Madla")
-      if (data) {
-        let storeLatLong = data
-        console.log("data", data)
-      }
-
-    }
-    // getStoreLocation()  
-  }, [])
-  
-  // get user's current position
-  if (window.navigator.geolocation) {
-    const success = (position) => {
-      const data = position
-      setUserPosition([data.coords.latitude, data.coords.longitude])
-      // console.log(data.coords.latitude)
-      // console.log(data.coords.longitude)
-    }
-  
-    const error = (error) => {
-      console.log(error)
-    }
-  
-    window.navigator.geolocation.getCurrentPosition(success, error)
-  }
-
-
-  // effects
+  // get conversion rate
   // retrieve exchange rates from API compared to EUR
   useEffect(() => {
     const getConversionRate = async() => {
@@ -98,7 +68,7 @@ function App() {
         setSpendRate(getSpendRate)
       }
     }
-    getConversionRate()  
+    // getConversionRate()  
   }, [])
   
   // calculate relative exchange rate between home and spend currencies through EUR
@@ -106,8 +76,38 @@ function App() {
     let getRelativeRate = homeRate/spendRate
     setRelativeRate(getRelativeRate)
   }, [spendRate, homeRate])
+  
+  
+  // get user's current position
+  if (window.navigator.geolocation) {
+    const success = (position) => {
+      const data = position
+      setUserPosition([data.coords.latitude, data.coords.longitude])
+      // console.log(data.coords.latitude)
+      // console.log(data.coords.longitude)
+    }
+    
+    const error = (error) => {
+      console.log(error)
+    }
+    
+    window.navigator.geolocation.getCurrentPosition(success, error)
+  }
+  
+  //****pretty sure I can delete this ************************** */
+  // get store lat long
+  // useEffect(() => {
+  //   const getStoreLocation = async() => {
+  //     const data = await GetStoreLocationAPI.fetchLatLongFromStore("Coop Madla")
+  //     if (data) {
+  //       let storeLatLong = data
+  //       // console.log("data", data)
+  //     }
 
-
+  //   }
+  //   // getStoreLocation()  
+  // }, [])
+  
   // get list of stores
   useEffect(() => {
     const getStores = async () => {
@@ -116,10 +116,9 @@ function App() {
         setStoreList(data)
       }
     }
-    // setUserStore(2) // hard coding store value to keep developing
+
     getStores()
   }, [])  
-
 
   // get lat and long from each store and compare to userlocation...sets user store
   useEffect(() => {
@@ -145,11 +144,11 @@ function App() {
       // creates an array with store id and the distance from the user
       distanceList.push([storeList[i], distance])
     }
-    console.log(distanceList)
+    // console.log(distanceList)
 
     // determine if there are any stores in a given radius and, if so, which is closest
     let radius = 100
-    let distClosestStore = radius // any store must be less than 0.2 miles away from user location to count
+    let distClosestStore = radius // any store must be closer than the radius distance from user location to count
     let ClosestStoreObj = null
 
     // check if store is closer than previous ones
@@ -160,7 +159,7 @@ function App() {
       }
     }
 
-    console.log("closest store obj", ClosestStoreObj)
+    // console.log("closest store obj", ClosestStoreObj)
     if (distClosestStore < radius) {
       setUserStore(ClosestStoreObj)
     } 
