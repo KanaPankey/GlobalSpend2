@@ -36,3 +36,16 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = ['id', 'transaction_date', 'original_transaction_amt', 'home_transaction_amt', 'is_debit_transaction', 'notes', 'envelope', 'store']
+
+    def to_representation(self, instance):
+        repr = super().to_representation(instance)
+
+        repr["store"] = instance.store.store_name
+
+        return repr
+
+
+    # def to_representation(self, instance):
+    #     self.fields["store"] = StoreSerializer()
+
+    #     return super().to_representation(instance)
