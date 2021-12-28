@@ -15,6 +15,7 @@ function AddEditStorePage() {
   const [store, setStore] = useState(null)
   const [storeList, setStoreList] = useState([])
   const [storePosition, setStorePosition] = useState([])
+  const [storeName, setStoreName] = useState('')
 
   // get store lat long
   const getStoreLocation = async(event) => {
@@ -38,6 +39,8 @@ function AddEditStorePage() {
       console.log("store", store)
       let storePosition = [parseFloat(store.lat), parseFloat(store.lon)]
       setStorePosition(storePosition)
+      let storeName = store.display_name
+      setStoreName(storeName)
   }
 
   // populates store option dropdown menu if more than 1 store returns from api
@@ -66,13 +69,14 @@ function AddEditStorePage() {
       store_name: event.target.elements[0].value,
       store_longitude: storePosition[1],
       store_latitude: storePosition[0],
-      amt_1: event.target.elements[2].value,
-      amt_2: event.target.elements[3].value,
-      amt_3: event.target.elements[4].value,
-      amt_4: event.target.elements[5].value,
-      envelope: [event.target.elements[1].value]
+      amt_1: parseInt(event.target.elements[2].value),
+      amt_2: parseInt(event.target.elements[3].value),
+      amt_3: parseInt(event.target.elements[4].value),
+      amt_4: parseInt(event.target.elements[5].value),
+      envelope: parseInt(event.target.elements[1].value)
     }
 
+    console.log("storeobj", storeObj)
     const data = await BackendAPI.addStore(storeObj)
     if (data) {
       navigate(`/store/${data.id}`)
@@ -88,7 +92,7 @@ function AddEditStorePage() {
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>
           <Form.Label>Name</Form.Label>
-          <Form.Control onChange={getStoreLocation} placeholder="name" />
+          <Form.Control onChange={getStoreLocation} placeholder="name or address" />
         </Form.Group>
         <br />
         <Form.Group>

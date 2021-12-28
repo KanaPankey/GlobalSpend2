@@ -7,28 +7,11 @@ class EnvelopeSerializer(serializers.ModelSerializer):
         fields = ['id', 'envelope_name', 'current_amt', 'fill_amt']
 
 class StoreSerializer(serializers.ModelSerializer):
-    # envelope = serializers.PrimaryKeyRelatedField(many=True)
     envelope = serializers.SlugRelatedField(many=True, queryset=Envelope.objects.all(), slug_field='envelope_name')
 
     class Meta:
         model = Store
         fields = ['id', 'store_name', 'store_longitude', 'store_latitude', 'amt_1', 'amt_2', 'amt_3', 'amt_4', 'envelope']
-
-    # envelope = EnvelopeSerializer(many=True)
-
-    # def to_representation(self, instance):
-    #     repr = super().to_representation(instance)
-
-    #     repr["envelope"] = instance.envelope.envelope_name
-
-    #     return repr
-
-
-    # def to_representation(self, instance):
-    #     # return a serialized Envelope
-    #     self.fields["envelope"] = EnvelopeSerializer()
-
-    #     return super().to_representation(instance)
 
 class TransactionSerializer(serializers.ModelSerializer):
     # store = serializers.SlugRelatedField(many=True, queryset=Store.objects.all(), slug_field='store')
@@ -47,5 +30,25 @@ class TransactionSerializer(serializers.ModelSerializer):
 
     # def to_representation(self, instance):
     #     self.fields["store"] = StoreSerializer()
+
+    #     return super().to_representation(instance)
+
+
+
+    # envelope = serializers.PrimaryKeyRelatedField(many=True)
+
+    # envelope = EnvelopeSerializer(many=True)
+
+    # def to_representation(self, instance):
+    #     repr = super().to_representation(instance)
+
+    #     repr["envelope"] = instance.envelope.envelope_name
+
+    #     return repr
+
+
+    # def to_representation(self, instance):
+    #     # return a serialized Envelope
+    #     self.fields["envelope"] = EnvelopeSerializer()
 
     #     return super().to_representation(instance)
