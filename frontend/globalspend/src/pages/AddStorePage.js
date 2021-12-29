@@ -41,7 +41,7 @@ function AddEditStorePage() {
   // populates store option dropdown menu if more than 1 store returns from api
   const DisplayStores = () => {
     return (
-        <select id="store" onChange={selectStore}>  
+        <select id="store">  
             {storeList.map((store, index) => {
             return (     
                 <option value={index}>{store.display_name}</option>
@@ -50,31 +50,32 @@ function AddEditStorePage() {
         </select>
     )
   }
-
-  // reads the value from the drop down menu and sets the store latlong
-  const selectStore = () => {
-      let storeIndex = document.getElementById('store').value;
-      let store = storeList[storeIndex]
-      console.log("store", store)
-      let storePosition = [parseFloat(store.lat), parseFloat(store.lon)]
-      setStorePosition(storePosition)
-      let storeName = store.display_name
-      setStoreName(storeName)
-  }
-
+  
   // handlers
   const handleFormSubmit = async (event) => {
     event.preventDefault()
+    
+    // reads the value from the drop down menu and sets the store latlong
+    let storeIndex = document.getElementById('store').value;
+    let store = storeList[storeIndex]
+    console.log("store", store)
+    let storePosition = [parseFloat(store.lat), parseFloat(store.lon)]
 
+    // reads the value from the drop down menu and sets store name
+    let storeInfoArray = store.display_name.split(',')
+    let storeName = storeInfoArray[0]
+
+    console.log("event", event)
+//************************figure out how to input either user input from input boxes or dropdown menu */
     const storeObj = {
-      store_name: event.target.elements[0].value,
+      store_name: storeName,                //event.target.elements[0].value,
       store_longitude: storePosition[1],
       store_latitude: storePosition[0],
-      amt_1: parseInt(event.target.elements[2].value),
-      amt_2: parseInt(event.target.elements[3].value),
-      amt_3: parseInt(event.target.elements[4].value),
-      amt_4: parseInt(event.target.elements[5].value),
-      envelope: [parseInt(event.target.elements[1].value)]
+      amt_1: parseInt(event.target.elements[3].value),
+      amt_2: parseInt(event.target.elements[4].value),
+      amt_3: parseInt(event.target.elements[5].value),
+      amt_4: parseInt(event.target.elements[6].value),
+      envelope: [parseInt(event.target.elements[2].value)]
     }
 
     console.log("storeobj", storeObj)
@@ -96,9 +97,10 @@ function AddEditStorePage() {
         </Form.Group>
       <DisplayStores />
         <br />
+        <br />
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <EnvelopeDropdown />
+          <div><EnvelopeDropdown /></div>
           {/* <Form.Control placeholder="envelope" /> */}
         </Form.Group>
         <br />
