@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 
 // css
-// import 'cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css'  //table formatter
+// import 'cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css'  // table formatter
 // import 'cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js'   // table formatter
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -142,7 +142,6 @@ function App() {
       }
     }
 
-    // console.log("closest store obj", ClosestStoreObj)
     if (distClosestStore < radius) {
       // console.log("setuserstore", ClosestStoreObj)   // ********************************************
       setUserStore(ClosestStoreObj)
@@ -205,7 +204,6 @@ function App() {
       </BrowserRouter>
 
     </div>
-
 
   );
 }

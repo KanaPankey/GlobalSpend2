@@ -87,9 +87,11 @@ function EditStorePage() {
         </Form.Group>
 
         <br />
-        <Button variant="primary" type="submit">
-          Edit Store
-        </Button>  
+        <div className="text-center">
+          <Button variant="success" type="submit">
+            Edit Store
+          </Button>  
+        </div>
       </Form>  
     </div>
   )

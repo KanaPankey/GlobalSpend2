@@ -70,9 +70,11 @@ function AddTransactionPage(props) {
         </Form.Group>
 
         <br />
-        <Button variant="primary" type="submit">
-          Add Transaction
-        </Button>  
+        <div className="text-center">
+          <Button variant="success" type="submit">
+            Add Transaction
+          </Button>  
+        </div>
       </Form>  
     </div>
   )

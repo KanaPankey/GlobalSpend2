@@ -39,7 +39,11 @@ function ConverterPage(props) {
           <InputGroup.Text id="NOK-input-label">NOK</InputGroup.Text>
           <FormControl id="NOK-input" placeholder="Price in NOK"/>
         </InputGroup>
-        <Button variant="primary" type="submit">Convert</Button>
+        <div className="text-center">
+          <Button variant="success" type="submit">
+            Convert
+          </Button>  
+        </div>
       </Form>
 
       { renderConvertedPrice(price) }

@@ -118,9 +118,11 @@ function AddEditStorePage() {
         </Form.Group>
 
         <br />
-        <Button variant="success" type="submit">
-          Add Store
-        </Button>  
+        <div className="text-center">
+          <Button variant="success" type="submit">
+            Add Store
+          </Button>  
+        </div>
       </Form>  
     </div>
   )

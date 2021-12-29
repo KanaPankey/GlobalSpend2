@@ -10,6 +10,9 @@ import {Table} from 'react-bootstrap'
 // components
 import EnvelopeBar from '../components/EnvelopeBar'
 
+//css
+import Button from 'react-bootstrap/Button'
+
 function EnvelopePage(props) {
   // states
   const [envelope, setEnvelope] = useState(null)
@@ -76,7 +79,13 @@ function EnvelopePage(props) {
       { renderTransactionList() }
       <Link to={`/envelope/${params.envelopeID}/edit`}><button>Edit Envelope</button></Link>
       <Link to={`/envelope/${params.envelopeID}/delete`}><button>Delete Envelope</button></Link>
-      <Link to={`/`}><button>Add Transaction</button></Link>
+      <div className="text-center">
+        <Link to={`/`}>
+          <Button variant="success" type="submit">
+            Add Transaction
+          </Button> 
+        </Link> 
+      </div>
     </div>
   )
 }

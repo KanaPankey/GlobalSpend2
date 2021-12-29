@@ -82,9 +82,11 @@ function EditTransactionPage() {
         </Form.Group>
 
         <br />
-        <Button variant="primary" type="submit">
-          Edit Transaction
-        </Button>  
+        <div className="text-center">
+          <Button variant="success" type="submit">
+            Edit Transaction
+          </Button>  
+        </div>
       </Form>  
     </div>
   )
