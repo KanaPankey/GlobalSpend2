@@ -9,6 +9,7 @@ import BackendAPI from '../api/BackendAPI'
 function TransactionListPage(props) {
   // states
   const [transactionLists, setTransactionLists] = useState([])
+  const [storeList, setStoreList] = useState([])
 
   const params = useParams()
 
@@ -24,26 +25,28 @@ function TransactionListPage(props) {
     getTransactionLists()
   }, [])
 
+  useEffect(() => {
+    const getStoreLists = async() => {
+      const data = await BackendAPI.fetchStores()
+      if (data) {
+        setStoreList(data)
+      }
+    }
+
+    getStoreLists()
+  }, [])
+
+  // store id to name
+  const displayStoreName = (storeID) => {
+    for (let i = 0; i < storeList.length; i++) {
+      if (storeList[i].id == storeID) {
+        return storeList[i].store_name
+      }
+    }
+
+  }
 
   // render helpers
-  // const renderTransactionList = () => {
-  //   return transactionLists.map((transactionList, index) => {
-  //     return (
-  //       <div>
-  //         <Link to={`/transaction/${transactionList.id}`}>
-  //           <tr key={index}>
-  //             <td>{transactionList.transaction_date}</td>
-  //             <td>{transactionList.store}</td>
-  //             <td>{transactionList.original_transaction_amt}</td>
-  //           </tr>
-  //         </Link>
-  //       </div>
-  //     )
-  //   })
-  // }
-
-
-
   const renderTransactionList = () => {
     return (
       <Table striped bordered hover>
@@ -61,8 +64,8 @@ function TransactionListPage(props) {
             <tr key={index}>
               <td>{transactionList.id}</td>
               <td>{transactionList.transaction_date}</td>
-              <td>{transactionList.store}</td>
-              {console.log("transactionlist:", transactionList)}
+              <td>{displayStoreName(transactionList.store)}</td>
+              {console.log("transactionlist.store", transactionList.store)}
               <td><Link to={`/transaction/${transactionList.id}`} style={{color:'black'}}>{transactionList.original_transaction_amt}</Link></td>
             </tr>         
           )
@@ -71,7 +74,6 @@ function TransactionListPage(props) {
       </Table>
     )
   }
-
 
   // render
   return (

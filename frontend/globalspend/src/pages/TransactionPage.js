@@ -36,8 +36,6 @@ function TransactionPage(props) {
         <h3>Debit or deposit: {transaction.is_debit_transaction ? 'Debit' : 'Deposit'}</h3>
         <h3>Notes: {transaction.notes}</h3>
         <h3>Envelope: {transaction.envelope}</h3>
-
-
       </div>
     )
   }
