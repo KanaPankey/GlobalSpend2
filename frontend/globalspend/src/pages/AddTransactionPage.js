@@ -25,14 +25,14 @@ function AddTransactionPage(props) {
 
     const transactionObj = {
       transaction_date: today,
-      original_transaction_amt: event.target.elements[0].value,
-      home_transaction_amt: event.target.elements[0].value * props.currencyRate,
-      is_debit_transaction: event.target.elements[1].value,
+      original_transaction_amt: parseInt(event.target.elements[0].value),
+      home_transaction_amt: parseInt(event.target.elements[0].value * props.currencyRate),
+      is_debit_transaction: true,
       envelope: event.target.elements[2].value,
-      store: event.target.elements[3].value,
+      store: parseInt(event.target.elements[3].value),
       notes: event.target.elements[4].value
     }
-
+    console.log("transObj", transactionObj)
 
     const data = await BackendAPI.addTransaction(transactionObj)
     if (data) {

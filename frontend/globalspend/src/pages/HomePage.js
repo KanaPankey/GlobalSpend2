@@ -1,5 +1,5 @@
 // react
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Form, Button, ButtonToolbar, ButtonGroup, InputGroup, FormControl } from "react-bootstrap"
 import { useEffect, useState } from 'react'
 
@@ -13,7 +13,7 @@ function HomePage(props) {
   const navigate = useNavigate()
   // const params = useParams()
 
-  // console.log ("in home page", props.userStore)
+  console.log ("in home page", props.userStore) // *******************************
 
   // states
   const [ spendAmt, setSpendAmt ] = useState(null)
@@ -24,6 +24,8 @@ function HomePage(props) {
 
     // get date to populate transaction
     let today = new Date();
+
+    console.log("rate in homepage", props.rate) // ********************************
     
     // set amount spent in home currency
     let spentInHomeCurrency = event.target.elements[0].value * props.rate
@@ -42,6 +44,8 @@ function HomePage(props) {
       store: event.target.elements[3].value,
       notes: event.target.elements[4].value
     }
+
+    console.log("transobj", transactionObj)  // ***************************************
     
     // create transaction record
     const data = await BackendAPI.addTransaction(transactionObj)
@@ -110,11 +114,11 @@ function HomePage(props) {
 
   // render
   return (
-    <div>
+    <div className="container">
+      <hr />
       <TypicalAmtTiles />
       <hr />
       <Form onSubmit={handleFormSubmit}>
-        <br />
         <Form.Group>
           <Form.Label>Spent in local currency</Form.Label>
           <Form.Control placeholder="amt in local" value={spendAmt}/>
@@ -124,14 +128,17 @@ function HomePage(props) {
           <Form.Label>Debit or deposit</Form.Label>
           <Form.Control placeholder="true or false" defaultValue={true} />
         </Form.Group>
+        <br />
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <Form.Control placeholder="envelope" defaultValue={props.userStore && props.userStore.envelope}/>
+          <Form.Control placeholder="envelope" defaultValue={props.userStore && props.userStore.envelope.envelope_name}/>
         </Form.Group>
+        <br />
         <Form.Group>
           <Form.Label>Store</Form.Label>
           <Form.Control placeholder="store" defaultValue={props.userStore && props.userStore.id}/>
         </Form.Group>
+        <br />
         <Form.Group>
           <Form.Label>Notes</Form.Label>
           <Form.Control placeholder="notes" />

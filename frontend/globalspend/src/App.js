@@ -11,10 +11,6 @@ import { Nav, Navbar, NavDropdown, Container } from 'react-bootstrap';
 // router
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-// import { AppProvider } from './context/AppContext';
-
-// components
-
 // pages
 import HomePage from './pages/HomePage';
 import ConverterPage from './pages/ConverterPage';
@@ -35,19 +31,16 @@ import DeleteTransactionPage from './pages/DeleteTransactionPage';
 // api
 import ConverterAPI from './api/ConverterAPI'
 import BackendAPI from './api/BackendAPI'
-import GetStoreLocationAPI from './api/GetStoreLocationAPI'
-
 
 
 function App() {
 
-  
   // states...home and spend rates are in relation to EUR
   const [homeCurrency, setHomeCurrency] = useState('USD') // future multi-currency functionality
   const [spendCurrency, setSpendCurrency] = useState('NOK') // future multi-currency functionality
-  const [homeRate, setHomeRate] = useState(null)  // hard-coded to prevent API calls
-  const [spendRate, setSpendRate] = useState(null)  // hard-coded to prevent API calls
-  const [relativeRate, setRelativeRate] = useState(.113)
+  const [homeRate, setHomeRate] = useState(1.13005)  // hard-coded to prevent API calls
+  const [spendRate, setSpendRate] = useState(9.959586)  // hard-coded to prevent API calls
+  const [relativeRate, setRelativeRate] = useState(null)  // hard-coded to prevent API calls
   
   // states...for userlocation and default store
   const [storeList, setStoreList] = useState([])
@@ -58,10 +51,9 @@ function App() {
   // retrieve exchange rates from API compared to EUR
   useEffect(() => {
     const getConversionRate = async() => {
-      console.log("in conversion")
       const data = await ConverterAPI.fetchRates()
       if (data) {
-        console.log("conversion rate", data)
+        // console.log("conversion rate", data)  // ********************************************
         let getHomeRate = data.rates.USD
         setHomeRate(getHomeRate)
         let getSpendRate = data.rates.NOK
@@ -83,8 +75,6 @@ function App() {
     const success = (position) => {
       const data = position
       setUserPosition([data.coords.latitude, data.coords.longitude])
-      // console.log(data.coords.latitude)
-      // console.log(data.coords.longitude)
     }
     
     const error = (error) => {
@@ -93,20 +83,6 @@ function App() {
     
     window.navigator.geolocation.getCurrentPosition(success, error)
   }
-  
-  //****pretty sure I can delete this ************************** */
-  // get store lat long
-  // useEffect(() => {
-  //   const getStoreLocation = async() => {
-  //     const data = await GetStoreLocationAPI.fetchLatLongFromStore("Coop Madla")
-  //     if (data) {
-  //       let storeLatLong = data
-  //       // console.log("data", data)
-  //     }
-
-  //   }
-  //   // getStoreLocation()  
-  // }, [])
   
   // get list of stores
   useEffect(() => {
@@ -122,8 +98,6 @@ function App() {
 
   // get lat and long from each store and compare to userlocation...sets user store
   useEffect(() => {
-    // console.log("in storelist update", storeList)
-
     const distanceList = []
     for (let i = 0; i < storeList.length; i++) {
       // pull in user latlong and store instance latlong
@@ -133,18 +107,27 @@ function App() {
       let storeLong = storeList[i].store_longitude
 
       // Haversine distance equation to find distance as crow flies between two latlongs
-      const R = 3958.8;  // Radius of the Earth in miles
-      let rUserLat = userLat * (Math.PI/180)  // Convert degrees to radians
-      let rStoreLat = storeLat * (Math.PI/180)  // Convert degrees to radians
+      const R = 6371000;  // Radius of the Earth in meters
+      let rUserLat = userLat * (Math.PI/180.0)  // Convert degrees to radians
+      let rStoreLat = storeLat * (Math.PI/180.0)  // Convert degrees to radians
+      let rUserLong = userLong * (Math.PI/180.0)  // Convert degrees to radians
+      let rStoreLong = storeLong * (Math.PI/180.0)  // Convert degrees to radians
       let diffLat = rStoreLat - rUserLat  // Radian difference (latitudes)
-      let diffLong = storeLong - userLong  // Radian difference (longitudes)
+      let diffLong = rStoreLong - rUserLong  // Radian difference (longitudes)
 
-      let distance = 2 * R * Math.asin(Math.sqrt(Math.sin(diffLat/2) * Math.sin(diffLat/2) + Math.cos(rUserLat) * Math.cos(rStoreLat) * Math.sin(diffLong/2) * Math.sin(diffLong/2)))
+      let a = Math.sin(diffLat/2.0)**2 + Math.cos(storeLat) * Math.cos(userLat) * Math.sin(diffLong/2.0)**2
+
+      let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+
+      let distanceKM = (R * c)/1000.0
+      let distance = Math.round(distanceKM, 3)
+
+      // let distance = 2 * R * Math.asin(Math.sqrt(Math.sin(diffLat/2) * Math.sin(diffLat/2) + Math.cos(rUserLat) * Math.cos(rStoreLat) * Math.sin(diffLong/2) * Math.sin(diffLong/2)))
 
       // creates an array with store id and the distance from the user
       distanceList.push([storeList[i], distance])
     }
-    // console.log(distanceList)
+    console.log(distanceList)
 
     // determine if there are any stores in a given radius and, if so, which is closest
     let radius = 100
@@ -163,8 +146,13 @@ function App() {
     if (distClosestStore < radius) {
       setUserStore(ClosestStoreObj)
     } 
-
+    
   }, [storeList])
+
+  // this is what we need
+  // useEffect(() => {
+
+  // }, [userStore])
   
 
   const renderNavbar = () => {

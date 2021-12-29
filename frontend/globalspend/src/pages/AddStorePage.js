@@ -73,7 +73,7 @@ function AddEditStorePage() {
       amt_2: parseInt(event.target.elements[3].value),
       amt_3: parseInt(event.target.elements[4].value),
       amt_4: parseInt(event.target.elements[5].value),
-      envelope: parseInt(event.target.elements[1].value)
+      envelope: [parseInt(event.target.elements[1].value)]
     }
 
     console.log("storeobj", storeObj)
