@@ -18,8 +18,9 @@ function HomePage(props) {
 
   console.log ("in home page", props.userStore) // *******************************
 
-  // states
-  const [ spendAmt, setSpendAmt ] = useState(null)
+  // // states
+  // const [ spendAmt, setSpendAmt ] = useState(null)  ***********delete
+  const spendAmt = null
 
   // handlers
   const handleFormSubmit = async (event) => {
@@ -76,10 +77,9 @@ function HomePage(props) {
   }
 
   const setSpendAmount = (event) => {
-    // console.log("clicked", event)
+    let amtSpent = document.getElementById('amtSpent')
     let spendAmt = event.target.firstChild.data
-    // console.log("spendAmt", spendAmt)
-    setSpendAmt(spendAmt)
+    amtSpent.value = spendAmt
   }
 
   // helpers for TypicalAmtTitles render function
@@ -122,7 +122,7 @@ function HomePage(props) {
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>
           <Form.Label>Spent in local currency</Form.Label>
-          <Form.Control placeholder="amt in local" value={spendAmt}/>
+          <Form.Control id="amtSpent" placeholder="amt in local" defaultValue={spendAmt}/>
         </Form.Group>
         <br />
         <Form.Group>
@@ -133,7 +133,7 @@ function HomePage(props) {
         <br />
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <div><EnvelopeDropdown /></div>
+          <div><EnvelopeDropdown defaultValue={props.userStore && props.userStore.envelope}/></div>
           {/* <Form.Control placeholder="envelope" defaultValue={props.userStore && props.userStore.envelope}/> */}
         </Form.Group>
         <br />

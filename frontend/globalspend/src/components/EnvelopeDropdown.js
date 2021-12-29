@@ -25,7 +25,10 @@ function EnvelopeDropdown(props) {
     <select id="envelope" >  
         {envelopeList.map((envelope, index) => {
         return (     
-            <option key={index} value={envelope.id}>{envelope.envelope_name}</option>
+            props.defaultValue == envelope.id
+            ? <option key={index} value={envelope.id} selected>{envelope.envelope_name}</option>
+            : <option key={index} value={envelope.id}>{envelope.envelope_name}</option>
+
         )
         })}
     </select>
