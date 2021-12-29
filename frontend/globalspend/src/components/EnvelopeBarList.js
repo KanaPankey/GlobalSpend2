@@ -43,7 +43,7 @@ function EnvelopeBarList(props) {
           const progressBarFill = envelopeList.current_amt/envelopeList.fill_amt*100
           return (
             <tr key={index} >
-              <td className='w-25'><Link to={`/envelope/${envelopeList.id}/`}>{envelopeList.envelope_name}</Link></td>
+              <td className='w-25'><Link to={`/envelope/${envelopeList.id}/`} style={{color:'black'}}>{envelopeList.envelope_name}</Link></td>
               <td colSpan="4"><ProgressBar variant="success" now={ progressBarFill } /></td>
               <td>{Math.round(envelopeList.current_amt)}/{Math.round(envelopeList.fill_amt)}</td>
             </tr>

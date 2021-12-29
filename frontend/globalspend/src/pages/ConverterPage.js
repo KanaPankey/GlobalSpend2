@@ -4,7 +4,7 @@ import { InputGroup, FormControl, Form, Button } from 'react-bootstrap'
 function ConverterPage(props) {
   // states
   const[price, setPrice] = useState(null)
-  const[displayPrice, setDisplayPrice] = useState()
+  const[displayPrice, setDisplayPrice] = useState(0.00)
 
   // effects
   useEffect(() => {
@@ -24,7 +24,7 @@ function ConverterPage(props) {
   const renderConvertedPrice = (price) => {
     return (
       <div>
-        <h2>Price in $: {displayPrice}</h2>
+        <h2>Price in $: { displayPrice}</h2>
         <h2>Conversion rate: {props.rate}</h2>
       </div>
     )
@@ -34,11 +34,16 @@ function ConverterPage(props) {
     <div className="container mt-4">
       <h1>Converter Page</h1>
 
+      <br />
+      { renderConvertedPrice(price) }
+      <br />
+
       <Form onSubmit={ handleFormSubmit }>
         <InputGroup size="lg">
           <InputGroup.Text id="NOK-input-label">NOK</InputGroup.Text>
           <FormControl id="NOK-input" placeholder="Price in NOK"/>
         </InputGroup>
+      <br />
         <div className="text-center">
           <Button variant="success" type="submit">
             Convert
@@ -46,7 +51,6 @@ function ConverterPage(props) {
         </div>
       </Form>
 
-      { renderConvertedPrice(price) }
 
     </div>
   )

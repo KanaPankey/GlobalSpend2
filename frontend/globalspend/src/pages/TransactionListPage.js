@@ -63,7 +63,7 @@ function TransactionListPage(props) {
               <td>{transactionList.transaction_date}</td>
               <td>{transactionList.store}</td>
               {console.log("transactionlist:", transactionList)}
-              <td><Link to={`/transaction/${transactionList.id}`}>{transactionList.original_transaction_amt}</Link></td>
+              <td><Link to={`/transaction/${transactionList.id}`} style={{color:'black'}}>{transactionList.original_transaction_amt}</Link></td>
             </tr>         
           )
         })}

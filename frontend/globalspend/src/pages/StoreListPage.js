@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom'
 // table component
 import {Table} from 'react-bootstrap'
 
+// css
+import Button from 'react-bootstrap/Button'
+
 // APIs
 import BackendAPI from '../api/BackendAPI'
 
@@ -39,7 +42,7 @@ function StoreListPage(props) {
             return (
               <tr key={index}>
                 <td>{storeList.id}</td>
-                <td><Link to={`/store/${storeList.id}/`}>{storeList.store_name}</Link></td>
+                <td><Link to={`/store/${storeList.id}/`} style={{color:'black'}}>{storeList.store_name}</Link></td>
                 {console.log(storeList.envelope)}
                 <td>{storeList.envelope}</td>
               </tr>
@@ -54,7 +57,13 @@ function StoreListPage(props) {
       <div className="container mt-4">
         <h1>Store List</h1>
         { renderStoreList(storeLists) }
-        <Link to={`/store/add`}><button>Add Store</button></Link>
+        <div className="text-center">
+          <Link to={`/store/add`}>  
+            <Button variant="success" type="submit">
+              Add Store
+            </Button>  
+          </Link>
+        </div>
       </div>
     )
   }

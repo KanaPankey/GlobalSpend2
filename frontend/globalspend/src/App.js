@@ -159,8 +159,8 @@ function App() {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
                 <Nav.Link href="/envelope/">Envelopes</Nav.Link>
-                <Nav.Link href="/store/">Stores</Nav.Link>
                 <Nav.Link href="/transaction/">Transactions</Nav.Link>
+                <Nav.Link href="/store/">Stores</Nav.Link>
                 <NavDropdown title="Actions" id="basic-nav-dropdown">
                   <NavDropdown.Item href="/store/add/">Add Store</NavDropdown.Item>
                   <NavDropdown.Item href="/envelope/add">Add Envelope</NavDropdown.Item>

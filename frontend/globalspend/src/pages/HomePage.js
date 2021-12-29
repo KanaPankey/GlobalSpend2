@@ -5,6 +5,9 @@ import { useEffect, useState } from 'react'
 
 // API
 import BackendAPI from "../api/BackendAPI"
+import EnvelopeDropdown from "../components/EnvelopeDropdown"
+import StoreDropdown from "../components/StoreDropdown"
+import IsDebitDropdown from "../components/IsDebitDropdown"
 
 // components
 
@@ -70,8 +73,6 @@ function HomePage(props) {
       }
       const newEnvelope = await BackendAPI.updateEnvelope(envelopeObj, envelopeID)
     }
-
-
   }
 
   const setSpendAmount = (event) => {
@@ -81,7 +82,7 @@ function HomePage(props) {
     setSpendAmt(spendAmt)
   }
 
-  // helpers for TeypicalAmtTitles render function
+  // helpers for TypicalAmtTitles render function
   let amt1 = props.userStore && props.userStore.amt_1
   let amt2 = props.userStore && props.userStore.amt_2
   let amt3 = props.userStore && props.userStore.amt_3
@@ -126,17 +127,20 @@ function HomePage(props) {
         <br />
         <Form.Group>
           <Form.Label>Debit or deposit</Form.Label>
-          <Form.Control placeholder="true or false" defaultValue={true} />
+          <div><IsDebitDropdown /></div>
+          {/* <Form.Control placeholder="true or false" defaultValue={true} /> */}
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <Form.Control placeholder="envelope" defaultValue={props.userStore && props.userStore.envelope.envelope_name}/>
+          <div><EnvelopeDropdown /></div>
+          {/* <Form.Control placeholder="envelope" defaultValue={props.userStore && props.userStore.envelope}/> */}
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Store</Form.Label>
-          <Form.Control placeholder="store" defaultValue={props.userStore && props.userStore.id}/>
+          <div><StoreDropdown /></div>
+          {/* <Form.Control placeholder="store" defaultValue={props.userStore && props.userStore.id}/> */}
         </Form.Group>
         <br />
         <Form.Group>

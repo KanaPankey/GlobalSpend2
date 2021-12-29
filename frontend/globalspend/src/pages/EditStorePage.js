@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 // api
 import GetStoreLocationAPI from '../api/GetStoreLocationAPI'
+import EnvelopeDropdown from "../components/EnvelopeDropdown"
 
 function EditStorePage() {
   // router props
@@ -39,6 +40,8 @@ function EditStorePage() {
       envelope: [event.target.elements[1].value]
     }
 
+    console.log("storeobj", storeObj)
+
     const data = await BackendAPI.updateStore(storeObj, params.storeID)
     if (data) {
       navigate(`/store/${data.id}`)
@@ -58,7 +61,8 @@ function EditStorePage() {
         <br />
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <Form.Control placeholder="envelope" defaultValue={store && store.envelope} />
+          <EnvelopeDropdown />
+          {/* <Form.Control placeholder="envelope" defaultValue={store && store.envelope} /> */}
         </Form.Group>
         <br />
         <Form.Group>

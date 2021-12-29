@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 // api
 import GetStoreLocationAPI from '../api/GetStoreLocationAPI'
+import EnvelopeDropdown from "../components/EnvelopeDropdown"
 
 function AddEditStorePage() {
   // router props
@@ -30,19 +31,13 @@ function AddEditStorePage() {
     // console.log("store position", storePosition)
     // console.log("data", data)
     }
-}
-
-  // reads the value from th drop down menu and sets the store latlong
-  const selectStore = () => {
-      let storeIndex = document.getElementById('store').value;
-      let store = storeList[storeIndex]
-      console.log("store", store)
-      let storePosition = [parseFloat(store.lat), parseFloat(store.lon)]
-      setStorePosition(storePosition)
-      let storeName = store.display_name
-      setStoreName(storeName)
   }
 
+  // populates store option drop down menu if multiple store ptions
+  useEffect(() => {
+    DisplayStores()
+  }, [storeList])
+  
   // populates store option dropdown menu if more than 1 store returns from api
   const DisplayStores = () => {
     return (
@@ -56,10 +51,16 @@ function AddEditStorePage() {
     )
   }
 
-  // populates store option drop down menu if multiple store ptions
-  useEffect(() => {
-    DisplayStores()
-  }, [storeList])
+  // reads the value from the drop down menu and sets the store latlong
+  const selectStore = () => {
+      let storeIndex = document.getElementById('store').value;
+      let store = storeList[storeIndex]
+      console.log("store", store)
+      let storePosition = [parseFloat(store.lat), parseFloat(store.lon)]
+      setStorePosition(storePosition)
+      let storeName = store.display_name
+      setStoreName(storeName)
+  }
 
   // handlers
   const handleFormSubmit = async (event) => {
@@ -86,18 +87,19 @@ function AddEditStorePage() {
   // render
   return ( 
     <div className="container mt-4">
-      <h2>Add Store Page</h2>
+      <h1>Add Store Page</h1>
       <hr />
-      <DisplayStores />
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>
           <Form.Label>Name</Form.Label>
           <Form.Control onChange={getStoreLocation} placeholder="name or address" />
         </Form.Group>
+      <DisplayStores />
         <br />
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <Form.Control placeholder="envelope" />
+          <EnvelopeDropdown />
+          {/* <Form.Control placeholder="envelope" /> */}
         </Form.Group>
         <br />
         <Form.Group>
