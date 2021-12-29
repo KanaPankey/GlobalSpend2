@@ -139,7 +139,7 @@ function HomePage(props) {
         <br />
         <Form.Group>
           <Form.Label>Store</Form.Label>
-          <div><StoreDropdown /></div>
+          <div><StoreDropdown defaultValue={props.userStore && props.userStore.id}/></div>
           {/* <Form.Control placeholder="store" defaultValue={props.userStore && props.userStore.id}/> */}
         </Form.Group>
         <br />

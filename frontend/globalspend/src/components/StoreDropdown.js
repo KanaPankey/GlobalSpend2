@@ -25,7 +25,9 @@ function StoreDropdown(props) {
     <select id="store" >  
         {storeList.map((store, index) => {
         return (     
-            <option key={index} value={store.id}>{store.store_name}</option>
+          props.defaultValue == store.id
+          ? <option key={index} value={store.id} selected>{store.store_name}</option>
+          : <option key={index} value={store.id}>{store.store_name}</option>
         )
         })}
     </select>
