@@ -71,18 +71,20 @@ function App() {
   
   
   // get user's current position
-  if (window.navigator.geolocation) {
-    const success = (position) => {
-      const data = position
-      setUserPosition([data.coords.latitude, data.coords.longitude])
+  useEffect(() => {
+    if (window.navigator.geolocation) {
+      const success = (position) => {
+        const data = position
+        setUserPosition([data.coords.latitude, data.coords.longitude])
+      }
+      
+      const error = (error) => {
+        console.log(error)
+      }
+      
+      window.navigator.geolocation.getCurrentPosition(success, error)
     }
-    
-    const error = (error) => {
-      console.log(error)
-    }
-    
-    window.navigator.geolocation.getCurrentPosition(success, error)
-  }
+  }, [])
   
   // get list of stores
   useEffect(() => {
@@ -120,20 +122,18 @@ function App() {
       let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
 
       let distanceKM = (R * c)/1000.0
-      let distance = Math.round(distanceKM, 3)
-
-      // let distance = 2 * R * Math.asin(Math.sqrt(Math.sin(diffLat/2) * Math.sin(diffLat/2) + Math.cos(rUserLat) * Math.cos(rStoreLat) * Math.sin(diffLong/2) * Math.sin(diffLong/2)))
+      let distance = distanceKM.toFixed(3)
 
       // creates an array with store id and the distance from the user
       distanceList.push([storeList[i], distance])
     }
-    console.log(distanceList)
+    // console.log("distance list", distanceList)  // **************************************************
 
     // determine if there are any stores in a given radius and, if so, which is closest
-    let radius = 100
+    let radius = 5
     let distClosestStore = radius // any store must be closer than the radius distance from user location to count
     let ClosestStoreObj = null
-
+    
     // check if store is closer than previous ones
     for (let i = 0; i < distanceList.length; i++) {
       if (distanceList[i][1] < distClosestStore) {
@@ -144,17 +144,13 @@ function App() {
 
     // console.log("closest store obj", ClosestStoreObj)
     if (distClosestStore < radius) {
+      // console.log("setuserstore", ClosestStoreObj)   // ********************************************
       setUserStore(ClosestStoreObj)
     } 
     
-  }, [storeList])
+  }, [storeList, userPosition])
 
-  // this is what we need
-  // useEffect(() => {
-
-  // }, [userStore])
   
-
   const renderNavbar = () => {
     return(
         <Navbar bg="success" expand="sm">
