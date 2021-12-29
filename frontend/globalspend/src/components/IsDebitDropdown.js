@@ -3,7 +3,7 @@ function IsDebitDropdown(props) {
   return (
     <select id="isDebit" >  
       return (     
-          <option key='1' value={true}>Debit</option>
+          <option key='1' value={true} selected>Debit</option>
           <option key='2' value={false}>Deposit</option>
       )
     </select>
