@@ -34,7 +34,7 @@ function DeleteEnvelopePage(props) {
 
   // render
   return (
-    <div>
+    <div className="container">
       {envelope && <h1>Are you sure you want to delete {envelope.envelope_name}?</h1>}
       <button onClick={ deleteEnvelope }>Yes</button>
       <button onClick={ doNotDelete }>No</button>

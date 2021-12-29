@@ -46,7 +46,7 @@ function AddEditEnvelopePage() {
 
   // render
   return (
-    <div>
+    <div className="container">
       <h2>{action} Envelope Page</h2>
       <hr />
       <Form onSubmit={handleFormSubmit}>

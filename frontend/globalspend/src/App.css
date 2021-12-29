@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+
+}
+
+html, body, body > div, .app{
+  background-color: rgb(244, 250, 244);
 }
 
 .App-logo {
@@ -45,3 +50,6 @@ a:link a:visited {
   color: green
 }
 
+.nav-link {
+  color: whitesmoke;
+}

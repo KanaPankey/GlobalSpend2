@@ -47,7 +47,7 @@ function EditStorePage() {
 
   // render
   return (
-    <div>
+    <div className="container">
       <h2>Edit Store Page</h2>
       <hr />
       <Form onSubmit={handleFormSubmit}>

@@ -114,7 +114,7 @@ function HomePage(props) {
 
   // render
   return (
-    <div className="container">
+    <div className="container" style={{}}>
       <hr />
       <TypicalAmtTiles />
       <hr />
@@ -145,9 +145,11 @@ function HomePage(props) {
         </Form.Group>
 
         <br />
-        <Button variant="primary" type="submit">
-          Add Transaction
-        </Button>  
+        <div className="text-center">
+          <Button variant="primary" type="submit">
+            Add Transaction
+          </Button>  
+        </div>
       </Form>  
     </div>
   )

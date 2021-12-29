@@ -75,7 +75,7 @@ function TransactionListPage(props) {
 
   // render
   return (
-    <div>
+    <div className="container">
       <h1>Transaction List Page</h1>
       <div>{ renderTransactionList() }</div>
       <Link to={`/`}><button>Add Transaction</button></Link>

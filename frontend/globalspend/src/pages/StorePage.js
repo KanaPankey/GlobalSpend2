@@ -38,7 +38,7 @@ function StorePage(props) {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>Store Page</h1>
       { renderStore() }
       <Link to={`/store/${params.storeID}/edit`}><button>Edit Store</button></Link>

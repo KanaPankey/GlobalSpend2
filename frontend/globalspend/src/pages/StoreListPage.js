@@ -51,7 +51,7 @@ function StoreListPage(props) {
     }
 
     return (
-      <div>
+      <div className="container">
         <h1>StoreList Page</h1>
         { renderStoreList(storeLists) }
         <Link to={`/store/add`}><button>Add Store</button></Link>

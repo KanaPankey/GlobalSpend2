@@ -34,7 +34,7 @@ function DeleteTransactionPage(props) {
 
   // render
   return (
-    <div>
+    <div className="container">
       {transaction && <h1>Are you sure you want to delete {transaction.store}?</h1>}
       <button onClick={ deleteTransaction }>Yes</button>
       <button onClick={ doNotDelete }>No</button>

@@ -31,7 +31,7 @@ function ConverterPage(props) {
   }
   
   return (
-    <div>
+    <div className="container">
       <h1>Converter Page</h1>
 
       <Form onSubmit={ handleFormSubmit }>

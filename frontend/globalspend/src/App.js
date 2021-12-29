@@ -157,7 +157,7 @@ function App() {
 
   const renderNavbar = () => {
     return(
-        <Navbar bg="light" expand="sm">
+        <Navbar bg="success" expand="sm">
           <Container>
             <Navbar.Brand href="/">GlobalSpend</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -176,9 +176,9 @@ function App() {
               </Nav>
             </Navbar.Collapse>
           </Container>
-          <Container>
+          <div className="text-right mx-5" style={{color: 'white'}}>
             <Nav.Link href='/converter/'>Converter</Nav.Link>
-          </Container>
+          </div>
         </Navbar>
     )
   }

@@ -85,7 +85,7 @@ function AddEditStorePage() {
 
   // render
   return ( 
-    <div>
+    <div className="container">
       <h2>Add Store Page</h2>
       <hr />
       <DisplayStores />
