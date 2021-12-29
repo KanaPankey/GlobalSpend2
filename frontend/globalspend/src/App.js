@@ -177,7 +177,7 @@ function App() {
             </Navbar.Collapse>
           </Container>
           <div className="text-right mx-5" style={{color: 'white'}}>
-            <Nav.Link href='/converter/'>Converter</Nav.Link>
+            <Nav.Link href='/converter/' style={{color:'black'}}>Converter</Nav.Link>
           </div>
         </Navbar>
     )

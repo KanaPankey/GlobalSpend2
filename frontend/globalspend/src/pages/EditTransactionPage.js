@@ -46,7 +46,7 @@ function EditTransactionPage() {
 
   // render
   return (
-    <div className="container">
+    <div className="container mt-4">
       <h2>Edit Transaction Page</h2>
       <hr />
       <Form onSubmit={handleFormSubmit}>

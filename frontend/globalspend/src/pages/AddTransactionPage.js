@@ -43,7 +43,7 @@ function AddTransactionPage(props) {
 
   // render
   return (
-    <div className="container">
+    <div className="container mt-4">
       <hr />
       <Form onSubmit={handleFormSubmit}>
         <br />

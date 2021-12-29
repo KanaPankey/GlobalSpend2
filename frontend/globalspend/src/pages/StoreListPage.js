@@ -51,8 +51,8 @@ function StoreListPage(props) {
     }
 
     return (
-      <div className="container">
-        <h1>StoreList Page</h1>
+      <div className="container mt-4">
+        <h1>Store List</h1>
         { renderStoreList(storeLists) }
         <Link to={`/store/add`}><button>Add Store</button></Link>
       </div>

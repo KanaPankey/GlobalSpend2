@@ -34,7 +34,7 @@ function DeleteStorePage(props) {
 
   // render
   return (
-    <div className="container">
+    <div className="container mt-4">
       {store && <h1>Are you sure you want to delete {store.store_name}?</h1>}
       <button onClick={ deleteStore }>Yes</button>
       <button onClick={ doNotDelete }>No</button>

@@ -43,7 +43,7 @@ function TransactionPage(props) {
   }
 
   return (
-    <div className="container">
+    <div className="container mt-4">
       <h1>Transaction Page</h1>
       { renderTransaction() }
       <Link to={`/transaction/${params.transactionID}/edit`}><button>Edit Transaction</button></Link>

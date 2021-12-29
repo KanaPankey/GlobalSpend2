@@ -14,7 +14,8 @@ function EnvelopeListPage(props) {
 
   // render
   return (
-    <div className='container'>
+    <div className='container mt-4'>
+      <h1>Envelope List</h1>
       <EnvelopeBarList />
       <div className="text-center">
         <Link to={`/envelope/add`}><Button variant="success">Add Envelope</Button></Link>

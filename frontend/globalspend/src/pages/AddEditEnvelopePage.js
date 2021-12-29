@@ -46,7 +46,7 @@ function AddEditEnvelopePage() {
 
   // render
   return (
-    <div className="container">
+    <div className="container mt-4">
       <h2>{action} Envelope Page</h2>
       <hr />
       <Form onSubmit={handleFormSubmit}>
@@ -66,9 +66,11 @@ function AddEditEnvelopePage() {
         </Form.Group>
 
         <br />
-        <Button variant="primary" type="submit">
-          {action} Envelope
-        </Button>  
+        <div className="text-center">
+          <Button variant="success" type="submit">
+            {action} Envelope
+          </Button>  
+        </div>
       </Form>  
     </div>
   )

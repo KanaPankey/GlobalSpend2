@@ -71,7 +71,7 @@ function EnvelopePage(props) {
   }
 
   return (
-    <div className="container">
+    <div className="container mt-4">
       <EnvelopeBar />
       { renderTransactionList() }
       <Link to={`/envelope/${params.envelopeID}/edit`}><button>Edit Envelope</button></Link>

@@ -30,10 +30,10 @@ function EnvelopeBarList(props) {
       <Table>
         <thead>
           <tr>
-            <th className='w-25'>Envelope</th>
             <th></th>
             <th></th>
-            <th colSpan={2}>Money left</th>
+            <th></th>
+            <th></th>
             <th></th>
             <th></th>
           </tr>

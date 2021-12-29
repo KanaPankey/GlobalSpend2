@@ -85,7 +85,7 @@ function AddEditStorePage() {
 
   // render
   return ( 
-    <div className="container">
+    <div className="container mt-4">
       <h2>Add Store Page</h2>
       <hr />
       <DisplayStores />
@@ -118,7 +118,7 @@ function AddEditStorePage() {
         </Form.Group>
 
         <br />
-        <Button variant="primary" type="submit">
+        <Button variant="success" type="submit">
           Add Store
         </Button>  
       </Form>  

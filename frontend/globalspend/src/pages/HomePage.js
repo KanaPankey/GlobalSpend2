@@ -114,7 +114,7 @@ function HomePage(props) {
 
   // render
   return (
-    <div className="container" style={{}}>
+    <div className="container mt-4">
       <hr />
       <TypicalAmtTiles />
       <hr />
@@ -146,7 +146,7 @@ function HomePage(props) {
 
         <br />
         <div className="text-center">
-          <Button variant="primary" type="submit">
+          <Button variant="success" type="submit">
             Add Transaction
           </Button>  
         </div>
