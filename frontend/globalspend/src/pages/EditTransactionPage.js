@@ -2,6 +2,9 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Form, Button } from "react-bootstrap"
 import BackendAPI from "../api/BackendAPI"
 import { useEffect, useState } from 'react'
+import EnvelopeDropdown from "../components/EnvelopeDropdown"
+import StoreDropdown from "../components/StoreDropdown"
+import IsDebitDropdown from "../components/IsDebitDropdown"
 
 function EditTransactionPage() {
   // router props
@@ -59,6 +62,7 @@ function EditTransactionPage() {
           <Form.Label>Spent in local currency</Form.Label>
           <Form.Control placeholder="amt in local" defaultValue={transaction && transaction.original_transaction_amt}/>
         </Form.Group>
+        <br />
         <Form.Group>
           <Form.Label>Spent in home currency</Form.Label>
           <Form.Control placeholder="amt in home" defaultValue={transaction && transaction.home_transaction_amt}/>
@@ -66,16 +70,22 @@ function EditTransactionPage() {
         <br />
         <Form.Group>
           <Form.Label>Debit or deposit</Form.Label>
-          <Form.Control placeholder="true or false" defaultValue={transaction && transaction.is_debit_transaction}/>
+          <div><IsDebitDropdown /></div>
+          {/* <Form.Control placeholder="true or false" defaultValue={transaction && transaction.is_debit_transaction}/> */}
         </Form.Group>
+        <br />
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <Form.Control placeholder="envelope" defaultValue={transaction && transaction.envelope.envelope_name} />
+          <div><EnvelopeDropdown /></div>
+          {/* <Form.Control placeholder="envelope" defaultValue={transaction && transaction.envelope.envelope_name} /> */}
         </Form.Group>
+        <br />
         <Form.Group>
           <Form.Label>Store</Form.Label>
-          <Form.Control placeholder="store" defaultValue={transaction && transaction.store} />
+          <div><StoreDropdown /></div>
+          {/* <Form.Control placeholder="store" defaultValue={transaction && transaction.store} /> */}
         </Form.Group>
+        <br />
         <Form.Group>
           <Form.Label>Notes</Form.Label>
           <Form.Control placeholder="notes" defaultValue={transaction && transaction.notes} />

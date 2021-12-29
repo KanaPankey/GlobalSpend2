@@ -47,6 +47,7 @@ function AddEditStorePage() {
                 <option value={index}>{store.display_name}</option>
             )
             })}
+            <option value={20}>Custom Store: Add info below</option>
         </select>
     )
   }
@@ -54,18 +55,25 @@ function AddEditStorePage() {
   // handlers
   const handleFormSubmit = async (event) => {
     event.preventDefault()
+
+    let storeName = ''
+    let storePosition = []
     
-    // reads the value from the drop down menu and sets the store latlong
-    let storeIndex = document.getElementById('store').value;
-    let store = storeList[storeIndex]
-    console.log("store", store)
-    let storePosition = [parseFloat(store.lat), parseFloat(store.lon)]
+    if (document.getElementById('store').value != '20') {
+      // reads the value from the drop down menu and sets the store latlong
+      let storeIndex = document.getElementById('store').value;
+      let store = storeList[storeIndex]
+      console.log("store", store)
+      storePosition = [parseFloat(store.lat), parseFloat(store.lon)]
+  
+      // reads the value from the drop down menu and sets store name
+      let storeInfoArray = store.display_name.split(',')
+      storeName = storeInfoArray[0]
+    } else {
+      storeName = event.target.elements[7].value
+      storePosition = [event.target.elements[8].value, event.target.elements[9].value]
+    }
 
-    // reads the value from the drop down menu and sets store name
-    let storeInfoArray = store.display_name.split(',')
-    let storeName = storeInfoArray[0]
-
-    console.log("event", event)
 //************************figure out how to input either user input from input boxes or dropdown menu */
     const storeObj = {
       store_name: storeName,                //event.target.elements[0].value,
@@ -92,7 +100,7 @@ function AddEditStorePage() {
       <hr />
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>
-          <Form.Label>Name</Form.Label>
+          <Form.Label>Search for Store</Form.Label>
           <Form.Control onChange={getStoreLocation} placeholder="name or address" />
         </Form.Group>
       <DisplayStores />
@@ -119,6 +127,18 @@ function AddEditStorePage() {
         <Form.Group>
           <Form.Label>Typical Amount 4</Form.Label>
           <Form.Control placeholder="amt_4" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Custom Store: Name</Form.Label>
+          <Form.Control placeholder="latitude" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Custom Store: Latitude</Form.Label>
+          <Form.Control placeholder="latitude" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Custom Store: Longitude</Form.Label>
+          <Form.Control placeholder="longitude" />
         </Form.Group>
 
         <br />
