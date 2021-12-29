@@ -7,6 +7,7 @@ import BackendAPI from '../api/BackendAPI'
 function StorePage(props) {
   // states
   const [store, setStore] = useState(null)
+  const [envelopeList, setEnvelopeList] = useState([])
 
   const params = useParams()
 
@@ -22,6 +23,27 @@ function StorePage(props) {
     getStore()
   }, [])
 
+  useEffect(() => {
+    const getEnvelopeList = async() => {
+      const data = await BackendAPI.fetchEnvelopes()
+      if (data) {
+        setEnvelopeList(data)
+      }
+    }
+  
+    getEnvelopeList()
+  }, [])
+  
+  // envelope id to name
+  const displayEnvelopeName = (envelopeID) => {
+    for (let i = 0; i < envelopeList.length; i++) {
+      if (envelopeList[i].id == envelopeID) {
+        return envelopeList[i].envelope_name
+      }
+    }
+  }
+
+  // render helper
   const renderStore = () => {
     if (!store) {
       return null
@@ -30,13 +52,14 @@ function StorePage(props) {
     return (
       <div>
         <h3>Store: {store.store_name}</h3>
-        <h3>Envelope: {store.envelope}</h3>
+        <h3>Envelope: {displayEnvelopeName(store.envelope)}</h3>
         <h3>Typical spend amount: {store.amt_1}, {store.amt_2}, {store.amt_3}, {store.amt_4}</h3>
 
       </div>
     )
   }
 
+  // render
   return (
     <div className="container mt-4">
       <h1>Store Page</h1>

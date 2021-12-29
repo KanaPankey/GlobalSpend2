@@ -43,7 +43,6 @@ function TransactionListPage(props) {
         return storeList[i].store_name
       }
     }
-
   }
 
   // render helpers

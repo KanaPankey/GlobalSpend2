@@ -15,14 +15,13 @@ import Button from 'react-bootstrap/Button'
 
 function EnvelopePage(props) {
   // states
-  const [envelope, setEnvelope] = useState(null)
+  const [storeList, setStoreList] = useState([])
   const [transactionListsByEnvelope, setTransactionListsByEnvelope] = useState([])
 
   const params = useParams()
 
   //effects
   useEffect(() => {
-
     // get the transactions by envelope
     const getTransactionLists = async () => {
       const data = await BackendAPI.fetchTransactions()
@@ -41,9 +40,27 @@ function EnvelopePage(props) {
     getTransactionLists()
   }, [])
 
+  useEffect(() => {
+    const getStoreLists = async() => {
+      const data = await BackendAPI.fetchStores()
+      if (data) {
+        setStoreList(data)
+      }
+    }
+  
+    getStoreLists()
+  }, [])
+  
+  // store id to name
+  const displayStoreName = (storeID) => {
+    for (let i = 0; i < storeList.length; i++) {
+      if (storeList[i].id == storeID) {
+        return storeList[i].store_name
+      }
+    }
+  }
 
   // render helpers
-
   const renderTransactionList = () => {
     return (
       <Table striped bordered hover>
@@ -62,7 +79,7 @@ function EnvelopePage(props) {
               <tr key={index}>
                 <td>{transactionList.id}</td>
                 <td>{transactionList.transaction_date}</td>
-                <td>{transactionList.store}</td>
+                <td>{displayStoreName(transactionList.store)}</td>
                 <td><Link to={`/transaction/${transactionList.id}`}>{transactionList.original_transaction_amt}</Link></td>
               </tr>
             
