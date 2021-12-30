@@ -150,9 +150,11 @@ function App() {
   const renderNavbar = () => {
     return(
         <Navbar variant='dark' bg="success" expand="sm">
-          <Container className="navItem">
+          <Container className="navItem mx-5">
             <Navbar.Brand href="/">GlobalSpend</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          </Container>
+          <Container className='text-right'>
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
                 <Nav.Link href="/envelope/">Envelopes</Nav.Link>
@@ -168,9 +170,6 @@ function App() {
               </Nav>
             </Navbar.Collapse>
           </Container>
-          <div className="text-right mx-5" style={{color: 'white'}}>
-            <Nav.Link href='/converter/' style={{color:'whitesmoke'}}>Converter</Nav.Link>
-          </div>
         </Navbar>
     )
   }

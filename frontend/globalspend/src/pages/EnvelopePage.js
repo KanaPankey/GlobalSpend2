@@ -66,7 +66,6 @@ function EnvelopePage(props) {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
             <th>Date</th>
             <th>Store</th>
             <th>Local Amt</th>
@@ -77,7 +76,6 @@ function EnvelopePage(props) {
           return (
             
               <tr key={index}>
-                <td>{transactionList.id}</td>
                 <td>{transactionList.transaction_date}</td>
                 <td>{displayStoreName(transactionList.store)}</td>
                 <td><Link to={`/transaction/${transactionList.id}`}>{transactionList.original_transaction_amt}</Link></td>
