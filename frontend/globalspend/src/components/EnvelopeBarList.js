@@ -1,9 +1,10 @@
+// react
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import ProgressBar from 'react-bootstrap/ProgressBar'
 
-// table component
-import {Table} from 'react-bootstrap'
+// css
+import ProgressBar from 'react-bootstrap/ProgressBar'
+import Table from 'react-bootstrap/Table'
 
 // APIs
 import BackendAPI from '../api/BackendAPI'

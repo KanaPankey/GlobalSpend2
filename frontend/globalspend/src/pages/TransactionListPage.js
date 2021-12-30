@@ -48,7 +48,7 @@ function TransactionListPage(props) {
   // render helpers
   const renderTransactionList = () => {
     return (
-      <Table striped bordered>
+      <Table striped bordered >
         <thead>
           <tr>
             <th>#</th>

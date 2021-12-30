@@ -2,6 +2,9 @@ import { useNavigate, useParams } from "react-router-dom"
 import BackendAPI from "../api/BackendAPI"
 import { useEffect, useState } from 'react'
 
+// css
+import Button from 'react-bootstrap/Button'
+
 function DeleteEnvelopePage(props) {
   // routers
   const params = useParams()
@@ -9,7 +12,6 @@ function DeleteEnvelopePage(props) {
 
   // states
   const [envelope, setEnvelope] = useState(null)
-
 
   // effects
   useEffect (() => {
@@ -20,7 +22,6 @@ function DeleteEnvelopePage(props) {
 
     getEnvelope()
   }, [] )
-
   
   // handlers
   const deleteEnvelope = async () => {
@@ -34,12 +35,15 @@ function DeleteEnvelopePage(props) {
 
   // render
   return (
-    <div className="container mt-4">
-      {envelope && <h1>Are you sure you want to delete {envelope.envelope_name}?</h1>}
-      <button onClick={ deleteEnvelope }>Yes</button>
-      <button onClick={ doNotDelete }>No</button>
+    <div className="container mt-4 text-center">
+      {envelope && <h1>Are you sure you want to delete the "{envelope.envelope_name}" envelope?</h1>}
+      <br />
+      <hr />
+      <div>
+        <Button onClick={ deleteEnvelope } variant="success">Yes</Button>{' '}
+        <Button onClick={ doNotDelete } variant="success">No</Button>
+      </div>
     </div>)
-
 }
 
 export default DeleteEnvelopePage;

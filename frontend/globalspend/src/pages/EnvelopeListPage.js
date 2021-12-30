@@ -1,10 +1,7 @@
-import { useEffect, useState } from 'react'
+// react
 import { Link } from 'react-router-dom'
 
-// APIs
-import BackendAPI from '../api/BackendAPI'
-
-// CSS
+// css
 import Button from 'react-bootstrap/Button'
 
 // components

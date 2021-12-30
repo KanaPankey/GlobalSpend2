@@ -2,8 +2,6 @@
 import { useEffect, useState } from 'react'
 
 // css
-// import 'cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css'  // table formatter
-// import 'cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js'   // table formatter
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav, Navbar, NavDropdown, Container } from 'react-bootstrap';
@@ -38,9 +36,9 @@ function App() {
   // states...home and spend rates are in relation to EUR
   const [homeCurrency, setHomeCurrency] = useState('USD') // future multi-currency functionality
   const [spendCurrency, setSpendCurrency] = useState('NOK') // future multi-currency functionality
-  const [homeRate, setHomeRate] = useState(1.13005)  // hard-coded to prevent API calls
-  const [spendRate, setSpendRate] = useState(9.959586)  // hard-coded to prevent API calls
-  const [relativeRate, setRelativeRate] = useState(null)  // hard-coded to prevent API calls
+  const [homeRate, setHomeRate] = useState(null) 
+  const [spendRate, setSpendRate] = useState(null) 
+  const [relativeRate, setRelativeRate] = useState(null)  
   
   // states...for userlocation and default store
   const [storeList, setStoreList] = useState([])
@@ -53,14 +51,13 @@ function App() {
     const getConversionRate = async() => {
       const data = await ConverterAPI.fetchRates()
       if (data) {
-        // console.log("conversion rate", data)  // ********************************************
         let getHomeRate = data.rates.USD
         setHomeRate(getHomeRate)
         let getSpendRate = data.rates.NOK
         setSpendRate(getSpendRate)
       }
     }
-    // getConversionRate()  
+    getConversionRate()  
   }, [])
   
   // calculate relative exchange rate between home and spend currencies through EUR
@@ -98,7 +95,8 @@ function App() {
     getStores()
   }, [])  
 
-  // get lat and long from each store and compare to userlocation...sets user store
+  // get lat and long from each store and compare to userlocation
+  // sets user store to store closest to user current position if it's within a given radius
   useEffect(() => {
     const distanceList = []
     for (let i = 0; i < storeList.length; i++) {
@@ -127,10 +125,9 @@ function App() {
       // creates an array with store id and the distance from the user
       distanceList.push([storeList[i], distance])
     }
-    // console.log("distance list", distanceList)  // **************************************************
 
     // determine if there are any stores in a given radius and, if so, which is closest
-    let radius = 5
+    let radius = 0.3 // in km
     let distClosestStore = radius // any store must be closer than the radius distance from user location to count
     let ClosestStoreObj = null
     
@@ -142,8 +139,8 @@ function App() {
       }
     }
 
+    // if closest store is closer than maximum radius
     if (distClosestStore < radius) {
-      // console.log("setuserstore", ClosestStoreObj)   // ********************************************
       setUserStore(ClosestStoreObj)
     } 
     
@@ -152,8 +149,8 @@ function App() {
   
   const renderNavbar = () => {
     return(
-        <Navbar bg="success" expand="sm">
-          <Container>
+        <Navbar variant='dark' bg="success" expand="sm">
+          <Container className="navItem">
             <Navbar.Brand href="/">GlobalSpend</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -172,7 +169,7 @@ function App() {
             </Navbar.Collapse>
           </Container>
           <div className="text-right mx-5" style={{color: 'white'}}>
-            <Nav.Link href='/converter/' style={{color:'black'}}>Converter</Nav.Link>
+            <Nav.Link href='/converter/' style={{color:'whitesmoke'}}>Converter</Nav.Link>
           </div>
         </Navbar>
     )
@@ -202,9 +199,7 @@ function App() {
           <Route exact path="/transaction/:transactionID/delete" element={<DeleteTransactionPage />} />
         </Routes>
       </BrowserRouter>
-
     </div>
-
   );
 }
 
