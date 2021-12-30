@@ -7,6 +7,10 @@ html, body, body > div, .app{
   background-color: rgb(244, 250, 244);
 }
 
+h1 {
+  display: inline;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

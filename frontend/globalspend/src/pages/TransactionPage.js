@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
+// CSS
+import Button from 'react-bootstrap/Button'
+
 // APIs
 import BackendAPI from '../api/BackendAPI'
 
@@ -85,11 +88,12 @@ function TransactionPage(props) {
 
   // render
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 text-center">
       <h1>Transaction Page</h1>
       { renderTransaction() }
-      <Link to={`/transaction/${params.transactionID}/edit`}><button>Edit Transaction</button></Link>
-      <Link to={`/transaction/${params.transactionID}/delete`}><button>Delete Transaction</button></Link>
+      <br />
+      <Link to={`/transaction/${params.transactionID}/edit`}><Button variant='success'>Edit Transaction</Button></Link>
+      <Link to={`/transaction/${params.transactionID}/delete`}><Button className="mx-4" variant='success'>Delete Transaction</Button></Link>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-import { Table } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 
 // APIs
 import BackendAPI from '../api/BackendAPI'
@@ -48,7 +48,7 @@ function TransactionListPage(props) {
   // render helpers
   const renderTransactionList = () => {
     return (
-      <Table striped bordered hover>
+      <Table striped bordered>
         <thead>
           <tr>
             <th>#</th>
@@ -80,7 +80,13 @@ function TransactionListPage(props) {
     <div className="container mt-4">
       <h1>Transaction List</h1>
       <div>{ renderTransactionList() }</div>
-      <Link to={`/`}><button>Add Transaction</button></Link>
+      <div className="text-center">
+        <Link to={`/`}>
+          <Button variant="success" type="submit">
+            Add Transaction
+          </Button>  
+        </Link>
+      </div>
     </div>
   )
 }

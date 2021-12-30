@@ -94,14 +94,10 @@ function EnvelopePage(props) {
     <div className="container mt-4">
       <EnvelopeBar />
       { renderTransactionList() }
-      <Link to={`/envelope/${params.envelopeID}/edit`}><button>Edit Envelope</button></Link>
-      <Link to={`/envelope/${params.envelopeID}/delete`}><button>Delete Envelope</button></Link>
       <div className="text-center">
-        <Link to={`/`}>
-          <Button variant="success" type="submit">
-            Add Transaction
-          </Button> 
-        </Link> 
+        <Link to={`/envelope/${params.envelopeID}/edit`}><Button variant="success">Edit Envelope</Button></Link>
+        <Link to={`/envelope/${params.envelopeID}/delete`}><Button  className="mx-4"variant="success">Delete Envelope</Button></Link>
+        <Link to={`/`}><Button variant="success" >Add Transaction</Button> </Link> 
       </div>
     </div>
   )
