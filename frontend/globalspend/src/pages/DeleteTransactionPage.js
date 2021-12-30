@@ -13,7 +13,6 @@ function DeleteTransactionPage(props) {
   // states
   const [transaction, setTransaction] = useState(null)
 
-
   // effects
   useEffect (() => {
     const getTransaction = async () => {
@@ -24,7 +23,6 @@ function DeleteTransactionPage(props) {
     getTransaction()
   }, [] )
 
-  
   // handlers
   const deleteTransaction = async () => {
     // change current amt for the envelope of transaction accounting for debit/deposit
@@ -32,7 +30,7 @@ function DeleteTransactionPage(props) {
     let newCurrentAmt 
     if (envelope) {
       let envelopeCurrentAmt = envelope.current_amt
-      if (transaction.isDebit) {
+      if (transaction.is_debit_transaction) {
         newCurrentAmt = envelopeCurrentAmt + transaction.home_transaction_amt
       } else {
         newCurrentAmt = envelopeCurrentAmt - transaction.home_transaction_amt

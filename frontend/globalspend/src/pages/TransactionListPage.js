@@ -48,10 +48,9 @@ function TransactionListPage(props) {
   // render helpers
   const renderTransactionList = () => {
     return (
-      <Table striped bordered >
+      <Table striped bordered responsive>
         <thead>
           <tr>
-            <th>#</th>
             <th>Date</th>
             <th>Store</th>
             <th>Local Amt</th>
@@ -62,7 +61,6 @@ function TransactionListPage(props) {
         {transactionLists.map((transactionList, index) => {
           return (     
             <tr key={index}>
-              <td>{transactionList.id}</td>
               <td>{transactionList.transaction_date}</td>
               <td>{displayStoreName(transactionList.store)}</td>
               <td><Link to={`/transaction/${transactionList.id}`} style={{color:'black'}}>{transactionList.original_transaction_amt} NOK</Link></td>
@@ -79,6 +77,7 @@ function TransactionListPage(props) {
   return (
     <div className="container mt-4">
       <h1>Transaction List</h1>
+      <hr />
       <div>{ renderTransactionList() }</div>
       <div className="text-center">
         <Link to={`/`}>

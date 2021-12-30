@@ -1,12 +1,16 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { Form, Button } from "react-bootstrap"
-import BackendAPI from "../api/BackendAPI"
 import { useEffect, useState } from 'react'
+
+// api
+import BackendAPI from "../api/BackendAPI"
+
+// components
 import EnvelopeDropdown from "../components/EnvelopeDropdown"
 import StoreDropdown from "../components/StoreDropdown"
 import IsDebitDropdown from "../components/IsDebitDropdown"
 
-function EditTransactionPage() {
+function EditTransactionPage(props) {
   // router props
   const navigate = useNavigate()
   const params = useParams()
@@ -16,10 +20,8 @@ function EditTransactionPage() {
 
   // effects
   useEffect (() => {
-    console.log("in edit transaction", params.transactionID)
     const getTransaction = async () => {
       const data = await BackendAPI.fetchTransactionByID(params.transactionID) 
-      console.log(data)
       setTransaction(data)
     }
 
@@ -30,17 +32,74 @@ function EditTransactionPage() {
   const handleFormSubmit = async (event) => {
     event.preventDefault()
 
+    let homeAmt = (event.target.elements[1].value * props.rate).toFixed(2) 
+
+    // change current amount for the envelope(s) of transaction accounting
+    let newEnvelope = event.target.elements[3].value
+    let newAmt = event.target.elements[1].value
+    let oldAmt = transaction.home_transaction_amt
+    let oldEnvelopeCurrentAmt = null
+    let newEnvelopeCurrentAmt = null
+    let oldEnvelopeUpdatedAmt = null
+    let newEnvelopeUpdatedAmt = null
+
+    const oldEnvelopeData = await BackendAPI.fetchEnvelopeByID(transaction.envelope)
+    if (oldEnvelopeData) {
+      oldEnvelopeCurrentAmt = oldEnvelopeData.current_amt
+    }
+
+    const newEnvelopeData = await BackendAPI.fetchEnvelopeByID(newEnvelope)
+    if (newEnvelopeData) {
+      newEnvelopeCurrentAmt = newEnvelopeData.current_amt
+    }
+
+    // for case when envelope stays the same
+    if (transaction.envelope == newEnvelope) {
+      if (transaction.is_debit_transaction) {
+        oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt + oldAmt - newAmt
+      } else {
+        oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt - oldAmt + newAmt
+      }
+      // update envelope
+      const envelopeObj = {
+        current_amt: oldEnvelopeUpdatedAmt
+      }
+      const doNotNeedVariable = await BackendAPI.updateEnvelope(envelopeObj, transaction.envelope)
+
+    } else {
+      // when envelope changes
+      if (transaction.is_debit_transaction) {
+        oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt + oldAmt
+        newEnvelopeUpdatedAmt = newEnvelopeCurrentAmt - newAmt
+      } else {
+        oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt - oldAmt
+        newEnvelopeUpdatedAmt = newEnvelopeCurrentAmt + newAmt
+      }
+      // update envelopes
+      const envelopeObj1 = {
+        current_amt: oldEnvelopeUpdatedAmt
+      }
+      const doNotNeedVariable = await BackendAPI.updateEnvelope(envelopeObj1, transaction.envelope)
+
+      const envelopeObj2 = {
+        current_amt: newEnvelopeUpdatedAmt
+      }
+      const doNotNeedVariable2 = await BackendAPI.updateEnvelope(envelopeObj2, newEnvelope)
+
+    }
+   
     const transactionObj = {
       transaction_date: event.target.elements[0].value,
-      original_transaction_amt: event.target.elements[1].value,
-      home_transaction_amt: event.target.elements[2].value,
-      is_debit_transaction: event.target.elements[3].value,
-      envelope: event.target.elements[4].value,
-      // store: event.target.elements[5].value,
-      notes: event.target.elements[6].value
+      original_transaction_amt: newAmt,
+      home_transaction_amt: homeAmt,
+      is_debit_transaction: transaction.is_debit_transaction,
+      envelope: event.target.elements[3].value,
+      store: event.target.elements[4].value,
+      notes: event.target.elements[5].value
     }
-    console.log("transobj", transactionObj)
 
+    console.log(transactionObj)
+    
     const data = await BackendAPI.updateTransaction(transactionObj, params.transactionID)
     if (data) {
       navigate(`/transaction/${data.id}`)
@@ -50,7 +109,7 @@ function EditTransactionPage() {
   // render
   return (
     <div className="container mt-4">
-      <h2>Edit Transaction Page</h2>
+      <h1>Edit Transaction Page</h1>
       <hr />
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>
@@ -64,26 +123,18 @@ function EditTransactionPage() {
         </Form.Group>
         <br />
         <Form.Group>
-          <Form.Label>Spent in home currency</Form.Label>
-          <Form.Control placeholder="amt in home" defaultValue={transaction && transaction.home_transaction_amt}/>
-        </Form.Group>
-        <br />
-        <Form.Group>
           <Form.Label>Debit or deposit</Form.Label>
-          <div><IsDebitDropdown /></div>
-          {/* <Form.Control placeholder="true or false" defaultValue={transaction && transaction.is_debit_transaction}/> */}
+          <Form.Control readonly='readonly' defaultValue={transaction && (transaction.is_debit_transaction ? "Debit" : "Deposit")}/>
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
           <div><EnvelopeDropdown defaultValue={transaction && transaction.envelope}/></div>
-          {/* <Form.Control placeholder="envelope" defaultValue={transaction && transaction.envelope.envelope_name} /> */}
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Store</Form.Label>
           <div><StoreDropdown defaultValue={transaction && transaction.store}/></div>
-          {/* <Form.Control placeholder="store" defaultValue={transaction && transaction.store} /> */}
         </Form.Group>
         <br />
         <Form.Group>

@@ -1,10 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { Form, Button } from "react-bootstrap"
-import BackendAPI from "../api/BackendAPI"
 import { useEffect, useState } from 'react'
 
 // api
-import GetStoreLocationAPI from '../api/GetStoreLocationAPI'
+import BackendAPI from "../api/BackendAPI"
+
+// component
 import EnvelopeDropdown from "../components/EnvelopeDropdown"
 
 function EditStorePage() {
@@ -40,8 +41,6 @@ function EditStorePage() {
       envelope: [event.target.elements[1].value]
     }
 
-    console.log("storeobj", storeObj)
-
     const data = await BackendAPI.updateStore(storeObj, params.storeID)
     if (data) {
       navigate(`/store/${data.id}`)
@@ -51,7 +50,7 @@ function EditStorePage() {
   // render
   return (
     <div className="container mt-4">
-      <h2>Edit Store Page</h2>
+      <h1>Edit Store Page</h1>
       <hr />
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>

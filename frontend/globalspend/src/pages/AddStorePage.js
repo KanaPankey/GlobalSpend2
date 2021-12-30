@@ -10,13 +10,10 @@ import EnvelopeDropdown from "../components/EnvelopeDropdown"
 function AddEditStorePage() {
   // router props
   const navigate = useNavigate()
-  const params = useParams()
 
   // states
-  const [store, setStore] = useState(null)
   const [storeList, setStoreList] = useState([])
   const [storePosition, setStorePosition] = useState([])
-  const [storeName, setStoreName] = useState('')
 
   // get store lat long
   const getStoreLocation = async(event) => {
@@ -28,8 +25,6 @@ function AddEditStorePage() {
         } else {
             setStoreList(data)
         }
-    // console.log("store position", storePosition)
-    // console.log("data", data)
     }
   }
 
@@ -74,7 +69,6 @@ function AddEditStorePage() {
       storePosition = [event.target.elements[8].value, event.target.elements[9].value]
     }
 
-//************************figure out how to input either user input from input boxes or dropdown menu */
     const storeObj = {
       store_name: storeName,                //event.target.elements[0].value,
       store_longitude: storePosition[1],
@@ -93,6 +87,27 @@ function AddEditStorePage() {
     }
   }
 
+  // render helper
+  const ifCustomStore = () => {
+    if (document.getElementById('store').value == '20') {
+      return(
+        <>
+          <Form.Group>
+            <Form.Label>Custom Store: Name</Form.Label>
+            <Form.Control placeholder="latitude" />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Custom Store: Latitude</Form.Label>
+            <Form.Control placeholder="latitude" />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Custom Store: Longitude</Form.Label>
+            <Form.Control placeholder="longitude" />
+          </Form.Group>   
+        </>
+      )
+    }
+  }
   // render
   return ( 
     <div className="container mt-4">
@@ -128,19 +143,7 @@ function AddEditStorePage() {
           <Form.Label>Typical Amount 4</Form.Label>
           <Form.Control placeholder="amt_4" />
         </Form.Group>
-        <Form.Group>
-          <Form.Label>Custom Store: Name</Form.Label>
-          <Form.Control placeholder="latitude" />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Custom Store: Latitude</Form.Label>
-          <Form.Control placeholder="latitude" />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Custom Store: Longitude</Form.Label>
-          <Form.Control placeholder="longitude" />
-        </Form.Group>
-
+        <ifCustomStore />
         <br />
         <div className="text-center">
           <Button variant="success" type="submit">

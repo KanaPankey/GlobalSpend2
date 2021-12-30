@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-// table component
-import {Table} from 'react-bootstrap'
-
 // css
 import Button from 'react-bootstrap/Button'
+import {Table} from 'react-bootstrap'
 
 // APIs
 import BackendAPI from '../api/BackendAPI'
@@ -53,7 +51,6 @@ function StoreListPage(props) {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>#</th>
               <th>Store Name</th>
               <th>Envelope</th>
             </tr>
@@ -62,7 +59,6 @@ function StoreListPage(props) {
           {storeLists.map((storeList, index) => {
             return (
               <tr key={index}>
-                <td>{storeList.id}</td>
                 <td><Link to={`/store/${storeList.id}/`} style={{color:'black'}}>{storeList.store_name}</Link></td>
                 {console.log(storeList.envelope)}
                 <td>{displayEnvelopeName(storeList.envelope)}</td>
@@ -77,6 +73,7 @@ function StoreListPage(props) {
     return (
       <div className="container mt-4">
         <h1>Store List</h1>
+        <hr />
         { renderStoreList(storeLists) }
         <div className="text-center">
           <Link to={`/store/add`}>  

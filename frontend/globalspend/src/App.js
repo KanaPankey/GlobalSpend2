@@ -195,7 +195,7 @@ function App() {
           <Route exact path="/envelope/:envelopeID/delete" element={<DeleteEnvelopePage />} />
           <Route exact path="/transaction/" element={<TransactionListPage />} />
           <Route exact path="/transaction/:transactionID" element={<TransactionPage />} />
-          <Route exact path="/transaction/:transactionID/edit" element={<EditTransactionPage />} />
+          <Route exact path="/transaction/:transactionID/edit" element={<EditTransactionPage rate={relativeRate}/>} />
           <Route exact path="/transaction/:transactionID/delete" element={<DeleteTransactionPage />} />
         </Routes>
       </BrowserRouter>

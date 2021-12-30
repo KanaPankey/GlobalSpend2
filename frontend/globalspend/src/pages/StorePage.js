@@ -4,6 +4,10 @@ import { Link, useParams } from 'react-router-dom'
 // APIs
 import BackendAPI from '../api/BackendAPI'
 
+// css
+import Button from 'react-bootstrap/Button'
+import Table from 'react-bootstrap/Table'
+
 function StorePage(props) {
   // states
   const [store, setStore] = useState(null)
@@ -51,10 +55,26 @@ function StorePage(props) {
 
     return (
       <div>
-        <h3>Store: {store.store_name}</h3>
-        <h3>Envelope: {displayEnvelopeName(store.envelope)}</h3>
-        <h3>Typical spend amount: {store.amt_1}, {store.amt_2}, {store.amt_3}, {store.amt_4}</h3>
-
+        <Table striped bordered>
+        <thead>
+          <th></th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Store</td>
+            <td>{store.store_name}</td>
+          </tr>
+          <tr>
+            <td>Envelope</td>
+            <td>{displayEnvelopeName(store.envelope)}</td>
+          </tr>
+          <tr>
+            <td>Typical spend amount</td>
+            <td>{store.amt_1}, {store.amt_2}, {store.amt_3}, {store.amt_4}</td>
+          </tr>
+        </tbody>
+      </Table>
       </div>
     )
   }
@@ -63,9 +83,13 @@ function StorePage(props) {
   return (
     <div className="container mt-4">
       <h1>Store Page</h1>
+      <hr />
       { renderStore() }
-      <Link to={`/store/${params.storeID}/edit`}><button>Edit Store</button></Link>
-      <Link to={`/store/${params.storeID}/delete`}><button>Delete Store</button></Link>
+      <hr />
+      <div className="text-center">
+        <Link to={`/store/${params.storeID}/edit`}><Button variant='success'>Edit Store</Button></Link>{' '}
+        <Link to={`/store/${params.storeID}/delete`}><Button variant='success'>Delete Store</Button></Link>
+      </div>
     </div>
   )
 }

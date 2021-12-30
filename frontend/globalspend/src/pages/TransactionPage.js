@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 
 // CSS
 import Button from 'react-bootstrap/Button'
+import Table from 'react-bootstrap/Table'
 
 // APIs
 import BackendAPI from '../api/BackendAPI'
@@ -74,26 +75,56 @@ function TransactionPage(props) {
     }
 
     return (
-      <div>
-        <h3>Date: {transaction.transaction_date}</h3>
-        <h3>Store: {displayStoreName(transaction.store)}</h3>
-        <h3>Original transaction amt: {transaction.original_transaction_amt}</h3>
-        <h3>Home transaction amt: {transaction.home_transaction_amt}</h3>
-        <h3>Debit or deposit: {transaction.is_debit_transaction ? 'Debit' : 'Deposit'}</h3>
-        <h3>Notes: {transaction.notes}</h3>
-        <h3>Envelope: {displayEnvelopeName(transaction.envelope)}</h3>
-      </div>
+      <Table striped bordered>
+        <thead>
+          <th></th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Date</td>
+            <td>{transaction.transaction_date}</td>
+          </tr>
+          <tr>
+            <td>Store</td>
+            <td>{displayStoreName(transaction.store)}</td>
+          </tr>
+          <tr>
+            <td>Original transaction amt</td>
+            <td>{transaction.original_transaction_amt}</td>
+          </tr>
+          <tr>
+            <td>Home transaction amt</td>
+            <td>{transaction.home_transaction_amt}</td>
+          </tr>
+          <tr>
+            <td>Debit or deposit</td>
+            <td>{transaction.is_debit_transaction ? 'Debit' : 'Deposit'}</td>
+          </tr>
+          <tr>
+            <td>Notes</td>
+            <td>{transaction.notes}</td>
+          </tr>
+          <tr>
+            <td>Envelope</td>
+            <td>{displayEnvelopeName(transaction.envelope)}</td>
+          </tr>
+        </tbody>
+      </Table>
     )
   }
 
   // render
   return (
-    <div className="container mt-4 text-center">
+    <div className="container mt-4">
       <h1>Transaction Page</h1>
-      { renderTransaction() }
-      <br />
-      <Link to={`/transaction/${params.transactionID}/edit`}><Button variant='success'>Edit Transaction</Button></Link>
-      <Link to={`/transaction/${params.transactionID}/delete`}><Button className="mx-4" variant='success'>Delete Transaction</Button></Link>
+      <hr />
+        { renderTransaction() }
+      <div className='text-center'>
+        <hr />
+        <Link to={`/transaction/${params.transactionID}/edit`}><Button variant='success'>Edit Transaction</Button></Link>
+        <Link to={`/transaction/${params.transactionID}/delete`}><Button className="mx-4" variant='success'>Delete Transaction</Button></Link>
+      </div>
     </div>
   )
 }

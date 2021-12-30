@@ -1,6 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom"
-import BackendAPI from "../api/BackendAPI"
 import { useEffect, useState } from 'react'
+
+// APIs
+import BackendAPI from "../api/BackendAPI"
+
+// css
+import Button from 'react-bootstrap/Button'
 
 function DeleteStorePage(props) {
   // routers
@@ -34,10 +39,14 @@ function DeleteStorePage(props) {
 
   // render
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 text-center">
       {store && <h1>Are you sure you want to delete {store.store_name}?</h1>}
-      <button onClick={ deleteStore }>Yes</button>
-      <button onClick={ doNotDelete }>No</button>
+      <br />
+      <hr />
+      <div>
+        <Button onClick={ deleteStore } variant="success">Yes</Button>{' '}
+        <Button onClick={ doNotDelete } variant="success">No</Button>
+      </div>
     </div>)
 
 }
