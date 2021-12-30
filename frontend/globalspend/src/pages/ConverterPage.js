@@ -24,8 +24,9 @@ function ConverterPage(props) {
   const renderConvertedPrice = (price) => {
     return (
       <div>
-        <h2>Price in $: { displayPrice}</h2>
-        <h2>Conversion rate: {props.rate}</h2>
+        <h2>Price in $: { displayPrice == 'NaN' ? '' : displayPrice }</h2>
+        <br />
+        <h6>Conversion rate: {props.rate}</h6>
       </div>
     )
   }
@@ -33,10 +34,11 @@ function ConverterPage(props) {
   return (
     <div className="container mt-4">
       <h1>Converter Page</h1>
-
+      <hr />
       <br />
       { renderConvertedPrice(price) }
       <br />
+      <hr />
 
       <Form onSubmit={ handleFormSubmit }>
         <InputGroup size="lg">
@@ -50,7 +52,6 @@ function ConverterPage(props) {
           </Button>  
         </div>
       </Form>
-
 
     </div>
   )

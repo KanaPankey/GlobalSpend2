@@ -56,7 +56,6 @@ function EnvelopeBar(props) {
   // render
   return (
     <div>
-      <h1>{envelope.envelope_name}</h1>
       { renderEnvelope(envelope) }
     </div>
   )

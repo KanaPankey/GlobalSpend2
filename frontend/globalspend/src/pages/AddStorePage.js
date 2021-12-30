@@ -88,26 +88,7 @@ function AddEditStorePage() {
   }
 
   // render helper
-  const ifCustomStore = () => {
-    if (document.getElementById('store').value == '20') {
-      return(
-        <>
-          <Form.Group>
-            <Form.Label>Custom Store: Name</Form.Label>
-            <Form.Control placeholder="latitude" />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Custom Store: Latitude</Form.Label>
-            <Form.Control placeholder="latitude" />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Custom Store: Longitude</Form.Label>
-            <Form.Control placeholder="longitude" />
-          </Form.Group>   
-        </>
-      )
-    }
-  }
+
   // render
   return ( 
     <div className="container mt-4">
@@ -143,7 +124,19 @@ function AddEditStorePage() {
           <Form.Label>Typical Amount 4</Form.Label>
           <Form.Control placeholder="amt_4" />
         </Form.Group>
-        <ifCustomStore />
+        <Form.Group>
+          <Form.Label>Custom Store: Name</Form.Label>
+          <Form.Control placeholder="latitude" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Custom Store: Latitude</Form.Label>
+          <Form.Control placeholder="latitude" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Custom Store: Longitude</Form.Label>
+          <Form.Control placeholder="longitude" />
+        </Form.Group>
+
         <br />
         <div className="text-center">
           <Button variant="success" type="submit">

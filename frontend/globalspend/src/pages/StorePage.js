@@ -56,25 +56,25 @@ function StorePage(props) {
     return (
       <div>
         <Table striped bordered>
-        <thead>
-          <th></th>
-          <th></th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Store</td>
-            <td>{store.store_name}</td>
-          </tr>
-          <tr>
-            <td>Envelope</td>
-            <td>{displayEnvelopeName(store.envelope)}</td>
-          </tr>
-          <tr>
-            <td>Typical spend amount</td>
-            <td>{store.amt_1}, {store.amt_2}, {store.amt_3}, {store.amt_4}</td>
-          </tr>
-        </tbody>
-      </Table>
+          <thead>
+            <th></th>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Store</td>
+              <td>{store.store_name}</td>
+            </tr>
+            <tr>
+              <td>Envelope</td>
+              <td>{displayEnvelopeName(store.envelope)}</td>
+            </tr>
+            <tr>
+              <td>Typical spend amount</td>
+              <td>{store.amt_1}, {store.amt_2}, {store.amt_3}, {store.amt_4}</td>
+            </tr>
+          </tbody>
+        </Table>
       </div>
     )
   }
