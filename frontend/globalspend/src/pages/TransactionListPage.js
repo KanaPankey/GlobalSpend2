@@ -55,6 +55,7 @@ function TransactionListPage(props) {
             <th>Date</th>
             <th>Store</th>
             <th>Local Amt</th>
+            <th>Home Amt</th>
           </tr>
         </thead>
         <tbody>
@@ -64,8 +65,8 @@ function TransactionListPage(props) {
               <td>{transactionList.id}</td>
               <td>{transactionList.transaction_date}</td>
               <td>{displayStoreName(transactionList.store)}</td>
-              {console.log("transactionlist.store", transactionList.store)}
-              <td><Link to={`/transaction/${transactionList.id}`} style={{color:'black'}}>{transactionList.original_transaction_amt}</Link></td>
+              <td><Link to={`/transaction/${transactionList.id}`} style={{color:'black'}}>{transactionList.original_transaction_amt} NOK</Link></td>
+              <td>$ {transactionList.home_transaction_amt}</td>
             </tr>         
           )
         })}

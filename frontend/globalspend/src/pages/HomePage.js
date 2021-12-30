@@ -127,7 +127,7 @@ function HomePage(props) {
         <br />
         <Form.Group>
           <Form.Label>Debit or deposit</Form.Label>
-          <div><IsDebitDropdown /></div>
+          <div><IsDebitDropdown defaultValue={true}/></div>
           {/* <Form.Control placeholder="true or false" defaultValue={true} /> */}
         </Form.Group>
         <br />

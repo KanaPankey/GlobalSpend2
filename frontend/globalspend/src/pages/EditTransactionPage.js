@@ -76,13 +76,13 @@ function EditTransactionPage() {
         <br />
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <div><EnvelopeDropdown /></div>
+          <div><EnvelopeDropdown defaultValue={transaction && transaction.envelope}/></div>
           {/* <Form.Control placeholder="envelope" defaultValue={transaction && transaction.envelope.envelope_name} /> */}
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Store</Form.Label>
-          <div><StoreDropdown /></div>
+          <div><StoreDropdown defaultValue={transaction && transaction.store}/></div>
           {/* <Form.Control placeholder="store" defaultValue={transaction && transaction.store} /> */}
         </Form.Group>
         <br />

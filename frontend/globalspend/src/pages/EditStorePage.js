@@ -61,7 +61,7 @@ function EditStorePage() {
         <br />
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
-          <EnvelopeDropdown />
+          <EnvelopeDropdown defaultValue={store && store.envelope}/>
           {/* <Form.Control placeholder="envelope" defaultValue={store && store.envelope} /> */}
         </Form.Group>
         <br />
