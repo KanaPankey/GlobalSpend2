@@ -65,8 +65,8 @@ function HomePage(props) {
       }
       const newEnvelope = await BackendAPI.updateEnvelope(envelopeObj, envelopeID)
 
-      // wait for both backend calls to complete
-      if (data && newEnvelope) {
+      // wait for both backend calls to complete...took off newEnvelope
+      if (data) {
         navigate(`/transaction/${data.id}`)
       }
     }
