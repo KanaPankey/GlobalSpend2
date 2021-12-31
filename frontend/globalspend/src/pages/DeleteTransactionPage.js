@@ -27,24 +27,30 @@ function DeleteTransactionPage(props) {
   const deleteTransaction = async () => {
     // change current amt for the envelope of transaction accounting for debit/deposit
     const envelope = await BackendAPI.fetchEnvelopeByID(transaction.envelope)
-    let newCurrentAmt 
+
+    let newCurrentAmt = null
     if (envelope) {
-      let envelopeCurrentAmt = envelope.current_amt
+      let envelopeCurrentAmt = parseFloat(envelope.current_amt)
+      let homeAmt = parseFloat(transaction.home_transaction_amt)
       if (transaction.is_debit_transaction) {
-        newCurrentAmt = envelopeCurrentAmt + transaction.home_transaction_amt
+        newCurrentAmt = envelopeCurrentAmt + homeAmt
       } else {
-        newCurrentAmt = envelopeCurrentAmt - transaction.home_transaction_amt
+        newCurrentAmt = envelopeCurrentAmt - homeAmt
       }
       
       // update envelope
       const envelopeObj = {
         current_amt: newCurrentAmt
       }
-      const newEnvelope = await BackendAPI.updateEnvelope(envelopeObj, transaction.envelope)
+      console.log(envelopeObj)
+      let newEnvelope = await BackendAPI.updateEnvelope(envelopeObj, transaction.envelope)
+
+      if (newEnvelope) {
+        let data = await BackendAPI.deleteTransaction(params.transactionID)
+        navigate(`/transaction/`)
+      }
     }
 
-    const data = await BackendAPI.deleteTransaction(params.transactionID)
-    navigate(`/transaction/`)
   }
   
   const doNotDelete = () => {

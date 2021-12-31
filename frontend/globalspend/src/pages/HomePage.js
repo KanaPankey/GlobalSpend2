@@ -16,10 +16,8 @@ function HomePage(props) {
   const navigate = useNavigate()
   // const params = useParams()
 
-  console.log ("in home page", props.userStore) // *******************************
 
-  // // states
-  // const [ spendAmt, setSpendAmt ] = useState(null)  ***********delete
+  // states
   const spendAmt = null
 
   // handlers
@@ -28,8 +26,6 @@ function HomePage(props) {
 
     // get date to populate transaction
     let today = new Date();
-
-    console.log("rate in homepage", props.rate) // ********************************
     
     // set amount spent in home currency
     let spentInHomeCurrency = event.target.elements[0].value * props.rate
@@ -48,14 +44,9 @@ function HomePage(props) {
       store: event.target.elements[3].value,
       notes: event.target.elements[4].value
     }
-
-    console.log("transobj", transactionObj)  // ***************************************
     
     // create transaction record
     const data = await BackendAPI.addTransaction(transactionObj)
-    if (data) {
-      navigate(`/transaction/${data.id}`)
-    }
     
     // change current amt for the envelope of transaction accounting for debit/deposit
     const envelope = await BackendAPI.fetchEnvelopeByID(envelopeID)
@@ -67,15 +58,21 @@ function HomePage(props) {
       } else {
         newCurrentAmt = envelopeCurrentAmt + homeAmt
       }
-
+      
       // update envelope
       const envelopeObj = {
         current_amt: newCurrentAmt
       }
       const newEnvelope = await BackendAPI.updateEnvelope(envelopeObj, envelopeID)
+
+      // wait for both backend calls to complete
+      if (data && newEnvelope) {
+        navigate(`/transaction/${data.id}`)
+      }
     }
   }
 
+  // changes spend amount 
   const setSpendAmount = (event) => {
     let amtSpent = document.getElementById('amtSpent')
     let spendAmt = event.target.firstChild.data
@@ -128,19 +125,16 @@ function HomePage(props) {
         <Form.Group>
           <Form.Label>Debit or deposit</Form.Label>
           <div><IsDebitDropdown defaultValue={true}/></div>
-          {/* <Form.Control placeholder="true or false" defaultValue={true} /> */}
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Envelope</Form.Label>
           <div><EnvelopeDropdown defaultValue={props.userStore && props.userStore.envelope}/></div>
-          {/* <Form.Control placeholder="envelope" defaultValue={props.userStore && props.userStore.envelope}/> */}
         </Form.Group>
         <br />
         <Form.Group>
           <Form.Label>Store</Form.Label>
           <div><StoreDropdown defaultValue={props.userStore && props.userStore.id}/></div>
-          {/* <Form.Control placeholder="store" defaultValue={props.userStore && props.userStore.id}/> */}
         </Form.Group>
         <br />
         <Form.Group>
