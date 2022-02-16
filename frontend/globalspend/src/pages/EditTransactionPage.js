@@ -8,7 +8,6 @@ import BackendAPI from "../api/BackendAPI"
 // components
 import EnvelopeDropdown from "../components/EnvelopeDropdown"
 import StoreDropdown from "../components/StoreDropdown"
-import IsDebitDropdown from "../components/IsDebitDropdown"
 
 function EditTransactionPage(props) {
   // router props
@@ -38,7 +37,7 @@ function EditTransactionPage(props) {
     let oldAmt = transaction.original_transaction_amt
     let oldHomeAmt = parseFloat(transaction.home_transaction_amt)
     let newAmt = event.target.elements[1].value
-    let newHomeAmt = oldHomeAmt
+    let newHomeAmt = parseFloat(transaction.home_transaction_amt)
     if (oldAmt != newAmt) {
       newHomeAmt = parseFloat(newAmt * props.rate).toFixed(2) 
     }
@@ -54,9 +53,8 @@ function EditTransactionPage(props) {
     const oldEnvelopeData = await BackendAPI.fetchEnvelopeByID(transaction.envelope)
     if (oldEnvelopeData) {
       oldEnvelopeCurrentAmt = parseFloat(oldEnvelopeData.current_amt)
-      console.log("oldenvelope", oldEnvelopeCurrentAmt) //********************* */
     }
-
+    
     const newEnvelopeData = await BackendAPI.fetchEnvelopeByID(newEnvelope)
     if (newEnvelopeData) {
       newEnvelopeCurrentAmt = parseFloat(newEnvelopeData.current_amt)
@@ -78,8 +76,6 @@ function EditTransactionPage(props) {
       if (transaction.is_debit_transaction) {
         oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt + oldHomeAmt
         newEnvelopeUpdatedAmt = newEnvelopeCurrentAmt - newHomeAmt
-        console.log("oldhomeamt", oldHomeAmt)
-        console.log("updatedamt", oldEnvelopeUpdatedAmt)
       } else {
         oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt - oldHomeAmt
         newEnvelopeUpdatedAmt = newEnvelopeCurrentAmt + newHomeAmt
