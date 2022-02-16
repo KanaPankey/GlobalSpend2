@@ -20,7 +20,6 @@ function EnvelopeDropdown(props) {
     }, [])
   
   // populates envelope option dropdown menu 
-
   return (
     <select id="envelope" >  
         {envelopeList.map((envelope, index) => {

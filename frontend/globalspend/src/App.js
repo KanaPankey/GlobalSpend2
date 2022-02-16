@@ -32,7 +32,6 @@ import BackendAPI from './api/BackendAPI'
 
 
 function App() {
-
   // states...home and spend rates are in relation to EUR
   const [homeCurrency, setHomeCurrency] = useState('USD') // future multi-currency functionality
   const [spendCurrency, setSpendCurrency] = useState('NOK') // future multi-currency functionality
@@ -46,7 +45,7 @@ function App() {
   const [userStore, setUserStore] = useState(null)
   
   // get conversion rate
-  // retrieve exchange rates from API compared to EUR
+  // retrieve exchange rates compared to EUR from API
   useEffect(() => {
     const getConversionRate = async() => {
       const data = await ConverterAPI.fetchRates()

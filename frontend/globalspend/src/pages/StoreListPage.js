@@ -47,43 +47,43 @@ function StoreListPage(props) {
 
   // render helpers
   const renderStoreList = (storeLists) => {
-      return (
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Store Name</th>
-              <th>Envelope</th>
-            </tr>
-          </thead>
-          <tbody>
-          {storeLists.map((storeList, index) => {
-            return (
-              <tr key={index}>
-                <td><Link to={`/store/${storeList.id}/`} style={{color:'black'}}>{storeList.store_name}</Link></td>
-                {console.log(storeList.envelope)}
-                <td>{displayEnvelopeName(storeList.envelope)}</td>
-              </tr>
-            )
-          })}
-          </tbody>
-        </Table>
-      )
-    }
-
     return (
-      <div className="container mt-4">
-        <h1>Store List</h1>
-        <hr />
-        { renderStoreList(storeLists) }
-        <div className="text-center">
-          <Link to={`/store/add`}>  
-            <Button variant="success" type="submit">
-              Add Store
-            </Button>  
-          </Link>
-        </div>
-      </div>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Store Name</th>
+            <th>Envelope</th>
+          </tr>
+        </thead>
+        <tbody>
+        {storeLists.map((storeList, index) => {
+          return (
+            <tr key={index}>
+              <td><Link to={`/store/${storeList.id}/`} style={{color:'black'}}>{storeList.store_name}</Link></td>
+              {console.log(storeList.envelope)}
+              <td>{displayEnvelopeName(storeList.envelope)}</td>
+            </tr>
+          )
+        })}
+        </tbody>
+      </Table>
     )
   }
+
+  return (
+    <div className="container mt-4">
+      <h1>Store List</h1>
+      <hr />
+      { renderStoreList(storeLists) }
+      <div className="text-center">
+        <Link to={`/store/add`}>  
+          <Button variant="success" type="submit">
+            Add Store
+          </Button>  
+        </Link>
+      </div>
+    </div>
+  )
+}
 
 export default StoreListPage;

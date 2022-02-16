@@ -15,7 +15,6 @@ function DeleteStorePage(props) {
   // states
   const [store, setStore] = useState(null)
 
-
   // effects
   useEffect (() => {
     const getStore = async () => {

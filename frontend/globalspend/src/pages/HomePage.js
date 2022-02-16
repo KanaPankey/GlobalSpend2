@@ -1,21 +1,18 @@
 // react
 import { useNavigate } from "react-router-dom"
-import { Form, Button, ButtonToolbar, ButtonGroup, InputGroup, FormControl } from "react-bootstrap"
-import { useEffect, useState } from 'react'
+import { Form, Button, ButtonToolbar, ButtonGroup } from "react-bootstrap"
 
 // API
 import BackendAPI from "../api/BackendAPI"
+
+// components
 import EnvelopeDropdown from "../components/EnvelopeDropdown"
 import StoreDropdown from "../components/StoreDropdown"
 import IsDebitDropdown from "../components/IsDebitDropdown"
 
-// components
-
 function HomePage(props) {
   // router props
   const navigate = useNavigate()
-  // const params = useParams()
-
 
   // states
   const spendAmt = null
@@ -23,6 +20,8 @@ function HomePage(props) {
   // handlers
   const handleFormSubmit = async (event) => {
     event.preventDefault()
+
+    const promiseArray = []
 
     // get date to populate transaction
     let today = new Date();
@@ -46,7 +45,7 @@ function HomePage(props) {
     }
     
     // create transaction record
-    const data = await BackendAPI.addTransaction(transactionObj)
+    promiseArray.push(await BackendAPI.addTransaction(transactionObj))
     
     // change current amt for the envelope of transaction accounting for debit/deposit
     const envelope = await BackendAPI.fetchEnvelopeByID(envelopeID)
@@ -63,12 +62,12 @@ function HomePage(props) {
       const envelopeObj = {
         current_amt: newCurrentAmt
       }
-      const newEnvelope = await BackendAPI.updateEnvelope(envelopeObj, envelopeID)
+      promiseArray.push(await BackendAPI.updateEnvelope(envelopeObj, envelopeID))
 
-      // wait for both backend calls to complete...took off newEnvelope
-      if (data) {
-        navigate(`/transaction/${data.id}`)
-      }
+      // wait for both backend calls to complete
+      Promise.all(promiseArray).then(values => {
+        navigate(`/transaction/`)
+      })
     }
   }
 

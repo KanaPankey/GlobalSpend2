@@ -28,16 +28,24 @@ function EditTransactionPage(props) {
     getTransaction()
   }, [] )
 
-  // handlers
+  // handler
   const handleFormSubmit = async (event) => {
     event.preventDefault()
 
-    let homeAmt = (event.target.elements[1].value * props.rate).toFixed(2) 
+    const promiseArray = []
 
-    // change current amount for the envelope(s) of transaction accounting
-    let newEnvelope = event.target.elements[3].value
+    // determine if spend amount changed...default to old amount if not changed
+    let oldAmt = transaction.original_transaction_amt
+    let oldHomeAmt = transaction.home_transaction_amt
     let newAmt = event.target.elements[1].value
-    let oldAmt = transaction.home_transaction_amt
+    let newHomeAmt = oldHomeAmt
+    if (oldAmt != newAmt) {
+      newHomeAmt = (newAmt * props.rate).toFixed(2) 
+    }
+    let deltaHomeAmt = newHomeAmt - oldHomeAmt // positive if money spent increased
+    
+    // set up for determining if envelope changed
+    let newEnvelope = event.target.elements[3].value
     let oldEnvelopeCurrentAmt = null
     let newEnvelopeCurrentAmt = null
     let oldEnvelopeUpdatedAmt = null
@@ -53,57 +61,61 @@ function EditTransactionPage(props) {
       newEnvelopeCurrentAmt = newEnvelopeData.current_amt
     }
 
-    // for case when envelope stays the same
-    if (transaction.envelope == newEnvelope) {
-      if (transaction.is_debit_transaction) {
-        oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt + oldAmt - newAmt
-      } else {
-        oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt - oldAmt + newAmt
-      }
-      // update envelope
+    // for case when envelope stays the same and there is a change in money spent
+    if (transaction.envelope == newEnvelope && deltaHomeAmt != 0) {
+      oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt - deltaHomeAmt
+
+      // update envelopes
       const envelopeObj = {
         current_amt: oldEnvelopeUpdatedAmt
       }
-      const doNotNeedVariable = await BackendAPI.updateEnvelope(envelopeObj, transaction.envelope)
+      promiseArray.push(await BackendAPI.updateEnvelope(envelopeObj, transaction.envelope))
+    }
 
-    } else {
-      // when envelope changes
+    // for case when envelope changes
+    if (transaction.envelope != newEnvelope) {
       if (transaction.is_debit_transaction) {
-        oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt + oldAmt
-        newEnvelopeUpdatedAmt = newEnvelopeCurrentAmt - newAmt
+        oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt + oldHomeAmt
+        newEnvelopeUpdatedAmt = newEnvelopeCurrentAmt - newHomeAmt
       } else {
-        oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt - oldAmt
-        newEnvelopeUpdatedAmt = newEnvelopeCurrentAmt + newAmt
+        oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt - oldHomeAmt
+        newEnvelopeUpdatedAmt = newEnvelopeCurrentAmt + newHomeAmt
       }
+
       // update envelopes
       const envelopeObj1 = {
         current_amt: oldEnvelopeUpdatedAmt
       }
-      const doNotNeedVariable = await BackendAPI.updateEnvelope(envelopeObj1, transaction.envelope)
+      promiseArray.push(await BackendAPI.updateEnvelope(envelopeObj1, transaction.envelope))
 
       const envelopeObj2 = {
         current_amt: newEnvelopeUpdatedAmt
       }
-      const doNotNeedVariable2 = await BackendAPI.updateEnvelope(envelopeObj2, newEnvelope)
-
+      promiseArray.push(await BackendAPI.updateEnvelope(envelopeObj2, newEnvelope))
     }
    
     const transactionObj = {
       transaction_date: event.target.elements[0].value,
       original_transaction_amt: newAmt,
-      home_transaction_amt: homeAmt,
+      home_transaction_amt: newHomeAmt,
       is_debit_transaction: transaction.is_debit_transaction,
       envelope: event.target.elements[3].value,
       store: event.target.elements[4].value,
       notes: event.target.elements[5].value
     }
+    promiseArray.push(await BackendAPI.updateTransaction(transactionObj, params.transactionID))
 
-    console.log(transactionObj)
-    
-    const data = await BackendAPI.updateTransaction(transactionObj, params.transactionID)
-    if (data) {
-      navigate(`/transaction/${data.id}`)
-    }
+    // if (data) {
+    //   navigate(`/transaction/${data.id}`)
+    // }
+
+    Promise.all(promiseArray)
+    .then(values => {
+      navigate(`/transaction/${transaction.id}`)
+    })
+    .catch(error => {
+      console.error(error.message)
+    })
   }
 
   // render
@@ -114,7 +126,7 @@ function EditTransactionPage(props) {
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>
           <Form.Label>Transaction Date</Form.Label>
-          <Form.Control placeholder="date" defaultValue={transaction && transaction.transaction_date}/>
+          <Form.Control readonly='readonly' placeholder="date" defaultValue={transaction && transaction.transaction_date}/>
         </Form.Group>
         <br />
         <Form.Group>
@@ -124,6 +136,7 @@ function EditTransactionPage(props) {
         <br />
         <Form.Group>
           <Form.Label>Debit or deposit</Form.Label>
+          {/* <div><IsDebitDropdown /></div> need calculations for this option change*/}
           <Form.Control readonly='readonly' defaultValue={transaction && (transaction.is_debit_transaction ? "Debit" : "Deposit")}/>
         </Form.Group>
         <br />

@@ -10,6 +10,7 @@ function TransactionListPage(props) {
   // states
   const [transactionLists, setTransactionLists] = useState([])
   const [storeList, setStoreList] = useState([])
+  const [envelopeList, setEnvelopeList] = useState([])
 
   const params = useParams()
 
@@ -32,8 +33,15 @@ function TransactionListPage(props) {
         setStoreList(data)
       }
     }
+    const getEnvelopeLists = async() => {
+      const data = await BackendAPI.fetchEnvelopes()
+      if (data) {
+        setEnvelopeList(data)
+      }
+    }
 
     getStoreLists()
+    getEnvelopeLists()
   }, [])
 
   // store id to name
@@ -41,6 +49,15 @@ function TransactionListPage(props) {
     for (let i = 0; i < storeList.length; i++) {
       if (storeList[i].id == storeID) {
         return storeList[i].store_name
+      }
+    }
+  }
+
+  // envelope id to name
+  const displayEnvelopeName = (envelopeID) => {
+    for (let i = 0; i < envelopeList.length; i++) {
+      if (envelopeList[i].id == envelopeID) {
+        return envelopeList[i].envelope_name
       }
     }
   }
@@ -53,6 +70,7 @@ function TransactionListPage(props) {
           <tr>
             <th>Date</th>
             <th>Store</th>
+            <th>Envelope</th>
             <th>Local Amt</th>
             <th>Home Amt</th>
           </tr>
@@ -63,6 +81,7 @@ function TransactionListPage(props) {
             <tr key={index}>
               <td>{transactionList.transaction_date}</td>
               <td>{displayStoreName(transactionList.store)}</td>
+              <td>{displayEnvelopeName(transactionList.envelope)}</td>
               <td><Link to={`/transaction/${transactionList.id}`} style={{color:'black'}}>{transactionList.original_transaction_amt} NOK</Link></td>
               <td>$ {transactionList.home_transaction_amt}</td>
             </tr>         

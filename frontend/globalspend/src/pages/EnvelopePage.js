@@ -69,6 +69,7 @@ function EnvelopePage(props) {
             <th>Date</th>
             <th>Store</th>
             <th>Local Amt</th>
+            <th>Home Amt</th>
           </tr>
         </thead>
         <tbody>
@@ -79,6 +80,7 @@ function EnvelopePage(props) {
                 <td>{transactionList.transaction_date}</td>
                 <td>{displayStoreName(transactionList.store)}</td>
                 <td><Link to={`/transaction/${transactionList.id}`}>{transactionList.original_transaction_amt}</Link></td>
+                <td>{transactionList.home_transaction_amt}</td>
               </tr>
             
           )
