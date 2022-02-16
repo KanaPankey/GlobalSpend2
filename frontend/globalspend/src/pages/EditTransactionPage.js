@@ -104,10 +104,6 @@ function EditTransactionPage(props) {
     }
     promiseArray.push(await BackendAPI.updateTransaction(transactionObj, params.transactionID))
 
-    // if (data) {
-    //   navigate(`/transaction/${data.id}`)
-    // }
-
     Promise.all(promiseArray)
     .then(values => {
       navigate(`/transaction/${transaction.id}`)
