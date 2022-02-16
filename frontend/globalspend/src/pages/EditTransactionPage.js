@@ -36,11 +36,11 @@ function EditTransactionPage(props) {
 
     // determine if spend amount changed...default to old amount if not changed
     let oldAmt = transaction.original_transaction_amt
-    let oldHomeAmt = transaction.home_transaction_amt
+    let oldHomeAmt = parseFloat(transaction.home_transaction_amt)
     let newAmt = event.target.elements[1].value
     let newHomeAmt = oldHomeAmt
     if (oldAmt != newAmt) {
-      newHomeAmt = (newAmt * props.rate).toFixed(2) 
+      newHomeAmt = parseFloat(newAmt * props.rate).toFixed(2) 
     }
     let deltaHomeAmt = newHomeAmt - oldHomeAmt // positive if money spent increased
     
@@ -53,12 +53,13 @@ function EditTransactionPage(props) {
 
     const oldEnvelopeData = await BackendAPI.fetchEnvelopeByID(transaction.envelope)
     if (oldEnvelopeData) {
-      oldEnvelopeCurrentAmt = oldEnvelopeData.current_amt
+      oldEnvelopeCurrentAmt = parseFloat(oldEnvelopeData.current_amt)
+      console.log("oldenvelope", oldEnvelopeCurrentAmt) //********************* */
     }
 
     const newEnvelopeData = await BackendAPI.fetchEnvelopeByID(newEnvelope)
     if (newEnvelopeData) {
-      newEnvelopeCurrentAmt = newEnvelopeData.current_amt
+      newEnvelopeCurrentAmt = parseFloat(newEnvelopeData.current_amt)
     }
 
     // for case when envelope stays the same and there is a change in money spent
@@ -77,6 +78,8 @@ function EditTransactionPage(props) {
       if (transaction.is_debit_transaction) {
         oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt + oldHomeAmt
         newEnvelopeUpdatedAmt = newEnvelopeCurrentAmt - newHomeAmt
+        console.log("oldhomeamt", oldHomeAmt)
+        console.log("updatedamt", oldEnvelopeUpdatedAmt)
       } else {
         oldEnvelopeUpdatedAmt = oldEnvelopeCurrentAmt - oldHomeAmt
         newEnvelopeUpdatedAmt = newEnvelopeCurrentAmt + newHomeAmt
@@ -126,7 +129,7 @@ function EditTransactionPage(props) {
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>
           <Form.Label>Transaction Date</Form.Label>
-          <Form.Control readonly='readonly' placeholder="date" defaultValue={transaction && transaction.transaction_date}/>
+          <Form.Control readOnly='readOnly' placeholder="date" defaultValue={transaction && transaction.transaction_date}/>
         </Form.Group>
         <br />
         <Form.Group>
@@ -137,7 +140,7 @@ function EditTransactionPage(props) {
         <Form.Group>
           <Form.Label>Debit or deposit</Form.Label>
           {/* <div><IsDebitDropdown /></div> need calculations for this option change*/}
-          <Form.Control readonly='readonly' defaultValue={transaction && (transaction.is_debit_transaction ? "Debit" : "Deposit")}/>
+          <Form.Control readOnly='readOnly' defaultValue={transaction && (transaction.is_debit_transaction ? "Debit" : "Deposit")}/>
         </Form.Group>
         <br />
         <Form.Group>
